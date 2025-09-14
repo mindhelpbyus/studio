@@ -4,6 +4,7 @@ import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { SymptomChecker } from '@/components/symptom-checker';
 import { Header } from '@/components/header';
 import { ArrowRight } from 'lucide-react';
+import Link from 'next/link';
 
 export default function Home() {
   const heroImage = PlaceHolderImages.find((img) => img.id === 'hero-image');
@@ -79,6 +80,11 @@ export default function Home() {
             <Button variant="link" size="sm" className="text-muted-foreground">
               Terms of Service
             </Button>
+             <Link href="/patient-portal">
+              <Button variant="link" size="sm" className="text-muted-foreground">
+                Patient Portal
+              </Button>
+            </Link>
           </div>
         </div>
       </footer>
