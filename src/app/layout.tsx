@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { Toaster } from '@/components/ui/toaster';
 import './globals.css';
-import { Analytics } from '@vercel/analytics/react';
 
 export const metadata: Metadata = {
   title: 'MediVision AI',
@@ -30,7 +29,6 @@ export default function RootLayout({
       <body className="font-body h-full bg-background antialiased">
         {children}
         <Toaster />
-        <Analytics />
       </body>
     </html>
   );
