@@ -6,7 +6,7 @@ const mockAppointment = {
   id: '1',
   providerName: 'Dr. Evelyn Reed',
   specialty: 'Cardiology',
-  date: new Date().toISOString(),
+  date: '2024-08-15T10:30:00.000Z', // Using a static date to prevent hydration errors
   time: '10:30',
 };
 
