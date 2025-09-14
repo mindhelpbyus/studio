@@ -1,7 +1,8 @@
 
 'use client';
 
-import { useFormState, useFormStatus } from 'react-dom';
+import { useActionState } from 'react';
+import { useFormStatus } from 'react-dom';
 import { getSymptomAnalysis } from '@/app/actions';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -37,7 +38,7 @@ function SubmitButton() {
 
 export function SymptomChecker() {
   const initialState = { error: null, data: null };
-  const [state, formAction] = useFormState(getSymptomAnalysis, initialState);
+  const [state, formAction] = useActionState(getSymptomAnalysis, initialState);
 
   return (
     <div className="mx-auto max-w-3xl space-y-8">
