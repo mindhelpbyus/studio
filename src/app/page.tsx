@@ -85,6 +85,11 @@ export default function Home() {
                 Patient Portal
               </Button>
             </Link>
+            <Link href="/provider-portal/calendar">
+              <Button variant="link" size="sm" className="text-muted-foreground">
+                Provider Portal
+              </Button>
+            </Link>
           </div>
         </div>
       </footer>
