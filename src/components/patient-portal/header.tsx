@@ -19,6 +19,9 @@ export function PatientPortalHeader() {
           <Link href="/patient-portal/records">
             <Button variant="ghost">Medical Records</Button>
           </Link>
+           <Link href="/patient-portal/style-guide">
+            <Button variant="ghost">Style Guide</Button>
+          </Link>
           <Button>Sign Out</Button>
         </nav>
         <div className="md:hidden">
