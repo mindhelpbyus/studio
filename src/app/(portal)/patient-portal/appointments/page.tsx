@@ -1,4 +1,7 @@
 import { PatientPortalHeader } from '@/components/patient-portal/header';
+import { Button } from '@/components/ui/button';
+import { Video } from 'lucide-react';
+import Link from 'next/link';
 
 // Mock data - in a real app, this would be fetched for the logged-in user
 const upcomingAppointments = [
@@ -18,9 +21,17 @@ export default function AppointmentsPage() {
             {upcomingAppointments.length > 0 ? (
                  <ul className="space-y-4">
                     {upcomingAppointments.map(apt => (
-                        <li key={apt.id} className="p-4 border rounded-lg shadow-sm bg-card">
-                           <p className="font-bold">{apt.providerName} ({apt.specialty})</p>
-                           <p className="text-muted-foreground">{new Date(apt.date).toDateString()} at {apt.time}</p>
+                        <li key={apt.id} className="p-4 border rounded-lg shadow-sm bg-card flex items-center justify-between">
+                           <div>
+                             <p className="font-bold">{apt.providerName} ({apt.specialty})</p>
+                             <p className="text-muted-foreground">{new Date(apt.date).toDateString()} at {apt.time}</p>
+                           </div>
+                           <Link href={`/patient-portal/video-call/${apt.id}`}>
+                             <Button>
+                               <Video className="mr-2" />
+                               Join Call
+                             </Button>
+                           </Link>
                         </li>
                     ))}
                  </ul>
