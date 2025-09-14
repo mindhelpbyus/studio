@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import type { Provider } from '@/lib/providers';
 import { Badge } from '../ui/badge';
 import { MapPin } from 'lucide-react';
+import Link from 'next/link';
 
 type ProviderCardProps = {
   provider: Provider;
@@ -34,7 +35,9 @@ export function ProviderCard({ provider }: ProviderCardProps) {
         </CardDescription>
       </CardContent>
       <CardFooter className="p-6 pt-0">
-        <Button className="w-full">Book Appointment</Button>
+        <Link href={`/providers/${provider.id}/book`} className='w-full'>
+            <Button className="w-full">Book Appointment</Button>
+        </Link>
       </CardFooter>
     </Card>
   );
