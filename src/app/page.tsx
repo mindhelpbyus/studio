@@ -14,7 +14,7 @@ export default function Home() {
     <div className="flex min-h-screen flex-col bg-transparent">
       <Header />
       <main className="flex-1 relative z-10">
-        <section className="relative w-full py-20 md:py-32 lg:py-40">
+        <section className="relative w-full pt-20 md:pt-32 lg:pt-40">
           <div className="container mx-auto px-4 md:px-6">
             <div className="grid gap-10 lg:grid-cols-1 lg:gap-16">
               <div className="flex flex-col items-center justify-center space-y-6 text-center">
@@ -27,8 +27,8 @@ export default function Home() {
                       Vivalé
                     </span>
                   </h1>
-                  <p className="mx-auto max-w-[600px] text-lg text-muted-foreground md:text-xl">
-                    Vivalé helps you manage your health journey, connect with your care team, and live fully. Your trusted partner in health and wellness is here.
+                  <p className="mx-auto max-w-[700px] text-lg text-muted-foreground md:text-xl">
+                    Vivalé helps you manage your patient care journey, connect with your care team, and live fully. Your trusted partner in health and wellness software is here.
                   </p>
                 </div>
                 <div className="flex flex-col gap-4 sm:flex-row">
@@ -48,6 +48,21 @@ export default function Home() {
           </div>
         </section>
         
+        <section className="w-full pt-16 pb-20 md:pb-32">
+          <div className="container mx-auto px-4 md:px-6">
+            <div className="relative mx-auto max-w-6xl overflow-hidden rounded-2xl shadow-card">
+              <Image
+                src="https://picsum.photos/seed/health-collage/1200/600"
+                alt="Collage of diverse people enjoying healthy activities"
+                width={1200}
+                height={600}
+                className="w-full"
+                data-ai-hint="diverse people health"
+              />
+            </div>
+          </div>
+        </section>
+
         <section id="features" className="w-full py-20 md:py-32 bg-transparent">
           <div className="container mx-auto px-4 md:px-6">
             <FeaturesList />
