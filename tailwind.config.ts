@@ -21,7 +21,10 @@ export default {
     extend: {
       fontFamily,
       colors,
-      borderRadius,
+      borderRadius: {
+        ...borderRadius,
+        full: "9999px",
+      },
       boxShadow,
       keyframes: {
         'accordion-down': {

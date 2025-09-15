@@ -35,11 +35,12 @@ export default function Home() {
                 <div className="flex flex-col gap-4 sm:flex-row">
                   <Button
                     size="lg"
+                    className="rounded-full"
                   >
                     Get Started
                     <ArrowRight className="ml-2" />
                   </Button>
-                  <Button size="lg" variant="outline">
+                  <Button size="lg" variant="outline" className="rounded-full">
                     Learn More
                   </Button>
                 </div>
