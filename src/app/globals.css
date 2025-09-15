@@ -76,6 +76,11 @@
   }
 }
 
+.bg-page-gradient {
+  position: relative;
+  overflow-x: hidden;
+}
+
 .bg-page-gradient::before {
   content: '';
   position: fixed;
@@ -83,16 +88,17 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: linear-gradient(135deg, hsl(258, 88%, 95%), hsl(0, 0%, 99%));
+  background-image: linear-gradient(136deg, #f2ebff 0.58%, #ffffff 47.43%, #fff3eb 99.42%);
+  background-size: 200% 200%;
+  animation: gradient-pan 15s ease infinite;
   z-index: -10;
-  opacity: 0;
-  animation: fadeInGradient 1s ease-in-out forwards;
+  will-change: background-position;
 }
 
-@keyframes fadeInGradient {
-  to {
-    opacity: 1;
-  }
+@keyframes gradient-pan {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 .bg-page-gradient::after {
@@ -103,23 +109,21 @@
   right: 0;
   bottom: 0;
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
   background-size: 40px 40px;
   z-index: -9;
   opacity: 0;
-  animation: fadeInGrid 1.5s ease-in-out forwards;
-  animation-delay: 0.5s;
+  animation: fadeInGrid 2s ease-in-out forwards;
+  will-change: opacity;
 }
 
 @keyframes fadeInGrid {
   from {
     opacity: 0;
-    transform: scale(0.95);
   }
   to {
     opacity: 1;
-    transform: scale(1);
   }
 }
 

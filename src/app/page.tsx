@@ -60,7 +60,7 @@ export default function Home() {
           </div>
         </section>
         
-        <section id="features" className="w-full py-20 md:py-32 bg-background">
+        <section id="features" className="w-full py-20 md:py-32 bg-transparent">
           <div className="container mx-auto px-4 md:px-6">
             <FeaturesList />
           </div>
