@@ -34,6 +34,9 @@ const colors = {
     DEFAULT: "hsl(var(--card))",
     foreground: "hsl(var(--card-foreground))",
   },
+  'accent-left': 'var(--accent-left)',
+  'accent-mid': 'var(--accent-mid)',
+  'accent-right': 'var(--accent-right)',
 };
 
 export default {

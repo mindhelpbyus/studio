@@ -31,6 +31,11 @@
   --chart-4: 25 100% 84%;
   --chart-5: 258 100% 78%;
   --radius: 0.75rem;
+
+  /* Custom gradient colors */
+  --accent-left: #b28eff;
+  --accent-mid: #a82d9c;
+  --accent-right: #ffc39b;
 }
 
 .dark {
@@ -78,12 +83,49 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(136deg, #f2ebff 0.58%, #ffffff 47.43%, #fff3eb 99.42%);
+  background-image: linear-gradient(135deg, hsl(258, 88%, 95%), hsl(0, 0%, 99%));
   z-index: -10;
+  opacity: 0;
+  animation: fadeInGradient 1s ease-in-out forwards;
 }
 
+@keyframes fadeInGradient {
+  to {
+    opacity: 1;
+  }
+}
+
+.bg-page-gradient::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+  z-index: -9;
+  opacity: 0;
+  animation: fadeInGrid 1.5s ease-in-out forwards;
+  animation-delay: 0.5s;
+}
+
+@keyframes fadeInGrid {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+
 .text-gradient {
-  background: linear-gradient(99deg, #c098f5 2.09%, #faa4cd 45.25%, #ffc9a3 88.41%);
+  background: linear-gradient(99deg, var(--accent-left) 2.09%, var(--accent-mid) 45.25%, var(--accent-right) 88.41%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
