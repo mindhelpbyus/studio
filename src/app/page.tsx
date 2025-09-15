@@ -10,7 +10,7 @@ export default function Home() {
   const heroImage = PlaceHolderImages.find((img) => img.id === 'hero-image');
 
   return (
-    <div className="flex min-h-screen flex-col bg-background">
+    <div className="flex min-h-screen flex-col bg-background bg-page-gradient">
       <Header />
       <main className="flex-1 relative z-10">
         <section className="relative w-full py-20 md:py-32 lg:py-40">
@@ -22,7 +22,7 @@ export default function Home() {
                     Smarter Health,
                     <br />
                     Instantly with{' '}
-                    <span className="text-primary">
+                    <span className="text-gradient">
                       MediVision AI
                     </span>
                   </h1>
@@ -59,14 +59,14 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="symptom-checker" className="w-full bg-muted/50 py-20 md:py-32">
+        <section id="symptom-checker" className="w-full py-20 md:py-32">
           <div className="container mx-auto px-4 md:px-6">
             <SymptomChecker />
           </div>
         </section>
       </main>
 
-      <footer className="bg-background py-6 relative z-10">
+      <footer className="py-6 relative z-10">
         <div className="container mx-auto flex items-center justify-between px-4 md:px-6">
           <p className="text-sm text-muted-foreground">
             &copy; {new Date().getFullYear()} MediVision AI. All rights

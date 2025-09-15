@@ -52,7 +52,7 @@ export function SymptomChecker() {
         </p>
       </div>
 
-      <Card className="rounded-lg shadow-card">
+      <Card className="rounded-lg shadow-card bg-white/60 backdrop-blur-sm">
         <CardContent className="p-6">
           <form action={formAction} className="space-y-6">
             <div className="space-y-2">
@@ -63,7 +63,7 @@ export function SymptomChecker() {
                 id="symptoms"
                 name="symptoms"
                 placeholder="e.g., 'I have a persistent headache, slight fever, and a sore throat...'"
-                className="min-h-[120px] rounded-md text-base"
+                className="min-h-[120px] rounded-md text-base bg-transparent"
                 required
               />
             </div>
@@ -90,7 +90,7 @@ export function SymptomChecker() {
           <h3 className="text-center font-headline text-2xl font-bold">
             Your Analysis Results
           </h3>
-          <Card className="rounded-lg shadow-card">
+          <Card className="rounded-lg shadow-card bg-white/60 backdrop-blur-sm">
             <CardHeader className="flex flex-row items-center gap-4">
               <div className="rounded-full bg-primary/10 p-3">
                 <Bot className="h-6 w-6 text-primary" />
@@ -109,7 +109,7 @@ export function SymptomChecker() {
             </CardContent>
           </Card>
 
-          <Card className="rounded-lg shadow-card">
+          <Card className="rounded-lg shadow-card bg-white/60 backdrop-blur-sm">
             <CardHeader className="flex flex-row items-center gap-4">
                <div className="rounded-full bg-primary/10 p-3">
                 <User className="h-6 w-6 text-primary" />
