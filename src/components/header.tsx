@@ -33,6 +33,8 @@ import {
   FlaskConical,
   FileBarChart,
   type LucideIcon,
+  User,
+  Hospital,
 } from 'lucide-react';
 import React from 'react';
 
@@ -46,12 +48,18 @@ const features: { title: string; href: string; description: string, icon: Lucide
     { title: 'Customizable Intake Forms', href: '#', description: 'Create and manage digital forms for patient intake.', icon: FileText },
     { title: 'e-Prescribing', href: '#', description: 'Send prescriptions directly to pharmacies.', icon: Pill },
     { title: 'Lab Results', href: '#', description: 'Receive and manage lab results within the CRM.', icon: FlaskConical },
-    { title: 'Billing & Payments', href: '#', description: 'Handle patient billing and process payments seamlessly.', icon: CreditCard },
+    { title: 'Billing & Payments', href: '#', 'description': 'Handle patient billing and process payments seamlessly.', icon: CreditCard },
     { title: 'AI Symptom Checker', href: '#', description: 'Provide patients with an initial AI-powered symptom analysis.', icon: Bot },
     { title: 'Automated Reminders', href: '#', description: 'Reduce no-shows with automated appointment reminders.', icon: BellRing },
     { title: 'Practice Performance', href: '#', description: 'Get insights into your practice with advanced analytics.', icon: BarChart },
     { title: 'Patient Demographics', href: '#', description: 'Understand your patient population better.', icon: Users },
     { title: 'Provider Management', href: '#', description: 'Manage provider schedules and profiles.', icon: Stethoscope },
+];
+
+const whoWeServe: { title: string; href: string; description: string, icon: LucideIcon }[] = [
+    { title: 'Individual Therapist', href: '/providers', description: 'Tools for solo practitioners to manage their practice.', icon: User },
+    { title: 'Wellness & Counseling Center', href: '/providers', description: 'Solutions for clinics and centers to streamline operations.', icon: Hospital },
+    { title: 'Patient', href: '/patient-portal', description: 'Access your health records, appointments, and care team.', icon: HeartHandshake },
 ];
 
 
@@ -84,9 +92,34 @@ export function Header() {
                   </NavigationMenuContent>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                  <NavigationMenuLink asChild>
-                    <Link href="/providers" className={cn(navigationMenuTriggerStyle(), "font-bold")}>Who We Serve</Link>
-                  </NavigationMenuLink>
+                  <NavigationMenuTrigger className="font-bold">Who We Serve</NavigationMenuTrigger>
+                   <NavigationMenuContent>
+                    <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] lg:w-[600px] lg:grid-cols-[.75fr_1fr]">
+                      <li className="row-span-3">
+                        <NavigationMenuLink asChild>
+                          <a
+                            className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                            href="/"
+                          >
+                            <Logo />
+                            <p className="mt-4 text-sm leading-tight text-muted-foreground">
+                              A complete platform for modern healthcare providers and patients.
+                            </p>
+                          </a>
+                        </NavigationMenuLink>
+                      </li>
+                       {whoWeServe.map((item) => (
+                        <ListItem
+                          key={item.title}
+                          title={item.title}
+                          href={item.href}
+                          icon={item.icon}
+                        >
+                          {item.description}
+                        </ListItem>
+                      ))}
+                    </ul>
+                  </NavigationMenuContent>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
                    <NavigationMenuLink asChild>
