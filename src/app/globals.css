@@ -36,11 +36,6 @@
   --accent-left: #b28eff;
   --accent-mid: #a82d9c;
   --accent-right: #ffc39b;
-  
-  /* Background gradient tints */
-  --bg-accent-left: #f2ebff;   /* Lighter tint of --accent-left */
-  --bg-accent-mid: #ffffff;    /* Midpoint color, white for subtlety */
-  --bg-accent-right: #fff3eb;  /* Lighter tint of --accent-right */
 }
 
 .dark {
@@ -77,61 +72,34 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground overflow-x-hidden;
+    background: linear-gradient(135deg, var(--accent-left), var(--accent-mid), var(--accent-right));
+    background-size: 400% 400%;
+    animation: diagonalGradient 25s ease infinite;
+    position: relative;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+      linear-gradient(to right, rgba(255,255,255,0.08) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255,255,255,0.08) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: -9;
   }
 }
 
-.bg-page-gradient {
-  position: relative;
-  overflow-x: hidden;
+@keyframes diagonalGradient {
+  0% { background-position: 0% 0%; }
+  50% { background-position: 100% 100%; }
+  100% { background-position: 0% 0%; }
 }
-
-.bg-page-gradient::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: linear-gradient(136deg, var(--bg-accent-left) 0.58%, var(--bg-accent-mid) 47.43%, var(--bg-accent-right) 99.42%);
-  background-size: 200% 200%;
-  animation: gradient-pan 15s ease infinite;
-  z-index: -10;
-  will-change: background-position;
-}
-
-@keyframes gradient-pan {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-.bg-page-gradient::after {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image:
-    linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
-  background-size: 40px 40px;
-  z-index: -9;
-  opacity: 0;
-  animation: fadeInGrid 2s ease-in-out forwards;
-  will-change: opacity;
-}
-
-@keyframes fadeInGrid {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
 
 .text-gradient {
   background: linear-gradient(99deg, var(--accent-left) 2.09%, var(--accent-mid) 45.25%, var(--accent-right) 88.41%);

@@ -11,7 +11,7 @@ export default function Home() {
   const heroImage = PlaceHolderImages.find((img) => img.id === 'hero-image');
 
   return (
-    <div className="flex min-h-screen flex-col bg-background bg-page-gradient">
+    <div className="flex min-h-screen flex-col bg-transparent">
       <Header />
       <main className="flex-1 relative z-10">
         <section className="relative w-full py-20 md:py-32 lg:py-40">
