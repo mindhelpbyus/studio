@@ -1,4 +1,3 @@
-
 'use client';
 
 import Link from 'next/link';
@@ -65,47 +64,55 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-6">
-        <Link href="/" className="flex items-center gap-2">
-          <Logo />
-        </Link>
-        <nav className="hidden items-center gap-6 md:flex">
-          <NavigationMenu>
-            <NavigationMenuList>
-              <NavigationMenuItem>
-                <NavigationMenuTrigger>Features</NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-                    {features.map((feature) => (
-                      <ListItem
-                        key={feature.title}
-                        title={feature.title}
-                        href={feature.href}
-                        icon={feature.icon}
-                      >
-                        {feature.description}
-                      </ListItem>
-                    ))}
-                  </ul>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-                  <Link href="/providers">
-                    For Providers
-                  </Link>
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-                  <Link href="#">
-                    Pricing
-                  </Link>
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-            </NavigationMenuList>
-          </NavigationMenu>
-          <Button>Sign In</Button>
-        </nav>
+        <div className="flex items-center gap-6">
+          <Link href="/" className="flex items-center gap-2">
+            <Logo />
+          </Link>
+          <nav className="hidden items-center gap-6 md:flex">
+            <NavigationMenu>
+              <NavigationMenuList>
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger>Features</NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+                      {features.map((feature) => (
+                        <ListItem
+                          key={feature.title}
+                          title={feature.title}
+                          href={feature.href}
+                          icon={feature.icon}
+                        >
+                          {feature.description}
+                        </ListItem>
+                      ))}
+                    </ul>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+                <NavigationMenuItem>
+                  <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+                    <Link href="/providers">
+                      For Providers
+                    </Link>
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+                <NavigationMenuItem>
+                  <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+                    <Link href="#">
+                      Pricing
+                    </Link>
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+              </NavigationMenuList>
+            </NavigationMenu>
+          </nav>
+        </div>
+        
+        <div className="hidden items-center gap-4 md:flex">
+          <Button variant="ghost">Book Demo</Button>
+          <Button variant="ghost">Log In</Button>
+          <Button>Try it now</Button>
+        </div>
+        
         <div className="md:hidden">
             <Button>Menu</Button>
         </div>
