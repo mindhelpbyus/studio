@@ -89,7 +89,7 @@ export function FeaturesList() {
       </div>
 
       {/* Grid Layout */}
-      <div className="grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-4">
         {featureData.map((category) => (
           <div key={category.title} className="space-y-4">
             <h3 className="text-lg font-bold text-foreground">{category.title}</h3>
