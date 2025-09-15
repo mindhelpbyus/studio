@@ -47,8 +47,7 @@ export function SymptomChecker() {
           AI Symptom Checker
         </h2>
         <p className="mt-4 text-lg text-muted-foreground">
-          Describe your symptoms below, and our AI will provide potential causes
-          and recommended next steps.
+          Describe your symptoms below, and our AI will provide potential areas of concern and recommended next steps based on WHO standards for mental health.
         </p>
       </div>
 
@@ -62,7 +61,7 @@ export function SymptomChecker() {
               <Textarea
                 id="symptoms"
                 name="symptoms"
-                placeholder="e.g., 'I have a persistent headache, slight fever, and a sore throat...'"
+                placeholder="e.g., 'For the past few weeks, I've felt persistently sad, have lost interest in hobbies, and struggle with sleep...'"
                 className="min-h-[120px] rounded-md text-base bg-transparent"
                 required
               />
@@ -96,7 +95,7 @@ export function SymptomChecker() {
                 <Bot className="h-6 w-6 text-primary" />
               </div>
               <div>
-                <CardTitle>Potential Causes</CardTitle>
+                <CardTitle>Potential Areas of Concern</CardTitle>
                 <CardDescription>
                   Based on the symptoms you provided.
                 </CardDescription>
@@ -104,7 +103,7 @@ export function SymptomChecker() {
             </CardHeader>
             <CardContent>
               <p className="whitespace-pre-wrap text-base text-muted-foreground">
-                {state.data.potentialCauses}
+                {state.data.potentialAreasOfConcern}
               </p>
             </CardContent>
           </Card>
