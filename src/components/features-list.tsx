@@ -84,7 +84,7 @@ export function FeaturesList() {
           A Feature for Every Need
         </h2>
         <p className="mt-4 text-lg text-muted-foreground">
-          Explore the powerful tools that make BlackRock CRM the perfect solution.
+          Explore the powerful tools that make Vivalé the perfect solution.
         </p>
       </div>
 

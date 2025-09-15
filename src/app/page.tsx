@@ -24,7 +24,7 @@ export default function Home() {
                     <br />
                     Instantly with{' '}
                     <span className="text-gradient">
-                      BlackRock CRM
+                      Vivalé
                     </span>
                   </h1>
                   <p className="max-w-[600px] text-lg text-muted-foreground md:text-xl">
@@ -77,7 +77,7 @@ export default function Home() {
       <footer className="py-6 relative z-10">
         <div className="container mx-auto flex items-center justify-between px-4 md:px-6">
           <p className="text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} BlackRock CRM. All rights
+            &copy; {new Date().getFullYear()} Vivalé. All rights
             reserved.
           </p>
           <div className="flex gap-4">

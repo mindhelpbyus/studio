@@ -26,7 +26,7 @@ export default async function BookAppointmentPage({ params }: { params: { id: st
       <footer className="bg-background py-6">
         <div className="container mx-auto flex items-center justify-between px-4 md:px-6">
           <p className="text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} BlackRock CRM. All rights
+            &copy; {new Date().getFullYear()} Vivalé. All rights
             reserved.
           </p>
         </div>

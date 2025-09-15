@@ -7,7 +7,7 @@
 :root {
   --font-size: 16px;
   --background: 0 0% 99%; /* #fcfafa */
-  --foreground: 232 57% 22%; /* #19235a */
+  --foreground: 0 0% 9%; /* #171717 */
   --card: 0 0% 100%; /* #ffffff */
   --card-foreground: 232 57% 22%; /* #19235a */
   --popover: 0 0% 100%;

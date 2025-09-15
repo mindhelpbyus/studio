@@ -19,7 +19,10 @@ export default {
       },
     },
     extend: {
-      fontFamily,
+      fontFamily: {
+        body: ["var(--font-manrope)", "sans-serif"],
+        headline: ["var(--font-manrope)", "sans-serif"],
+      },
       colors,
       borderRadius: {
         ...borderRadius,

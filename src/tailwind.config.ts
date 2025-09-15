@@ -56,8 +56,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        body: ["Manrope", "sans-serif"],
-        headline: ["Manrope", "sans-serif"],
+        body: ["var(--font-manrope)", "sans-serif"],
+        headline: ["var(--font-manrope)", "sans-serif"],
       },
       colors,
       borderRadius: {
