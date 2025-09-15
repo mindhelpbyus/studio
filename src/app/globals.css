@@ -36,6 +36,11 @@
   --accent-left: #b28eff;
   --accent-mid: #a82d9c;
   --accent-right: #ffc39b;
+  
+  /* Background gradient tints */
+  --bg-accent-left: #f2ebff;   /* Lighter tint of --accent-left */
+  --bg-accent-mid: #ffffff;    /* Midpoint color, white for subtlety */
+  --bg-accent-right: #fff3eb;  /* Lighter tint of --accent-right */
 }
 
 .dark {
@@ -88,7 +93,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: linear-gradient(136deg, #f2ebff 0.58%, #ffffff 47.43%, #fff3eb 99.42%);
+  background-image: linear-gradient(136deg, var(--bg-accent-left) 0.58%, var(--bg-accent-mid) 47.43%, var(--bg-accent-right) 99.42%);
   background-size: 200% 200%;
   animation: gradient-pan 15s ease infinite;
   z-index: -10;
