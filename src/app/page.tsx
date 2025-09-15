@@ -48,21 +48,6 @@ export default function Home() {
           </div>
         </section>
         
-        <section className="w-full pt-16 pb-20 md:pb-32">
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="relative mx-auto max-w-6xl overflow-hidden rounded-2xl shadow-card">
-              <Image
-                src="https://picsum.photos/seed/health-collage/1200/600"
-                alt="Collage of diverse people enjoying healthy activities"
-                width={1200}
-                height={600}
-                className="w-full"
-                data-ai-hint="diverse people health"
-              />
-            </div>
-          </div>
-        </section>
-
         <section id="features" className="w-full py-20 md:py-32 bg-transparent">
           <div className="container mx-auto px-4 md:px-6">
             <FeaturesList />
