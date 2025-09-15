@@ -75,7 +75,7 @@ export function Header() {
                 <NavigationMenuItem>
                   <NavigationMenuTrigger className="font-bold">Features</NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+                    <ul className="grid w-[400px] gap-3 p-4 md:w-[800px] md:grid-cols-4 lg:w-[1000px] ">
                       {features.map((feature) => (
                         <ListItem
                           key={feature.title}
