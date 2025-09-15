@@ -96,8 +96,8 @@
     bottom: 0;
     z-index: 0;
     background-image:
-        linear-gradient(to right, rgba(255, 255, 255, 0.8) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.8) 1px, transparent-_1px);
+        linear-gradient(to right, rgba(228, 226, 237, 0.4) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(228, 226, 237, 0.4) 1px, transparent 1px);
     background-size: 4rem 4rem;
     opacity: 0;
     animation: fade-in-grid 2s ease-in-out forwards;
