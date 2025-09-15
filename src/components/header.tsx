@@ -10,7 +10,6 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
 import { cn } from '@/lib/utils';
 import {
@@ -89,14 +88,14 @@ export function Header() {
                   </NavigationMenuContent>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                  <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+                  <NavigationMenuLink asChild>
                     <Link href="/providers">
                       For Providers
                     </Link>
                   </NavigationMenuLink>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                  <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+                  <NavigationMenuLink asChild>
                     <Link href="#">
                       Pricing
                     </Link>
@@ -108,7 +107,7 @@ export function Header() {
         </div>
         
         <div className="hidden items-center gap-4 md:flex">
-          <Button variant="outline" className="rounded-full">Book Demo</Button>
+          <Button className="rounded-full">Book Demo</Button>
           <Button variant="ghost">Log In</Button>
           <Button>Try it now</Button>
         </div>
