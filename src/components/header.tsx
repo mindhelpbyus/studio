@@ -93,7 +93,7 @@ export function Header() {
                   </NavigationMenuLink>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                  <NavigationMenuLink asChild>
+                   <NavigationMenuLink asChild>
                     <Link href="#">Pricing</Link>
                   </NavigationMenuLink>
                 </NavigationMenuItem>
@@ -103,7 +103,7 @@ export function Header() {
         </div>
         
         <div className="hidden items-center gap-4 md:flex">
-          <Button variant="ghost" className="text-primary rounded-full">Book a Demo</Button>
+          <Button variant="outline" className="text-primary rounded-full">Book a Demo</Button>
           <Button variant="ghost">Log In</Button>
           <Button>Try it now</Button>
         </div>
