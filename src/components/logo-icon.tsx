@@ -7,7 +7,7 @@ export function LogoIcon() {
       viewBox="0 0 36 36"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className="h-8 w-8"
+      className="h-9 w-9"
     >
       <defs>
         <linearGradient id="logo-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -19,14 +19,14 @@ export function LogoIcon() {
       <path
         d="M18 5C12.48 5 8 9.48 8 15C8 22.25 18 31.5 18 31.5C18 31.5 28 22.25 28 15C28 9.48 23.52 5 18 5Z"
         stroke="url(#logo-gradient)"
-        strokeWidth="2.5"
+        strokeWidth="3"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
         d="M12 18H15L18 12L21 18H24"
         stroke="url(#logo-gradient)"
-        strokeWidth="2.5"
+        strokeWidth="3"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
