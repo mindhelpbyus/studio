@@ -27,7 +27,7 @@ export default function Home() {
                       Vivalé
                     </span>
                   </h1>
-                  <p className="max-w-[600px] text-lg text-muted-foreground md:text-xl">
+                  <p className="mx-auto max-w-[600px] text-lg text-muted-foreground md:text-xl">
                     Vivalé helps you manage your health journey, connect with your care team, and live fully. Your trusted partner in health and wellness is here.
                   </p>
                 </div>
