@@ -107,7 +107,7 @@ export function Header() {
         </div>
         
         <div className="hidden items-center gap-4 md:flex">
-          <Button className="rounded-full">Book Demo</Button>
+          <Button>Book Demo</Button>
           <Button variant="ghost">Log In</Button>
           <Button>Try it now</Button>
         </div>
