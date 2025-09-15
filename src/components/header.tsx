@@ -58,8 +58,6 @@ const featureCategories: {
     features: [
       { title: 'Patient Records (EHR)', href: '#', description: 'Access and manage comprehensive electronic health records.', icon: Clipboard },
       { title: 'Customizable Intake Forms', href: '#', description: 'Create and manage digital forms for patient intake.', icon: FileText },
-      { title: 'e-Prescribing', href: '#', description: 'Send prescriptions directly to pharmacies.', icon: Pill },
-      { title: 'Lab Results', href: '#', description: 'Receive and manage lab results within the CRM.', icon: FlaskConical },
       { title: 'Billing & Payments', href: '#', 'description': 'Handle patient billing and process payments seamlessly.', icon: CreditCard },
     ],
   },
@@ -221,4 +219,5 @@ const ListItem = React.forwardRef<
   );
 });
 ListItem.displayName = 'ListItem';
+
 

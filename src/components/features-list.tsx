@@ -47,8 +47,6 @@ const featureData: FeatureCategory[] = [
     features: [
       { name: 'Patient Records (EHR)', icon: Clipboard },
       { name: 'Customizable Intake Forms', icon: FileText },
-      { name: 'e-Prescribing', icon: Pill },
-      { name: 'Lab Results', icon: FlaskConical },
       { name: 'Billing & Payments', icon: CreditCard },
     ],
   },
