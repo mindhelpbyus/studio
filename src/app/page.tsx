@@ -1,3 +1,4 @@
+
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
@@ -8,7 +9,6 @@ import Link from 'next/link';
 import { FeaturesList } from '@/components/features-list';
 
 export default function Home() {
-  const heroImage = PlaceHolderImages.find((img) => img.id === 'hero-image');
 
   return (
     <div className="flex min-h-screen flex-col bg-transparent">
@@ -16,8 +16,8 @@ export default function Home() {
       <main className="flex-1 relative z-10">
         <section className="relative w-full py-20 md:py-32 lg:py-40">
           <div className="container mx-auto px-4 md:px-6">
-            <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
-              <div className="flex flex-col justify-center space-y-6">
+            <div className="grid gap-10 lg:grid-cols-1 lg:gap-16">
+              <div className="flex flex-col items-center justify-center space-y-6 text-center">
                 <div className="space-y-4">
                   <h1 className="font-headline text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl md:text-6xl lg:text-7xl">
                     Personalized Care,
@@ -43,18 +43,6 @@ export default function Home() {
                     Learn More
                   </Button>
                 </div>
-              </div>
-              <div className="relative flex items-center justify-center">
-                {heroImage && (
-                  <Image
-                    src={heroImage.imageUrl}
-                    alt={heroImage.description}
-                    width={600}
-                    height={400}
-                    className="rounded-lg object-cover shadow-card"
-                    data-ai-hint={heroImage.imageHint}
-                  />
-                )}
               </div>
             </div>
           </div>
