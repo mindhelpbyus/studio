@@ -20,16 +20,15 @@ export default function Home() {
               <div className="flex flex-col justify-center space-y-6">
                 <div className="space-y-4">
                   <h1 className="font-headline text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl md:text-6xl lg:text-7xl">
-                    Smarter Business,
+                    Personalized Care,
                     <br />
-                    Instantly with{' '}
+                    Deeper Connections with{' '}
                     <span className="text-gradient">
                       Vivalé
                     </span>
                   </h1>
                   <p className="max-w-[600px] text-lg text-muted-foreground md:text-xl">
-                    Get instant, AI-powered insights for your business.
-                    Your personal CRM companion is here to guide you.
+                    Vivalé helps you manage your health journey, connect with your care team, and live fully. Your trusted partner in health and wellness is here.
                   </p>
                 </div>
                 <div className="flex flex-col gap-4 sm:flex-row">

@@ -38,9 +38,11 @@ const prompt = ai.definePrompt({
   output: {schema: CheckSymptomsOutputSchema},
   prompt: `You are an AI-powered symptom checker. A patient will describe their symptoms, and you will provide potential causes and recommended next steps.
 
+IMPORTANT: Always start your response with a clear disclaimer that you are an AI assistant and not a medical professional, and that the user should consult with a healthcare provider for any medical concerns.
+
 Symptoms: {{{symptoms}}}
 
-Respond in a professional and helpful tone, focusing on providing informative potential causes and practical next steps.`,
+Respond in a professional and helpful tone, focusing on providing informative potential causes and practical next steps after the disclaimer.`,
 });
 
 const checkSymptomsFlow = ai.defineFlow(

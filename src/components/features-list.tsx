@@ -4,24 +4,22 @@ import {
   CalendarDays,
   CreditCard,
   BookOpen,
-  Zap,
+  Video,
   Smartphone,
   Users,
   MessagesSquare,
-  Package,
+  ClipboardPulse,
   FileText,
-  Gift,
+  HeartHandshake,
   Bot,
-  Megaphone,
-  Percent,
-  Sofa,
-  ShoppingBag,
-  UsersRound,
+  BellRing,
+  Pill,
   BarChart,
-  Building2,
-  Landmark,
+  Stethoscope,
+  type LucideIcon,
+  FlaskConical,
+  FileBarChart
 } from 'lucide-react';
-import type { LucideIcon } from 'lucide-react';
 
 type Feature = {
   name: string;
@@ -35,42 +33,40 @@ type FeatureCategory = {
 
 const featureData: FeatureCategory[] = [
   {
-    title: 'Scheduling & Payments',
+    title: 'Patient Engagement',
     features: [
-      { name: 'Calendar & Scheduling', icon: CalendarDays },
-      { name: 'Payments & Point-of-Sale', icon: CreditCard },
-      { name: 'Online Booking', icon: BookOpen },
-      { name: 'Express Booking™', icon: Zap },
-      { name: 'Mobile Apps', icon: Smartphone },
+      { name: 'Appointment Scheduling', icon: CalendarDays },
+      { name: 'Online Booking Portal', icon: BookOpen },
+      { name: 'Telehealth Video Calls', icon: Video },
+      { name: 'Patient Mobile App', icon: Smartphone },
+      { name: 'Secure Messaging', icon: MessagesSquare },
     ],
   },
   {
-    title: 'Client Relationships',
+    title: 'Clinical Operations',
     features: [
-      { name: 'Client Management', icon: Users },
-      { name: 'Two-Way Texting', icon: MessagesSquare },
-      { name: 'Memberships & Packages', icon: Package },
-      { name: 'Forms & Charting', icon: FileText },
-      { name: 'Gift Cards', icon: Gift },
+      { name: 'Patient Records (EHR)', icon: ClipboardPulse },
+      { name: 'Customizable Intake Forms', icon: FileText },
+      { name: 'e-Prescribing', icon: Pill },
+      { name: 'Lab Results', icon: FlaskConical },
+      { name: 'Billing & Payments', icon: CreditCard },
     ],
   },
   {
-    title: 'Marketing & Automation',
+    title: 'Practice Management',
     features: [
-      { name: 'Automated Flows', icon: Bot },
-      { name: 'Campaigns', icon: Megaphone },
-      { name: 'Offers & Discounts', icon: Percent },
-      { name: 'Virtual Waiting Room', icon: Sofa },
+      { name: 'Provider Management', icon: Stethoscope },
+      { name: 'Patient Relationship Mgmt', icon: HeartHandshake },
+      { name: 'Automated Reminders', icon: BellRing },
+      { name: 'AI Symptom Checker', icon: Bot },
     ],
   },
   {
-    title: 'Management',
+    title: 'Analytics & Reporting',
     features: [
-      { name: 'Retail & Inventory', icon: ShoppingBag },
-      { name: 'Staff Management', icon: UsersRound },
-      { name: 'Reporting', icon: BarChart },
-      { name: 'Multi-Location', icon: Building2 },
-      { name: 'Payroll Processing', icon: Landmark },
+      { name: 'Custom Reports', icon: FileBarChart },
+      { name: 'Patient Demographics', icon: Users },
+      { name: 'Practice Performance', icon: BarChart },
     ],
   },
 ];
@@ -84,7 +80,7 @@ export function FeaturesList() {
           A Feature for Every Need
         </h2>
         <p className="mt-4 text-lg text-muted-foreground">
-          Explore the powerful tools that make Vivalé the perfect solution.
+          Explore the powerful tools that make Vivalé the perfect solution for modern healthcare.
         </p>
       </div>
 
