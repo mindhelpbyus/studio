@@ -11,6 +11,7 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
+  navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
 import { cn } from '@/lib/utils';
 import {
@@ -72,7 +73,7 @@ export function Header() {
             <NavigationMenu>
               <NavigationMenuList>
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger>Features</NavigationMenuTrigger>
+                  <NavigationMenuTrigger className="font-bold">Features</NavigationMenuTrigger>
                   <NavigationMenuContent>
                     <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
                       {features.map((feature) => (
@@ -90,12 +91,12 @@ export function Header() {
                 </NavigationMenuItem>
                 <NavigationMenuItem>
                   <NavigationMenuLink asChild>
-                    <Link href="/providers">For Providers</Link>
+                    <Link href="/providers" className={cn(navigationMenuTriggerStyle(), "font-bold")}>For Providers</Link>
                   </NavigationMenuLink>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
                    <NavigationMenuLink asChild>
-                    <Link href="#">Pricing</Link>
+                    <Link href="#" className={cn(navigationMenuTriggerStyle(), "font-bold")}>Pricing</Link>
                   </NavigationMenuLink>
                 </NavigationMenuItem>
               </NavigationMenuList>
