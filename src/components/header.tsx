@@ -10,7 +10,7 @@ export function Header() {
           <Logo />
         </Link>
         <nav className="hidden items-center gap-6 md:flex">
-          <Link href="/#symptom-checker">
+          <Link href="/#features">
             <Button variant="ghost">Features</Button>
           </Link>
           <Link href="/providers">
