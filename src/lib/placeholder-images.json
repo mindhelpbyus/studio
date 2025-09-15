@@ -1,10 +1,11 @@
+
 {
   "placeholderImages": [
     {
       "id": "hero-image",
-      "description": "A futuristic medical technology background with abstract plexus shapes.",
-      "imageUrl": "https://picsum.photos/seed/medivision/600/400",
-      "imageHint": "medical technology"
+      "description": "A calm and professional office setting, suitable for therapy or consultation.",
+      "imageUrl": "https://picsum.photos/seed/serene-office/600/400",
+      "imageHint": "serene office"
     }
   ]
 }
