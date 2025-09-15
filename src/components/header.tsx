@@ -85,7 +85,7 @@ export function Header() {
                 </NavigationMenuItem>
                 <NavigationMenuItem>
                   <NavigationMenuLink asChild>
-                    <Link href="/providers" className={cn(navigationMenuTriggerStyle(), "font-bold")}>For Providers</Link>
+                    <Link href="/providers" className={cn(navigationMenuTriggerStyle(), "font-bold")}>Who We Serve</Link>
                   </NavigationMenuLink>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
