@@ -27,11 +27,8 @@ import {
   HeartHandshake,
   Bot,
   BellRing,
-  Pill,
-  BarChart,
   Stethoscope,
-  FlaskConical,
-  FileBarChart,
+  BarChart,
   type LucideIcon,
   User,
   Hospital,
@@ -64,7 +61,7 @@ const featureCategories: {
   {
     title: 'Practice & Analytics',
     features: [
-      { title: 'AI Symptom Checker', href: '#', description: 'Provide patients with an initial AI-powered symptom analysis.', icon: Bot },
+      { title: 'AI Mental Health Checker', href: '#mental-health-checker', description: 'Provide patients with an initial AI-powered symptom analysis.', icon: Bot },
       { title: 'Automated Reminders', href: '#', description: 'Reduce no-shows with automated appointment reminders.', icon: BellRing },
       { title: 'Practice Performance', href: '#', description: 'Get insights into your practice with advanced analytics.', icon: BarChart },
       { title: 'Provider Management', href: '#', description: 'Manage provider schedules and profiles.', icon: Stethoscope },
@@ -219,5 +216,3 @@ const ListItem = React.forwardRef<
   );
 });
 ListItem.displayName = 'ListItem';
-
-

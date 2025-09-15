@@ -1,7 +1,7 @@
 
 'use server';
 
-import { checkSymptoms, CheckSymptomsOutput } from '@/ai/flows/ai-symptom-checker';
+import { checkSymptoms, CheckSymptomsOutput } from '@/ai/flows/ai-mental-health-checker';
 import { z } from 'zod';
 
 const SymptomSchema = z.object({

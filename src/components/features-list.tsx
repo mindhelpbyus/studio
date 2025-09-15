@@ -13,11 +13,9 @@ import {
   HeartHandshake,
   Bot,
   BellRing,
-  Pill,
-  BarChart,
   Stethoscope,
   type LucideIcon,
-  FlaskConical,
+  BarChart,
   FileBarChart
 } from 'lucide-react';
 
@@ -56,7 +54,7 @@ const featureData: FeatureCategory[] = [
       { name: 'Provider Management', icon: Stethoscope },
       { name: 'Patient Relationship Mgmt', icon: HeartHandshake },
       { name: 'Automated Reminders', icon: BellRing },
-      { name: 'AI Symptom Checker', icon: Bot },
+      { name: 'AI Mental Health Checker', icon: Bot },
     ],
   },
   {

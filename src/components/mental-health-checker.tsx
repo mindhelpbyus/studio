@@ -8,8 +8,9 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { AlertCircle, Bot, Loader2, Sparkles, User } from 'lucide-react';
+import { AlertCircle, Bot, HandHelping, Loader2, Sparkles, Stethoscope } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from './ui/alert';
+import Link from 'next/link';
 
 function SubmitButton() {
   const { pending } = useFormStatus();
@@ -29,14 +30,14 @@ function SubmitButton() {
       ) : (
         <>
           <Sparkles className="mr-2 h-4 w-4" />
-          Check Symptoms
+          Analyze Symptoms
         </>
       )}
     </Button>
   );
 }
 
-export function SymptomChecker() {
+export function MentalHealthChecker() {
   const initialState = { error: null, data: null };
   const [state, formAction] = useActionState(getSymptomAnalysis, initialState);
 
@@ -44,10 +45,10 @@ export function SymptomChecker() {
     <div className="mx-auto max-w-3xl space-y-8">
       <div className="text-center">
         <h2 className="font-headline text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-          AI Symptom Checker
+          AI Mental Health Checker
         </h2>
         <p className="mt-4 text-lg text-muted-foreground">
-          Describe your symptoms below, and our AI will provide potential areas of concern and recommended next steps based on WHO standards for mental health.
+          Describe your symptoms, and our AI assistant will provide potential areas of concern and guide you toward the right professional help, based on WHO standards.
         </p>
       </div>
 
@@ -111,7 +112,7 @@ export function SymptomChecker() {
           <Card className="rounded-lg shadow-card bg-white/60 backdrop-blur-sm">
             <CardHeader className="flex flex-row items-center gap-4">
                <div className="rounded-full bg-primary/10 p-3">
-                <User className="h-6 w-6 text-primary" />
+                <HandHelping className="h-6 w-6 text-primary" />
               </div>
               <div>
                 <CardTitle>Recommended Next Steps</CardTitle>
@@ -126,6 +127,34 @@ export function SymptomChecker() {
               </p>
             </CardContent>
           </Card>
+          
+          {state.data.suggestedProviders && state.data.suggestedProviders.length > 0 && (
+             <Card className="rounded-lg shadow-card bg-accent/30 border-primary/50">
+                <CardHeader className="flex flex-row items-center gap-4">
+                <div className="rounded-full bg-primary/10 p-3">
+                    <Stethoscope className="h-6 w-6 text-primary" />
+                </div>
+                <div>
+                    <CardTitle>Find the Right Professional</CardTitle>
+                    <CardDescription>
+                    We suggest connecting with the following types of providers:
+                    </CardDescription>
+                </div>
+                </CardHeader>
+                <CardContent className="flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
+                    <div className='flex flex-wrap gap-2'>
+                        {state.data.suggestedProviders.map(provider => (
+                             <div key={provider} className="inline-block rounded-full bg-primary/20 px-3 py-1 text-sm font-semibold text-primary-foreground">{provider}</div>
+                        ))}
+                    </div>
+                    <Link href="/providers">
+                        <Button size="lg" className='w-full sm:w-auto'>
+                           Book an Appointment
+                        </Button>
+                    </Link>
+                </CardContent>
+            </Card>
+          )}
         </div>
       )}
     </div>

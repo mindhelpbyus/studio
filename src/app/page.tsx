@@ -2,7 +2,7 @@
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
-import { SymptomChecker } from '@/components/symptom-checker';
+import { MentalHealthChecker } from '@/components/mental-health-checker';
 import { Header } from '@/components/header';
 import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
@@ -54,9 +54,9 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="symptom-checker" className="w-full py-20 md:py-32">
+        <section id="mental-health-checker" className="w-full py-20 md:py-32">
           <div className="container mx-auto px-4 md:px-6">
-            <SymptomChecker />
+            <MentalHealthChecker />
           </div>
         </section>
       </main>
