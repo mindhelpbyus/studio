@@ -74,19 +74,22 @@
 .main-grid-background {
     position: relative;
     overflow: hidden;
+    background-color: #f2ebff; /* Starting light color */
+    animation: background-scroll-animation linear forwards;
+    animation-timeline: view();
+    animation-range-start: 0;
+    animation-range-end: 100vh;
 }
 
-.main-grid-background::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 0;
-    background-image: linear-gradient(136deg, #b28eff, #a82d9c, #ffc39b);
-    opacity: 0.2;
+@keyframes background-scroll-animation {
+  from {
+    background-color: #f2ebff; /* Lightest color at the top */
+  }
+  to {
+    background-color: #e9dbfc; /* Darker color at the bottom */
+  }
 }
+
 
 .main-grid-background::after {
     content: "";
@@ -97,11 +100,12 @@
     bottom: 0;
     z-index: 0;
     background-image:
-        linear-gradient(to right, rgba(228, 226, 237, 0.4) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(228, 226, 237, 0.4) 1px, transparent 1px);
+        linear-gradient(to right, rgba(255, 255, 255, 0.5) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.5) 1px, transparent 1px);
     background-size: 4rem 4rem;
+    mask-image: linear-gradient(to bottom, transparent, white 20%, white 80%, transparent);
     opacity: 0;
-    animation: fade-in-grid 2s ease-in-out forwards;
+    animation: fade-in-grid linear forwards;
     animation-timeline: view();
     animation-range-start: 20vh;
     animation-range-end: 80vh;
