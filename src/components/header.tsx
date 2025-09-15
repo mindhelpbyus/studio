@@ -37,24 +37,44 @@ import {
   Hospital,
 } from 'lucide-react';
 import React from 'react';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
-const features: { title: string; href: string; description: string, icon: LucideIcon }[] = [
-    { title: 'Appointment Scheduling', href: '#', description: 'Manage patient appointments with an intuitive calendar.', icon: CalendarDays },
-    { title: 'Telehealth Video Calls', href: '#', description: 'Conduct secure video consultations with patients.', icon: Video },
-    { title: 'Patient Records (EHR)', href: '#', description: 'Access and manage comprehensive electronic health records.', icon: Clipboard },
-    { title: 'Secure Messaging', href: '#', description: 'Communicate securely with patients and colleagues.', icon: MessagesSquare },
-    { title: 'Online Booking Portal', href: '#', description: 'Allow patients to book their appointments online 24/7.', icon: BookOpen },
-    { title: 'Patient Mobile App', href: '#', description: 'Engage patients with a dedicated mobile application.', icon: Smartphone },
-    { title: 'Customizable Intake Forms', href: '#', description: 'Create and manage digital forms for patient intake.', icon: FileText },
-    { title: 'e-Prescribing', href: '#', description: 'Send prescriptions directly to pharmacies.', icon: Pill },
-    { title: 'Lab Results', href: '#', description: 'Receive and manage lab results within the CRM.', icon: FlaskConical },
-    { title: 'Billing & Payments', href: '#', 'description': 'Handle patient billing and process payments seamlessly.', icon: CreditCard },
-    { title: 'AI Symptom Checker', href: '#', description: 'Provide patients with an initial AI-powered symptom analysis.', icon: Bot },
-    { title: 'Automated Reminders', href: '#', description: 'Reduce no-shows with automated appointment reminders.', icon: BellRing },
-    { title: 'Practice Performance', href: '#', description: 'Get insights into your practice with advanced analytics.', icon: BarChart },
-    { title: 'Patient Demographics', href: '#', description: 'Understand your patient population better.', icon: Users },
-    { title: 'Provider Management', href: '#', description: 'Manage provider schedules and profiles.', icon: Stethoscope },
+const featureCategories: {
+  title: string;
+  features: { title: string; href: string; description: string, icon: LucideIcon }[];
+}[] = [
+  {
+    title: 'Patient Engagement',
+    features: [
+      { title: 'Appointment Scheduling', href: '#', description: 'Manage patient appointments with an intuitive calendar.', icon: CalendarDays },
+      { title: 'Telehealth Video Calls', href: '#', description: 'Conduct secure video consultations with patients.', icon: Video },
+      { title: 'Secure Messaging', href: '#', description: 'Communicate securely with patients and colleagues.', icon: MessagesSquare },
+      { title: 'Online Booking Portal', href: '#', description: 'Allow patients to book their appointments online 24/7.', icon: BookOpen },
+      { title: 'Patient Mobile App', href: '#', description: 'Engage patients with a dedicated mobile application.', icon: Smartphone },
+    ],
+  },
+  {
+    title: 'Clinical Operations',
+    features: [
+      { title: 'Patient Records (EHR)', href: '#', description: 'Access and manage comprehensive electronic health records.', icon: Clipboard },
+      { title: 'Customizable Intake Forms', href: '#', description: 'Create and manage digital forms for patient intake.', icon: FileText },
+      { title: 'e-Prescribing', href: '#', description: 'Send prescriptions directly to pharmacies.', icon: Pill },
+      { title: 'Lab Results', href: '#', description: 'Receive and manage lab results within the CRM.', icon: FlaskConical },
+      { title: 'Billing & Payments', href: '#', 'description': 'Handle patient billing and process payments seamlessly.', icon: CreditCard },
+    ],
+  },
+  {
+    title: 'Practice & Analytics',
+    features: [
+      { title: 'AI Symptom Checker', href: '#', description: 'Provide patients with an initial AI-powered symptom analysis.', icon: Bot },
+      { title: 'Automated Reminders', href: '#', description: 'Reduce no-shows with automated appointment reminders.', icon: BellRing },
+      { title: 'Practice Performance', href: '#', description: 'Get insights into your practice with advanced analytics.', icon: BarChart },
+      { title: 'Provider Management', href: '#', description: 'Manage provider schedules and profiles.', icon: Stethoscope },
+      { title: 'Patient Demographics', href: '#', description: 'Understand your patient population better.', icon: Users },
+    ],
+  }
 ];
+
 
 const whoWeServe: { title: string; href: string; description: string, icon: LucideIcon }[] = [
     { title: 'Individual Therapist', href: '/providers', description: 'Tools for solo practitioners to manage their practice.', icon: User },
@@ -77,18 +97,42 @@ export function Header() {
                 <NavigationMenuItem>
                   <NavigationMenuTrigger className="font-bold">Features</NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <ul className="grid w-[400px] gap-3 p-4 md:w-[800px] md:grid-cols-4 lg:w-[1000px] ">
-                      {features.map((feature) => (
-                        <ListItem
-                          key={feature.title}
-                          title={feature.title}
-                          href={feature.href}
-                          icon={feature.icon}
-                        >
-                          {feature.description}
-                        </ListItem>
-                      ))}
-                    </ul>
+                    <div className="grid w-[400px] gap-3 p-4 md:w-[600px] md:grid-cols-[1fr_1fr] lg:w-[800px]">
+                      <div className="flex h-full flex-col justify-between rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md">
+                        <div>
+                          <Logo />
+                          <p className="mt-4 text-sm leading-tight text-muted-foreground">
+                            A complete platform for modern healthcare providers and patients.
+                          </p>
+                        </div>
+                        <Button asChild className="mt-6 w-full">
+                          <Link href="#features">Explore All Features</Link>
+                        </Button>
+                      </div>
+                      <div>
+                        <Accordion type="single" collapsible className="w-full">
+                          {featureCategories.map((category) => (
+                            <AccordionItem value={category.title} key={category.title}>
+                              <AccordionTrigger className="px-3 text-base font-semibold hover:no-underline">{category.title}</AccordionTrigger>
+                              <AccordionContent>
+                                <ul className="grid gap-3 p-3">
+                                  {category.features.map((feature) => (
+                                    <ListItem
+                                      key={feature.title}
+                                      title={feature.title}
+                                      href={feature.href}
+                                      icon={feature.icon}
+                                    >
+                                      {feature.description}
+                                    </ListItem>
+                                  ))}
+                                </ul>
+                              </AccordionContent>
+                            </AccordionItem>
+                          ))}
+                        </Accordion>
+                      </div>
+                    </div>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
@@ -177,3 +221,4 @@ const ListItem = React.forwardRef<
   );
 });
 ListItem.displayName = 'ListItem';
+
