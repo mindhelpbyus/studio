@@ -22,7 +22,7 @@ import {
   Smartphone,
   Users,
   MessagesSquare,
-  ClipboardPulse,
+  Clipboard,
   FileText,
   HeartHandshake,
   Bot,
@@ -39,7 +39,7 @@ import React from 'react';
 const features: { title: string; href: string; description: string, icon: LucideIcon }[] = [
     { title: 'Appointment Scheduling', href: '#', description: 'Manage patient appointments with an intuitive calendar.', icon: CalendarDays },
     { title: 'Telehealth Video Calls', href: '#', description: 'Conduct secure video consultations with patients.', icon: Video },
-    { title: 'Patient Records (EHR)', href: '#', description: 'Access and manage comprehensive electronic health records.', icon: ClipboardPulse },
+    { title: 'Patient Records (EHR)', href: '#', description: 'Access and manage comprehensive electronic health records.', icon: Clipboard },
     { title: 'Secure Messaging', href: '#', description: 'Communicate securely with patients and colleagues.', icon: MessagesSquare },
     { title: 'Online Booking Portal', href: '#', description: 'Allow patients to book their appointments online 24/7.', icon: BookOpen },
     { title: 'Patient Mobile App', href: '#', description: 'Engage patients with a dedicated mobile application.', icon: Smartphone },

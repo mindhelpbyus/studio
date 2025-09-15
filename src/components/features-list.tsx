@@ -8,7 +8,7 @@ import {
   Smartphone,
   Users,
   MessagesSquare,
-  ClipboardPulse,
+  Clipboard,
   FileText,
   HeartHandshake,
   Bot,
@@ -45,7 +45,7 @@ const featureData: FeatureCategory[] = [
   {
     title: 'Clinical Operations',
     features: [
-      { name: 'Patient Records (EHR)', icon: ClipboardPulse },
+      { name: 'Patient Records (EHR)', icon: Clipboard },
       { name: 'Customizable Intake Forms', icon: FileText },
       { name: 'e-Prescribing', icon: Pill },
       { name: 'Lab Results', icon: FlaskConical },
