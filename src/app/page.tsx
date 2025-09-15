@@ -20,16 +20,16 @@ export default function Home() {
               <div className="flex flex-col justify-center space-y-6">
                 <div className="space-y-4">
                   <h1 className="font-headline text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl md:text-6xl lg:text-7xl">
-                    Smarter Health,
+                    Smarter Business,
                     <br />
                     Instantly with{' '}
                     <span className="text-gradient">
-                      MediVision AI
+                      BlackRock CRM
                     </span>
                   </h1>
                   <p className="max-w-[600px] text-lg text-muted-foreground md:text-xl">
-                    Get instant, AI-powered insights into your health symptoms.
-                    Your personal health companion is here to guide you.
+                    Get instant, AI-powered insights for your business.
+                    Your personal CRM companion is here to guide you.
                   </p>
                 </div>
                 <div className="flex flex-col gap-4 sm:flex-row">
@@ -77,7 +77,7 @@ export default function Home() {
       <footer className="py-6 relative z-10">
         <div className="container mx-auto flex items-center justify-between px-4 md:px-6">
           <p className="text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} MediVision AI. All rights
+            &copy; {new Date().getFullYear()} BlackRock CRM. All rights
             reserved.
           </p>
           <div className="flex gap-4">

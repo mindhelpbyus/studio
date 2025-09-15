@@ -3,8 +3,8 @@ import { Toaster } from '@/components/ui/toaster';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'MediVision AI',
-  description: 'Your AI-powered health companion',
+  title: 'BlackRock CRM',
+  description: 'Your AI-powered CRM solution',
 };
 
 export default function RootLayout({

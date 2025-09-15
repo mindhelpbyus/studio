@@ -1,11 +1,11 @@
-import { HeartPulse } from 'lucide-react';
+import { Briefcase } from 'lucide-react';
 
 export function Logo() {
   return (
-    <div className="flex items-center gap-2" aria-label="MediVision AI Home">
-      <HeartPulse className="h-8 w-8 text-primary" />
+    <div className="flex items-center gap-2" aria-label="BlackRock CRM Home">
+      <Briefcase className="h-8 w-8 text-primary" />
       <span className="font-headline text-2xl font-bold text-gradient">
-        MediVision AI
+        BlackRock CRM
       </span>
     </div>
   );
