@@ -21,6 +21,12 @@ import {
   Landmark,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
 
 type Feature = {
   name: string;
@@ -87,23 +93,29 @@ export function FeaturesList() {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4">
+      <Accordion type="single" collapsible className="w-full max-w-3xl mx-auto">
         {featureData.map((category) => (
-          <div key={category.title} className="space-y-6">
-            <h3 className="text-xl font-bold text-foreground">{category.title}</h3>
-            <ul className="space-y-4">
-              {category.features.map((feature) => (
-                <li key={feature.name} className="flex items-center gap-4">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-accent">
-                    <feature.icon className="h-6 w-6 text-primary" />
-                  </div>
-                  <span className="font-medium text-muted-foreground">{feature.name}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <AccordionItem value={category.title} key={category.title}>
+            <AccordionTrigger className="text-xl font-bold text-foreground">
+              {category.title}
+            </AccordionTrigger>
+            <AccordionContent>
+                <ul className="space-y-4 pt-4">
+                  {category.features.map((feature) => (
+                    <li key={feature.name} className="flex items-center gap-4">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-accent">
+                        <feature.icon className="h-6 w-6 text-primary" />
+                      </div>
+                      <span className="font-medium text-muted-foreground">
+                        {feature.name}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+            </AccordionContent>
+          </AccordionItem>
         ))}
-      </div>
+      </Accordion>
     </div>
   );
 }
