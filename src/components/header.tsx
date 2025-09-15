@@ -1,3 +1,4 @@
+
 'use client';
 
 import Link from 'next/link';
@@ -103,9 +104,9 @@ export function Header() {
         </div>
         
         <div className="hidden items-center gap-4 md:flex">
-          <Button variant="outline" className="border-2 border-primary font-bold text-primary">Book a Demo</Button>
-          <Button variant="ghost">Log In</Button>
-          <Button>Try it now</Button>
+          <Button variant="outline" className="border-2 border-primary font-bold text-primary rounded-full">Book a Demo</Button>
+          <Button variant="ghost" className="font-bold">Log In</Button>
+          <Button className="rounded-full font-bold">Try it now</Button>
         </div>
         
         <div className="md:hidden">
