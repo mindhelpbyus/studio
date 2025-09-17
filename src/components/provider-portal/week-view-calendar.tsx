@@ -1,4 +1,5 @@
 
+
 import { Badge } from '@/components/ui/badge';
 
 const timeSlots = Array.from({ length: 24 }, (_, i) => `${i}:00`);
@@ -37,7 +38,7 @@ const activeColorClasses = {
 };
 
 export function WeekViewCalendar() {
-  const slotHeight = 2; // 2rem per 30 minutes, so 4rem per hour.
+  const slotHeight = 3; // 3rem per 30 minutes, so 6rem per hour.
 
   return (
     <div className="grid grid-cols-[auto_1fr] h-full bg-background">
@@ -46,7 +47,7 @@ export function WeekViewCalendar() {
          <div className="py-2 border-b h-[5.5rem] sticky top-0 bg-card z-10"></div>
         <div className="divide-y text-xs text-muted-foreground text-right pr-2">
           {timeSlots.map((time, index) => (
-            <div key={index} className={`h-${slotHeight * 2} flex items-center justify-end`}>
+            <div key={index} style={{ height: `${slotHeight * 2}rem`}} className={`flex items-center justify-end`}>
               {parseInt(time) % 12 || 12}:00 {parseInt(time) < 12 ? 'AM' : 'PM'}
             </div>
           ))}
@@ -65,17 +66,17 @@ export function WeekViewCalendar() {
             {/* Grid */}
             <div className={`relative h-full divide-y`}>
               {timeSlots.map((_, index) => (
-                <div key={index} className={`h-${slotHeight * 2}`}></div>
+                <div key={index} style={{ height: `${slotHeight * 2}rem`}}></div>
               ))}
               
               {/* Appointments */}
               {day.appointments.map(apt => {
                 const colorSet = apt.active ? activeColorClasses : colorClasses;
-                const topPosition = apt.start * slotHeight;
-                const height = apt.duration * slotHeight;
+                const topPosition = apt.start * (slotHeight * 2 / 2);
+                const height = apt.duration * (slotHeight * 2 / 2);
                 return (
                     <div key={apt.name} className="absolute inset-x-0.5" style={{ top: `${topPosition}rem`, height: `calc(${height}rem - 2px)`}}>
-                        <div className={`p-1 rounded-md border h-full overflow-hidden text-xs ${colorSet[apt.color as keyof typeof colorSet]} ${apt.type === 'break' ? 'italic' : ''}`}>
+                        <div className={`p-1 rounded-md border h-full overflow-hidden text-xs ${colorSet[apt.color as keyof typeof colorSet]} ${apt.type === 'break' ? 'bg-stripes' : ''}`}>
                             <p className="font-bold uppercase truncate">{apt.title}</p>
                             <p className="font-semibold truncate">{apt.name}</p>
                             <p className="truncate">{apt.time}</p>

@@ -1,4 +1,5 @@
 
+
 const timeSlots = Array.from({ length: 24 }, (_, i) => `${i}:00`);
 
 const appointments = [
@@ -29,7 +30,7 @@ const activeColorClasses = {
 
 export function DayViewCalendar() {
   // Height of each 30-minute slot in rem
-  const slotHeight = 2; // 2rem for 30 mins, so 4rem for an hour
+  const slotHeight = 3; // 3rem for 30 mins, so 6rem for an hour
 
   return (
     <div className="grid grid-cols-[auto_1fr] h-full bg-background">
@@ -38,7 +39,7 @@ export function DayViewCalendar() {
          <div className="py-2 border-b h-10"></div>
         <div className="divide-y text-xs text-muted-foreground text-right pr-2">
           {timeSlots.map((time, index) => (
-            <div key={index} className={`h-${slotHeight * 2} flex items-center justify-end`}>
+            <div key={index} style={{ height: `${slotHeight * 2}rem`}} className={`flex items-center justify-end`}>
               {parseInt(time) % 12 || 12}:00 {parseInt(time) < 12 ? 'AM' : 'PM'}
             </div>
           ))}
@@ -52,18 +53,18 @@ export function DayViewCalendar() {
         </div>
         <div className={`relative h-full divide-y`}>
           {timeSlots.map((_, index) => (
-            <div key={index} className={`h-${slotHeight * 2}`}></div>
+            <div key={index} style={{ height: `${slotHeight * 2}rem`}}></div>
           ))}
 
           {/* Appointments */}
           {appointments.map(apt => {
             const colorSet = apt.active ? activeColorClasses : colorClasses;
-            const topPosition = apt.start * slotHeight; // e.g., start at 13:00 (1pm) -> 13 * 4rem
-            const height = apt.duration * slotHeight; // e.g., 2 * 30-min blocks -> 2 * 2rem
+            const topPosition = apt.start * (slotHeight * 2 / 2); // e.g., start at 13:00 (1pm) -> 13 * 6rem
+            const height = apt.duration * (slotHeight * 2 / 2); // e.g., 2 * 30-min blocks -> 2 * 3rem
             
             return (
-                <div key={apt.name} className="absolute inset-x-2" style={{ top: `${topPosition}rem`, height: `calc(${height}rem - 2px)`}}>
-                    <div className={`p-2 rounded-lg border h-full ${colorSet[apt.color as keyof typeof colorSet]} ${apt.type === 'break' ? 'italic' : ''}`}>
+                <div key={apt.name} className="absolute inset-x-1" style={{ top: `${topPosition}rem`, height: `calc(${height}rem - 2px)`}}>
+                    <div className={`p-2 rounded-lg border h-full ${colorSet[apt.color as keyof typeof colorSet]} ${apt.type === 'break' ? 'bg-stripes' : ''}`}>
                         <p className="text-sm font-bold uppercase">{apt.title}</p>
                         <p className="text-base font-semibold">{apt.name}</p>
                         <p className="text-sm">{apt.time}</p>
