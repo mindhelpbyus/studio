@@ -1,3 +1,4 @@
+
 import { WeekViewCalendar } from '@/components/provider-portal/week-view-calendar';
 import { AppointmentDetail } from '@/components/provider-portal/appointment-detail';
 import { ChevronLeft, ChevronRight, SlidersHorizontal } from 'lucide-react';
