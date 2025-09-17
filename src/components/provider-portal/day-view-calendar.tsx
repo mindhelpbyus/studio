@@ -3,6 +3,7 @@
 
 
 
+
 const timeSlots = Array.from({ length: 24 }, (_, i) => `${i}:00`);
 
 const appointments = [
