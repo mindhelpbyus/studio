@@ -13,7 +13,7 @@ export function AnimatedLogoIcon() {
           <stop offset="100%" stopColor="hsl(var(--primary))" />
         </linearGradient>
         <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#ffc39b" />
+          <stop offset="0%" stopColor="hsl(var(--chart-4))" />
           <stop offset="100%" stopColor="hsl(var(--destructive))" />
         </linearGradient>
       </defs>
