@@ -7,21 +7,48 @@ import { DayViewCalendar } from '@/components/provider-portal/day-view-calendar'
 import { AppointmentDetail } from '@/components/provider-portal/appointment-detail';
 import { ChevronLeft, ChevronRight, SlidersHorizontal } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { addDays, format, subDays } from 'date-fns';
 
 export default function CalendarPage() {
   const [view, setView] = React.useState<'day' | 'week'>('day');
+  const [currentDate, setCurrentDate] = React.useState(new Date());
+
+  const handleNext = () => {
+    if (view === 'day') {
+      setCurrentDate(addDays(currentDate, 1));
+    } else {
+      setCurrentDate(addDays(currentDate, 7));
+    }
+  };
+
+  const handlePrev = () => {
+    if (view === 'day') {
+      setCurrentDate(subDays(currentDate, 1));
+    } else {
+      setCurrentDate(subDays(currentDate, 7));
+    }
+  };
+
+  const handleToday = () => {
+    setCurrentDate(new Date());
+  };
 
   return (
     <div className="flex h-full flex-col">
       <header className="flex shrink-0 items-center justify-between gap-4 border-b bg-card p-4">
         <div className="flex items-center gap-4">
-          <button className="font-semibold uppercase">Today</button>
+          <Button onClick={handleToday} variant="outline" className="font-semibold uppercase">Today</Button>
           <div className="flex items-center gap-2">
-            <Button variant="ghost" size="icon" className="h-8 w-8">
+            <Button onClick={handlePrev} variant="ghost" size="icon" className="h-8 w-8">
               <ChevronLeft className="h-5 w-5" />
             </Button>
-            <span className="text-base font-semibold">Tuesday, July 16</span>
-            <Button variant="ghost" size="icon" className="h-8 w-8">
+            <span className="text-base font-semibold min-w-40 text-center">
+              {view === 'day' 
+                ? format(currentDate, 'EEEE, LLL d') 
+                : `${format(currentDate, 'LLL d')} - ${format(addDays(currentDate, 6), 'LLL d')}`
+              }
+            </span>
+            <Button onClick={handleNext} variant="ghost" size="icon" className="h-8 w-8">
               <ChevronRight className="h-5 w-5" />
             </Button>
           </div>
@@ -34,13 +61,13 @@ export default function CalendarPage() {
           <div className="flex items-center rounded-md border bg-background text-sm font-medium">
             <button
               onClick={() => setView('day')}
-              className={`px-4 py-1.5 rounded-l-md ${view === 'day' ? 'bg-primary text-primary-foreground' : 'hover:bg-muted/50'}`}
+              className={`px-4 py-1.5 rounded-l-md transition-colors ${view === 'day' ? 'bg-primary text-primary-foreground' : 'hover:bg-muted/50'}`}
             >
               Day
             </button>
             <button
               onClick={() => setView('week')}
-              className={`px-4 py-1.5 border-l rounded-r-md ${view === 'week' ? 'bg-primary text-primary-foreground' : 'hover:bg-muted/50'}`}
+              className={`px-4 py-1.5 border-l rounded-r-md transition-colors ${view === 'week' ? 'bg-primary text-primary-foreground' : 'hover:bg-muted/50'}`}
             >
               Week
             </button>
@@ -51,7 +78,7 @@ export default function CalendarPage() {
         <main className="flex-1 overflow-auto">
           {view === 'week' ? <WeekViewCalendar /> : <DayViewCalendar />}
         </main>
-        <aside className="w-[380px] shrink-0 border-l bg-card">
+        <aside className="w-[380px] shrink-0 border-l bg-card hidden lg:block">
           <AppointmentDetail />
         </aside>
       </div>
