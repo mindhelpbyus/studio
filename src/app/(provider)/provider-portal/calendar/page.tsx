@@ -11,27 +11,43 @@ import { addDays, format, subDays } from 'date-fns';
 
 export default function CalendarPage() {
   const [view, setView] = React.useState<'day' | 'week'>('day');
-  const [currentDate, setCurrentDate] = React.useState(new Date());
+  // Initialize with null to prevent hydration mismatch. Date will be set on client mount.
+  const [currentDate, setCurrentDate] = React.useState<Date | null>(null);
+
+  React.useEffect(() => {
+    // Set the date only on the client-side after the component has mounted.
+    setCurrentDate(new Date());
+  }, []);
+
 
   const handleNext = () => {
-    if (view === 'day') {
-      setCurrentDate(addDays(currentDate, 1));
-    } else {
-      setCurrentDate(addDays(currentDate, 7));
+    if (currentDate) {
+        if (view === 'day') {
+        setCurrentDate(addDays(currentDate, 1));
+        } else {
+        setCurrentDate(addDays(currentDate, 7));
+        }
     }
   };
 
   const handlePrev = () => {
-    if (view === 'day') {
-      setCurrentDate(subDays(currentDate, 1));
-    } else {
-      setCurrentDate(subDays(currentDate, 7));
+    if (currentDate) {
+        if (view === 'day') {
+        setCurrentDate(subDays(currentDate, 1));
+        } else {
+        setCurrentDate(subDays(currentDate, 7));
+        }
     }
   };
 
   const handleToday = () => {
     setCurrentDate(new Date());
   };
+
+  // Render a loading state or nothing until the date is set on the client
+  if (!currentDate) {
+    return null; // Or a loading skeleton
+  }
 
   return (
     <div className="flex h-full flex-col">
