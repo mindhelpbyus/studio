@@ -159,3 +159,18 @@
 .bg-gradient-button:hover::before {
   opacity: 1;
 }
+
+@layer utilities {
+  .animate-logo-spin {
+    animation: logo-spin 10s linear infinite;
+  }
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
