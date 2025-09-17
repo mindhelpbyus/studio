@@ -25,6 +25,12 @@ users.set('patient@example.com', {
     passwordHash: hash
 });
 
+users.set('provider@example.com', {
+    id: '2',
+    email: 'provider@example.com',
+    passwordHash: hash
+});
+
 
 export const usersDb = {
   findByEmail: async (email: string): Promise<User | undefined> => {
