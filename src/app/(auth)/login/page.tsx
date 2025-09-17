@@ -19,7 +19,12 @@ function ProviderSubmitButton() {
   const { pending } = useFormStatus();
 
   return (
-    <Button type="submit" className="w-full" disabled={pending}>
+    <Button 
+        type="submit" 
+        className="w-full font-bold text-primary relative overflow-hidden bg-gradient-button" 
+        variant="outline"
+        disabled={pending}
+    >
       {pending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
       Sign In
     </Button>
@@ -58,7 +63,11 @@ function PatientJoinForm() {
             onChange={(e) => setMeetingId(e.target.value)}
             />
         </div>
-        <Button type="submit" className="w-full">
+        <Button 
+            type="submit" 
+            className="w-full font-bold text-primary relative overflow-hidden bg-gradient-button"
+            variant="outline"
+        >
             <Video className="mr-2 h-4 w-4" />
             Join Call
         </Button>
@@ -80,7 +89,7 @@ export default function LoginPage() {
         </Link>
       </div>
 
-      <Card className="w-full max-w-sm rounded-2xl shadow-card">
+      <Card className="w-full max-w-md rounded-2xl shadow-card">
         <CardHeader>
           <CardTitle className="text-2xl">Provider Login</CardTitle>
           <CardDescription>
