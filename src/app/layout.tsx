@@ -20,7 +20,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`h-full ${manrope.variable}`}>
+    <html lang="en" className={manrope.variable}>
       <body className="font-body h-full bg-background antialiased">
         {children}
         <Toaster />

@@ -54,7 +54,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="mental-health-checker" className="w-full py-20 md:py-32">
+        <section id="mental-health-checker" className="w-full py-20 md:py-32 bg-page-gradient">
           <div className="container mx-auto px-4 md:px-6">
             <MentalHealthChecker />
           </div>
