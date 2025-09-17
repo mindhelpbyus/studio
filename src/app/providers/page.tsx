@@ -1,3 +1,4 @@
+
 import { Header } from '@/components/header';
 import { ProviderCard } from '@/components/providers/provider-card';
 import { providersDb, type Provider } from '@/lib/providers';
@@ -31,8 +32,8 @@ export default async function ProvidersPage() {
             </p>
           </div>
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {providers.map((provider) => (
-              <ProviderCard key={provider.id} provider={provider} />
+            {providers.map((provider, index) => (
+              <ProviderCard key={provider.id} provider={provider} priority={index < 2} />
             ))}
           </div>
         </div>

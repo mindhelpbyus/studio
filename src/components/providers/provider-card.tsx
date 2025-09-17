@@ -1,3 +1,4 @@
+
 import Image from 'next/image';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -8,9 +9,10 @@ import Link from 'next/link';
 
 type ProviderCardProps = {
   provider: Provider;
+  priority?: boolean;
 };
 
-export function ProviderCard({ provider }: ProviderCardProps) {
+export function ProviderCard({ provider, priority = false }: ProviderCardProps) {
   return (
     <Card className="flex flex-col overflow-hidden rounded-lg shadow-card transition-all duration-300 hover:scale-105 hover:shadow-lg">
       <CardHeader className="p-0">
@@ -22,6 +24,7 @@ export function ProviderCard({ provider }: ProviderCardProps) {
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             className="object-cover"
             data-ai-hint={provider.imageHint}
+            priority={priority}
           />
         </div>
       </CardHeader>
