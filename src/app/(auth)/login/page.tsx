@@ -38,34 +38,32 @@ function PatientJoinForm() {
     };
 
   return (
-     <Card className="w-full max-w-sm">
-        <CardHeader>
-          <CardTitle className="text-2xl">Join Your Session</CardTitle>
-          <CardDescription>
-            Enter your meeting ID to join the telehealth call.
-          </CardDescription>
+    <div className='px-6 pb-6'>
+        <CardHeader className='p-0 mb-4'>
+            <CardTitle className="text-2xl">Join Your Session</CardTitle>
+            <CardDescription>
+                Enter your meeting ID to join the telehealth call.
+            </CardDescription>
         </CardHeader>
-        <CardContent>
-          <form onSubmit={handleJoin} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="meetingId">Meeting ID</Label>
-              <Input
-                id="meetingId"
-                name="meetingId"
-                type="text"
-                placeholder="Enter meeting ID"
-                required
-                value={meetingId}
-                onChange={(e) => setMeetingId(e.target.value)}
-              />
-            </div>
-            <Button type="submit" className="w-full">
-                <Video className="mr-2 h-4 w-4" />
-                Join Call
-            </Button>
-          </form>
-        </CardContent>
-      </Card>
+        <form onSubmit={handleJoin} className="space-y-4">
+        <div className="space-y-2">
+            <Label htmlFor="meetingId">Meeting ID</Label>
+            <Input
+            id="meetingId"
+            name="meetingId"
+            type="text"
+            placeholder="Enter meeting ID"
+            required
+            value={meetingId}
+            onChange={(e) => setMeetingId(e.target.value)}
+            />
+        </div>
+        <Button type="submit" className="w-full">
+            <Video className="mr-2 h-4 w-4" />
+            Join Call
+        </Button>
+        </form>
+    </div>
   )
 }
 
@@ -82,13 +80,11 @@ export default function LoginPage() {
         </Link>
       </div>
 
-      <PatientJoinForm />
-
-      <Card className="w-full max-w-sm">
+      <Card className="w-full max-w-sm rounded-2xl shadow-card">
         <CardHeader>
           <CardTitle className="text-2xl">Provider Login</CardTitle>
           <CardDescription>
-            Enter your email below to login to your provider account.
+            Enter your credentials to access your portal.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -137,6 +133,19 @@ export default function LoginPage() {
             </Link>
           </div>
         </CardContent>
+
+        <div className="relative my-2 px-6">
+            <div className="absolute inset-0 flex items-center">
+                <span className="w-full border-t" />
+            </div>
+            <div className="relative flex justify-center text-xs uppercase">
+                <span className="bg-card px-2 text-muted-foreground">
+                Or
+                </span>
+            </div>
+        </div>
+
+        <PatientJoinForm />
       </Card>
     </div>
   );
