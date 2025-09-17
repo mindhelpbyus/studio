@@ -3,6 +3,8 @@
 
 import { checkSymptoms, CheckSymptomsOutput } from '@/ai/flows/ai-mental-health-checker';
 import { z } from 'zod';
+import { redirect } from 'next/navigation';
+import { cookies } from 'next/headers';
 
 const SymptomSchema = z.object({
   symptoms: z.string().min(10, {
@@ -10,15 +12,15 @@ const SymptomSchema = z.object({
   }),
 });
 
-type FormState = {
+type SymptomCheckFormState = {
   error: string | null;
   data: CheckSymptomsOutput | null;
 }
 
 export async function getSymptomAnalysis(
-  prevState: FormState,
+  prevState: SymptomCheckFormState,
   formData: FormData
-): Promise<FormState> {
+): Promise<SymptomCheckFormState> {
   const validatedFields = SymptomSchema.safeParse({
     symptoms: formData.get('symptoms'),
   });
@@ -44,4 +46,61 @@ export async function getSymptomAnalysis(
       data: null,
     };
   }
+}
+
+
+// --- Login Action ---
+
+const LoginSchema = z.object({
+    email: z.string().email({ message: "Please enter a valid email address." }),
+    password: z.string().min(1, { message: "Password is required." }),
+});
+
+type LoginFormState = {
+    error: string | null;
+    message: string;
+}
+
+export async function login(prevState: LoginFormState, formData: FormData): Promise<LoginFormState> {
+    const validatedFields = LoginSchema.safeParse(Object.fromEntries(formData.entries()));
+
+    if (!validatedFields.success) {
+        const errors = validatedFields.error.flatten().fieldErrors;
+        return {
+            error: errors.email?.[0] ?? errors.password?.[0] ?? 'Invalid input.',
+            message: '',
+        };
+    }
+
+    const { email, password } = validatedFields.data;
+
+    try {
+        // We need the full URL for server-side fetch
+        const host = process.env.NEXT_PUBLIC_HOST_URL || 'http://localhost:9002';
+        const response = await fetch(`${host}/api/auth/login`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            return { error: data.message || 'Invalid credentials.', message: '' };
+        }
+
+        // The API route sets the cookie, so we just need to redirect.
+    } catch (error) {
+        if (error instanceof Error) {
+            return { error: error.message, message: '' };
+        }
+        return { error: 'An unknown error occurred.', message: '' };
+    }
+
+    // Redirect based on the user's role (inferred from email for this demo)
+    if (email === 'provider@example.com') {
+        redirect('/provider-portal/calendar');
+    } else {
+        redirect('/patient-portal');
+    }
 }

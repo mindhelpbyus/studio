@@ -32,9 +32,12 @@ import {
   type LucideIcon,
   User,
   Hospital,
+  Menu,
 } from 'lucide-react';
 import React from 'react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { Sheet, SheetContent, SheetTrigger, SheetClose } from '@/components/ui/sheet';
+
 
 const featureCategories: {
   title: string;
@@ -171,13 +174,36 @@ export function Header() {
         </div>
         
         <div className="hidden items-center gap-4 md:flex">
-          <Button variant="ghost" className="font-bold text-base">Log In</Button>
+          <Button asChild variant="ghost" className="font-bold text-base">
+            <Link href="/login">Log In</Link>
+          </Button>
           <Button variant="outline" className="border-2 border-primary font-bold text-primary rounded-full relative overflow-hidden bg-gradient-button">Book a Demo</Button>
           <Button className="rounded-full font-bold">Try it now</Button>
         </div>
         
         <div className="md:hidden">
-            <Button>Menu</Button>
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button variant="outline" size="icon">
+                  <Menu className="h-6 w-6" />
+                  <span className="sr-only">Open menu</span>
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="right">
+                <div className="grid gap-4 py-6">
+                  <Link href="/login">
+                     <SheetClose asChild>
+                        <Button variant="outline" className="w-full">Log In</Button>
+                     </SheetClose>
+                  </Link>
+                  <Link href="#">
+                    <SheetClose asChild>
+                        <Button className="w-full">Try it now</Button>
+                    </SheetClose>
+                  </Link>
+                </div>
+              </SheetContent>
+            </Sheet>
         </div>
       </div>
     </header>
