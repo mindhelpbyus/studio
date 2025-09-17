@@ -1,5 +1,6 @@
 
 
+
 import { Badge } from '@/components/ui/badge';
 
 const timeSlots = Array.from({ length: 24 }, (_, i) => `${i}:00`);
@@ -8,7 +9,7 @@ const days = [
     { day: 'Mon', date: 15, appointments: [] },
     { day: 'Tue', date: 16, appointments: [
         { start: 13, duration: 2, title: '50-Min Facial', name: 'Lucy C.', time: '1:00 PM', color: 'pink', active: true, type: 'appointment' },
-        { start: 12, duration: 1, title: 'Lunch', name: 'Therapist', time: '12:00 PM', color: 'gray', type: 'break' },
+        { start: 12, duration: 1, title: 'Lunch', name: '', time: '12:00 PM', color: 'gray', type: 'break' },
         { start: 15.5, duration: 2, title: 'Pedicure', name: 'Nathaniel J.', time: '3:30 PM', color: 'purple', type: 'appointment' },
         { start: 10, duration: 1.5, title: 'Manicure', name: 'Kelly G.', time: '10:00 AM', color: 'orange', type: 'appointment' },
     ] },

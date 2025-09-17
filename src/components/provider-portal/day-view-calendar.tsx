@@ -1,13 +1,14 @@
 
 
+
 const timeSlots = Array.from({ length: 24 }, (_, i) => `${i}:00`);
 
 const appointments = [
     { start: 13, duration: 2, title: '50-Minute Facial', name: 'Lucy Carmichael', time: '1:00 PM - 2:00 PM', color: 'pink', active: true, type: 'appointment' },
     { start: 15, duration: 2, title: 'Gel Manicure', name: 'Kelly Green', time: '3:00 PM - 4:00 PM', color: 'orange', type: 'appointment' },
-    { start: 12, duration: 1, title: 'Lunch Break', name: 'Therapist', time: '12:00 PM - 1:00 PM', color: 'gray', type: 'break' },
+    { start: 12, duration: 1, title: 'Lunch Break', name: '', time: '12:00 PM - 1:00 PM', color: 'gray', type: 'break' },
     { start: 10, duration: 2, title: 'Deep Tissue Massage', name: 'John Smith', time: '10:00 AM - 11:00 AM', color: 'blue', type: 'appointment' },
-    { start: 18, duration: 1, title: 'Personal Break', name: 'Therapist', time: '6:00 PM - 6:30 PM', color: 'gray', type: 'break' },
+    { start: 18, duration: 1, title: 'Personal Break', name: '', time: '6:00 PM - 6:30 PM', color: 'gray', type: 'break' },
 
 ];
 
