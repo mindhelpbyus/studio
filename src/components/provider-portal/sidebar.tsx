@@ -2,64 +2,61 @@ import Link from 'next/link';
 import Image from 'next/image';
 import {
   Calendar,
-  LayoutDashboard,
   Users,
-  Receipt,
+  CreditCard,
   BarChart,
   Settings,
   HelpCircle,
+  MessageSquare,
+  Package,
+  LayoutGrid
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { LogoIcon } from '../logo-icon';
+import { Badge } from '../ui/badge';
 
 const navLinks = [
-  { href: '/provider-portal/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
-  { href: '/provider-portal/calendar', icon: Calendar, label: 'Calendar', active: true },
+  { href: '/provider-portal/calendar', icon: Calendar, label: 'Calendar', active: true, notification: 2 },
   { href: '/provider-portal/clients', icon: Users, label: 'Clients' },
-  { href: '/provider-portal/billing', icon: Receipt, label: 'Billing' },
+  { href: '/provider-portal/sales', icon: CreditCard, label: 'Sales' },
+  { href: '/provider-portal/messages', icon: MessageSquare, label: 'Messages' },
   { href: '/provider-portal/reports', icon: BarChart, label: 'Reports' },
+  { href: '/provider-portal/products', icon: Package, label: 'Products' },
 ];
 
-const helpLinks = [
+const bottomLinks = [
+  { href: '/provider-portal/apps', icon: LayoutGrid, label: 'Apps' },
   { href: '/provider-portal/settings', icon: Settings, label: 'Settings' },
   { href: '/provider-portal/help', icon: HelpCircle, label: 'Help' },
 ];
 
 export function ProviderSidebar() {
   return (
-    <aside className="w-64 shrink-0 border-r bg-card">
-      <div className="flex h-full flex-col justify-between p-4">
-        <div className="flex flex-col gap-6">
-          <div className="flex items-center gap-3">
-            <Image
-              src="https://picsum.photos/seed/therapist/100/100"
-              alt="Dr. Amelia Reed"
-              width={40}
-              height={40}
-              className="rounded-full"
-            />
-            <div className="flex flex-col">
-              <h1 className="text-sm font-semibold">Dr. Amelia Reed</h1>
-              <p className="text-xs text-muted-foreground">Licensed Therapist</p>
-            </div>
-          </div>
-          <nav className="flex flex-col gap-1">
-            {navLinks.map((link) => (
-              <Link key={link.label} href={link.href}>
-                <Button
-                  variant={link.active ? 'secondary' : 'ghost'}
-                  className="w-full justify-start gap-3 px-3"
-                >
-                  <link.icon className="h-5 w-5" />
-                  <span>{link.label}</span>
-                </Button>
-              </Link>
-            ))}
-          </nav>
-        </div>
-        <div className="flex flex-col gap-4">
-          <Button>New Appointment</Button>
-          <div className="flex flex-col gap-1">
-            {helpLinks.map((link) => (
+    <aside className="w-56 shrink-0 border-r bg-card text-card-foreground flex flex-col">
+       <div className="flex h-16 shrink-0 items-center justify-center border-b px-4">
+         <Link href="/" className="flex items-center gap-2">
+            <LogoIcon />
+          </Link>
+      </div>
+      <div className="flex-1 overflow-y-auto">
+        <nav className="flex flex-col gap-1 p-4">
+          {navLinks.map((link) => (
+            <Link key={link.label} href={link.href}>
+              <Button
+                variant={link.active ? 'secondary' : 'ghost'}
+                className="w-full justify-start gap-3 px-3"
+              >
+                <link.icon className="h-5 w-5" />
+                <span className='flex-1 text-left'>{link.label}</span>
+                {link.notification && <Badge variant="destructive" className='h-5 w-5 justify-center p-0'>{link.notification}</Badge>}
+              </Button>
+            </Link>
+          ))}
+        </nav>
+      </div>
+      <div className="mt-auto border-t p-4">
+         <div className="flex flex-col gap-1 mb-4">
+            {bottomLinks.map((link) => (
               <Link key={link.label} href={link.href}>
                 <Button
                   variant="ghost"
@@ -70,6 +67,18 @@ export function ProviderSidebar() {
                 </Button>
               </Link>
             ))}
+          </div>
+        <div className="flex items-center gap-3">
+          <Image
+            src="https://picsum.photos/seed/therapist/100/100"
+            alt="Lisa Baker"
+            width={40}
+            height={40}
+            className="rounded-full"
+          />
+          <div className="flex flex-col">
+            <h1 className="text-sm font-semibold">Lisa Baker</h1>
+            <p className="text-xs text-muted-foreground">Jade Salon</p>
           </div>
         </div>
       </div>

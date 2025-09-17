@@ -3,7 +3,7 @@ import { ProviderSidebar } from '@/components/provider-portal/sidebar';
 
 export default function ProviderPortalLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="flex h-screen bg-muted/40">
+    <div className="flex h-screen w-full bg-muted/30">
       <ProviderSidebar />
       <div className="flex flex-1 flex-col">
         {children}
