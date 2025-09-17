@@ -21,7 +21,7 @@ function ProviderSubmitButton() {
   return (
     <Button 
         type="submit" 
-        className="w-full font-bold text-primary relative overflow-hidden bg-gradient-button" 
+        className="w-full font-bold text-primary relative overflow-hidden bg-gradient-button border-2 border-primary" 
         variant="outline"
         disabled={pending}
     >
@@ -65,7 +65,7 @@ function PatientJoinForm() {
         </div>
         <Button 
             type="submit" 
-            className="w-full font-bold text-primary relative overflow-hidden bg-gradient-button"
+            className="w-full font-bold text-primary relative overflow-hidden bg-gradient-button border-2 border-primary"
             variant="outline"
         >
             <Video className="mr-2 h-4 w-4" />
