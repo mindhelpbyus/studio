@@ -97,10 +97,6 @@ export async function login(prevState: LoginFormState, formData: FormData): Prom
         return { error: 'An unknown error occurred.', message: '' };
     }
 
-    // Redirect based on the user's role (inferred from email for this demo)
-    if (email === 'provider@example.com') {
-        redirect('/provider-portal/calendar');
-    } else {
-        redirect('/patient-portal');
-    }
+    // Redirect to the provider portal.
+    redirect('/provider-portal/calendar');
 }

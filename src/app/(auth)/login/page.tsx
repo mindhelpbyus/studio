@@ -9,11 +9,13 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { AlertCircle, Loader2 } from 'lucide-react';
+import { AlertCircle, Loader2, Video } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Logo } from '@/components/logo';
+import { useRouter } from 'next/navigation';
+import React from 'react';
 
-function SubmitButton() {
+function ProviderSubmitButton() {
   const { pending } = useFormStatus();
 
   return (
@@ -24,22 +26,69 @@ function SubmitButton() {
   );
 }
 
+function PatientJoinForm() {
+    const router = useRouter();
+    const [meetingId, setMeetingId] = React.useState('');
+  
+    const handleJoin = (e: React.FormEvent) => {
+      e.preventDefault();
+      if (meetingId) {
+        router.push(`/patient-portal/video-call/${meetingId}`);
+      }
+    };
+
+  return (
+     <Card className="w-full max-w-sm">
+        <CardHeader>
+          <CardTitle className="text-2xl">Join Your Session</CardTitle>
+          <CardDescription>
+            Enter your meeting ID to join the telehealth call.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleJoin} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="meetingId">Meeting ID</Label>
+              <Input
+                id="meetingId"
+                name="meetingId"
+                type="text"
+                placeholder="Enter meeting ID"
+                required
+                value={meetingId}
+                onChange={(e) => setMeetingId(e.target.value)}
+              />
+            </div>
+            <Button type="submit" className="w-full">
+                <Video className="mr-2 h-4 w-4" />
+                Join Call
+            </Button>
+          </form>
+        </CardContent>
+      </Card>
+  )
+}
+
+
 export default function LoginPage() {
   const initialState = { error: null, message: '' };
   const [state, formAction] = useFormState(login, initialState);
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-muted/50 p-4">
+    <div className="flex min-h-screen flex-col items-center justify-center gap-10 bg-muted/50 p-4">
        <div className="absolute top-8 left-8">
         <Link href="/">
             <Logo />
         </Link>
       </div>
+
+      <PatientJoinForm />
+
       <Card className="w-full max-w-sm">
         <CardHeader>
-          <CardTitle className="text-2xl">Login</CardTitle>
+          <CardTitle className="text-2xl">Provider Login</CardTitle>
           <CardDescription>
-            Enter your email below to login to your account.
+            Enter your email below to login to your provider account.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -52,7 +101,7 @@ export default function LoginPage() {
                 type="email"
                 placeholder="m@example.com"
                 required
-                defaultValue="patient@example.com"
+                defaultValue="provider@example.com"
               />
             </div>
             <div className="space-y-2">
@@ -79,10 +128,10 @@ export default function LoginPage() {
               </Alert>
             )}
 
-            <SubmitButton />
+            <ProviderSubmitButton />
           </form>
           <div className="mt-4 text-center text-sm">
-            Don&apos;t have an account?{' '}
+            Don&apos;t have a provider account?{' '}
             <Link href="#" className="underline">
               Sign up
             </Link>

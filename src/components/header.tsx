@@ -77,7 +77,6 @@ const featureCategories: {
 const whoWeServe: { title: string; href: string; description: string, icon: LucideIcon }[] = [
     { title: 'Individual Therapist', href: '/providers', description: 'Tools for solo practitioners to manage their practice.', icon: User },
     { title: 'Wellness & Counseling Center', href: '/providers', description: 'Solutions for clinics and centers to streamline operations.', icon: Hospital },
-    { title: 'Patient', href: '/patient-portal', description: 'Access your health records, appointments, and care team.', icon: HeartHandshake },
 ];
 
 
@@ -175,7 +174,7 @@ export function Header() {
         
         <div className="hidden items-center gap-4 md:flex">
           <Button asChild variant="ghost" className="font-bold text-base">
-            <Link href="/login">Log In</Link>
+            <Link href="/login">Provider Log In</Link>
           </Button>
           <Button variant="outline" className="border-2 border-primary font-bold text-primary rounded-full relative overflow-hidden bg-gradient-button">Book a Demo</Button>
           <Button className="rounded-full font-bold">Try it now</Button>
@@ -193,7 +192,7 @@ export function Header() {
                 <div className="grid gap-4 py-6">
                   <Link href="/login">
                      <SheetClose asChild>
-                        <Button variant="outline" className="w-full">Log In</Button>
+                        <Button variant="outline" className="w-full">Provider Log In</Button>
                      </SheetClose>
                   </Link>
                   <Link href="#">

@@ -74,11 +74,6 @@ export default function Home() {
             <Button variant="link" size="sm" className="text-muted-foreground">
               Terms of Service
             </Button>
-             <Link href="/patient-portal">
-              <Button variant="link" size="sm" className="text-muted-foreground">
-                Patient Portal
-              </Button>
-            </Link>
             <Link href="/provider-portal/calendar">
               <Button variant="link" size="sm" className="text-muted-foreground">
                 Provider Portal
