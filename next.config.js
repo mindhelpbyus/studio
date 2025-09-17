@@ -1,6 +1,21 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Your Next.js configuration options go here
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'storage.googleapis.com',
+        port: '',
+        pathname: '**',
+      },
+       {
+        protocol: 'https',
+        hostname: 'picsum.photos',
+        port: '',
+        pathname: '**',
+      },
+    ],
+  },
 };
 
 module.exports = nextConfig;

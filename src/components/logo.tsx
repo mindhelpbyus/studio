@@ -1,3 +1,4 @@
+
 import { AnimatedLogoIcon } from './animated-logo-icon';
 
 export function Logo() {

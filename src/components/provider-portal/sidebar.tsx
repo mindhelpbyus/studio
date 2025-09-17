@@ -12,8 +12,8 @@ import {
   LayoutGrid
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { AnimatedLogoIcon } from '../animated-logo-icon';
 import { Badge } from '../ui/badge';
+import { AnimatedLogoIcon } from '../animated-logo-icon';
 
 const navLinks = [
   { href: '/provider-portal/calendar', icon: Calendar, label: 'Calendar', active: true, notification: 2 },
@@ -35,7 +35,9 @@ export function ProviderSidebar() {
     <aside className="w-56 shrink-0 border-r bg-card text-card-foreground flex flex-col">
        <div className="flex h-16 shrink-0 items-center justify-center border-b px-4">
          <Link href="/" className="flex items-center gap-2">
-            <AnimatedLogoIcon />
+            <div className='w-8 h-8'>
+                <AnimatedLogoIcon />
+            </div>
           </Link>
       </div>
       <div className="flex-1 overflow-y-auto">
