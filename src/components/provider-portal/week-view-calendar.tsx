@@ -32,7 +32,7 @@ export function WeekViewCalendar() {
     <div className="grid grid-cols-[auto_1fr] h-full bg-background">
       {/* Time column */}
       <div className="border-r">
-         <div className="py-2 border-b h-12"></div>
+         <div className="py-2 border-b h-[2.5rem]"></div>
         <div className="divide-y text-xs text-muted-foreground text-right pr-2">
           {timeSlots.map((time, index) => (
             <div key={index} className="h-16 flex items-center justify-end">
@@ -48,8 +48,9 @@ export function WeekViewCalendar() {
         {days.map((day) => (
           <div key={day.day} className="border-r last:border-r-0">
             {/* Header */}
-            <div className={`text-center py-2 border-b h-12 flex items-center justify-center`}>
-              {/* This space is intentionally left to align with the staff avatars header */}
+            <div className={`text-center py-2 border-b h-10 flex flex-col items-center justify-center`}>
+                <span className='font-medium text-sm'>{day.day.toUpperCase()}</span>
+                <span className='font-bold text-xl'>{day.date}</span>
             </div>
             {/* Grid */}
             <div className={`relative h-full divide-y`}>
