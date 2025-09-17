@@ -1,6 +1,7 @@
 
 
 
+
 import { Badge } from '@/components/ui/badge';
 
 const timeSlots = Array.from({ length: 24 }, (_, i) => `${i}:00`);
@@ -9,7 +10,7 @@ const days = [
     { day: 'Mon', date: 15, appointments: [] },
     { day: 'Tue', date: 16, appointments: [
         { start: 13, duration: 2, title: '50-Min Facial', name: 'Lucy C.', time: '1:00 PM', color: 'pink', active: true, type: 'appointment' },
-        { start: 12, duration: 1, title: 'Lunch', name: '', time: '12:00 PM', color: 'gray', type: 'break' },
+        { start: 12, duration: 1, title: 'Lunch Break', name: '', time: '12:00 PM', color: 'gray', type: 'break' },
         { start: 15.5, duration: 2, title: 'Pedicure', name: 'Nathaniel J.', time: '3:30 PM', color: 'purple', type: 'appointment' },
         { start: 10, duration: 1.5, title: 'Manicure', name: 'Kelly G.', time: '10:00 AM', color: 'orange', type: 'appointment' },
     ] },
@@ -76,7 +77,7 @@ export function WeekViewCalendar() {
                 const topPosition = apt.start * (slotHeight * 2 / 2);
                 const height = apt.duration * (slotHeight * 2 / 2);
                 return (
-                    <div key={apt.name} className="absolute inset-x-0.5" style={{ top: `${topPosition}rem`, height: `calc(${height}rem - 2px)`}}>
+                    <div key={apt.title + apt.name} className="absolute inset-x-0.5" style={{ top: `${topPosition}rem`, height: `calc(${height}rem - 4px)`}}>
                         <div className={`p-1 rounded-md border h-full overflow-hidden text-xs ${colorSet[apt.color as keyof typeof colorSet]} ${apt.type === 'break' ? 'bg-stripes' : ''}`}>
                             <p className="font-bold uppercase truncate">{apt.title}</p>
                             <p className="font-semibold truncate">{apt.name}</p>

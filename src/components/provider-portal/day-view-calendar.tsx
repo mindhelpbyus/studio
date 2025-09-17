@@ -1,6 +1,7 @@
 
 
 
+
 const timeSlots = Array.from({ length: 24 }, (_, i) => `${i}:00`);
 
 const appointments = [
@@ -64,7 +65,7 @@ export function DayViewCalendar() {
             const height = apt.duration * (slotHeight * 2 / 2); // e.g., 2 * 30-min blocks -> 2 * 3rem
             
             return (
-                <div key={apt.name} className="absolute inset-x-1" style={{ top: `${topPosition}rem`, height: `calc(${height}rem - 2px)`}}>
+                <div key={apt.title + apt.name} className="absolute inset-x-1" style={{ top: `${topPosition}rem`, height: `calc(${height}rem - 4px)`}}>
                     <div className={`p-2 rounded-lg border h-full ${colorSet[apt.color as keyof typeof colorSet]} ${apt.type === 'break' ? 'bg-stripes' : ''}`}>
                         <p className="text-sm font-bold uppercase">{apt.title}</p>
                         <p className="text-base font-semibold">{apt.name}</p>
