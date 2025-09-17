@@ -2,6 +2,7 @@
 
 
 
+
 import { Badge } from '@/components/ui/badge';
 
 const timeSlots = Array.from({ length: 24 }, (_, i) => `${i}:00`);

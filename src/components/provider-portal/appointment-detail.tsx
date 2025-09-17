@@ -7,15 +7,30 @@ import {
   Pencil,
   MessageSquare,
   Crown,
+  ChevronDown,
+  Video,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
+
+const pastAppointments = [
+    { id: '1', date: '2024-06-18', service: '50-Minute Facial', status: 'Completed' },
+    { id: '2', date: '2024-05-21', service: '50-Minute Facial', status: 'Completed' },
+];
+
+const visitSummaries = [
+    { id: '1', date: '2024-06-18', summary: 'Client reported skin feeling refreshed. Discussed new serum...' },
+];
 
 export function AppointmentDetail() {
+  const [isClientInfoOpen, setIsClientInfoOpen] = React.useState(false);
+
   return (
-    <div className="flex h-full flex-col p-6">
+    <div className="flex h-full flex-col p-6 overflow-y-auto">
       <header className="flex items-center justify-between">
         <h2 className="text-lg font-semibold">Appointment</h2>
         <div className="flex items-center gap-2">
@@ -45,7 +60,7 @@ export function AppointmentDetail() {
       
       <Separator className="my-6" />
 
-      <div className="flex items-center justify-between">
+       <div className="flex items-center justify-between">
          <div className="flex items-center gap-4">
             <Avatar className="h-12 w-12">
                 <AvatarFallback className="bg-pink-100 text-pink-700 font-bold">LC</AvatarFallback>
@@ -60,7 +75,7 @@ export function AppointmentDetail() {
          </Button>
       </div>
 
-      <div className='mt-4 rounded-lg border bg-accent/50 p-3'>
+       <div className='mt-4 rounded-lg border bg-accent/50 p-3'>
           <div className='flex items-center gap-2'>
             <Crown size={18} className='text-yellow-500' />
             <span className='font-semibold'>Premium Facial Membership</span>
@@ -71,9 +86,40 @@ export function AppointmentDetail() {
           </p>
       </div>
 
-      <button className='mt-2 text-sm font-semibold text-primary text-left'>
-        Show additional client info
-      </button>
+       <Collapsible open={isClientInfoOpen} onOpenChange={setIsClientInfoOpen}>
+        <CollapsibleTrigger asChild>
+          <button className='mt-2 text-sm font-semibold text-primary text-left w-full flex items-center gap-1'>
+            Show additional client info
+            <ChevronDown size={16} className={`transition-transform ${isClientInfoOpen ? 'rotate-180' : ''}`} />
+          </button>
+        </CollapsibleTrigger>
+        <CollapsibleContent className="space-y-4 pt-4 animate-accordion-down">
+           <Card>
+                <CardHeader>
+                    <CardTitle className='text-base'>Past Appointments</CardTitle>
+                </CardHeader>
+                <CardContent className='text-sm space-y-2'>
+                    {pastAppointments.map(apt => (
+                        <div key={apt.id} className='flex justify-between'>
+                            <span>{apt.date} - {apt.service}</span>
+                            <Badge variant='secondary'>{apt.status}</Badge>
+                        </div>
+                    ))}
+                </CardContent>
+           </Card>
+           <Card>
+                <CardHeader>
+                    <CardTitle className='text-base'>Visit Summaries</CardTitle>
+                </CardHeader>
+                <CardContent className='text-sm space-y-2'>
+                    {visitSummaries.map(summary => (
+                        <p key={summary.id}><strong>{summary.date}:</strong> {summary.summary}</p>
+                    ))}
+                </CardContent>
+           </Card>
+        </CollapsibleContent>
+      </Collapsible>
+
 
       <Separator className="my-6" />
 
@@ -84,17 +130,27 @@ export function AppointmentDetail() {
                 <p className='text-sm mt-2'>with Natalie</p>
                 <p className='text-sm'>at 1:00 PM</p>
             </div>
-            <div>
+            <div className='text-right'>
                 <p className='text-lg font-bold'>$90</p>
-                <p className='text-sm text-muted-foreground text-right'>request: none</p>
-                <p className='text-sm text-muted-foreground text-right'>for: 1 hour</p>
+                <p className='text-sm text-muted-foreground'>for: 1 hour</p>
             </div>
         </div>
       </div>
 
        <div className='mt-auto pt-6'>
             <h4 className='font-semibold mb-3'>Booking Details</h4>
-            <div className='space-y-2'>
+            <div className='space-y-4'>
+                 <div className="flex items-center justify-between rounded-lg border p-3">
+                    <div>
+                        <p className="font-semibold">Telehealth Appointment</p>
+                        <p className="text-sm text-muted-foreground">Ready to join</p>
+                    </div>
+                    <Button size="sm">
+                        <Video className="mr-2 h-4 w-4" />
+                        Join Call
+                    </Button>
+                </div>
+                {/* Placeholder for more details */}
                 <div className='h-3 w-4/5 bg-muted rounded'></div>
                 <div className='h-3 w-3/5 bg-muted rounded'></div>
             </div>
