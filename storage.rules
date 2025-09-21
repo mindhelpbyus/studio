@@ -1,0 +1,178 @@
+rules_version = '2';
+
+// Firebase Storage Security Rules for Healthcare Application
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return request.auth.uid == userId;
+    }
+    
+    function hasRole(role) {
+      return isAuthenticated() && 
+             request.auth.token.roles != null && 
+             role in request.auth.token.roles;
+    }
+    
+    function isValidUser() {
+      return isAuthenticated() && 
+             request.auth.token.email_verified == true;
+    }
+    
+    function isValidFileType(allowedTypes) {
+      return request.resource.contentType in allowedTypes;
+    }
+    
+    function isValidFileSize(maxSizeBytes) {
+      return request.resource.size <= maxSizeBytes;
+    }
+
+    // User profile images
+    match /users/{userId}/profile/{fileName} {
+      allow read: if isValidUser() && (
+        isOwner(userId) || 
+        hasRole('admin') || 
+        hasRole('provider')
+      );
+      
+      allow write: if isValidUser() && 
+                   isOwner(userId) &&
+                   isValidFileType(['image/jpeg', 'image/png', 'image/webp']) &&
+                   isValidFileSize(5 * 1024 * 1024); // 5MB limit
+      
+      allow delete: if isValidUser() && (
+        isOwner(userId) || 
+        hasRole('admin')
+      );
+    }
+
+    // Medical documents and images
+    match /medical/{patientId}/{category}/{fileName} {
+      allow read: if isValidUser() && (
+        isOwner(patientId) || 
+        hasRole('provider') || 
+        hasRole('admin')
+      );
+      
+      allow write: if isValidUser() && (
+        hasRole('provider') || 
+        hasRole('admin')
+      ) && isValidFileType([
+        'image/jpeg', 'image/png', 'image/webp', 'image/tiff',
+        'application/pdf', 'application/dicom',
+        'text/plain', 'application/msword',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+      ]) && isValidFileSize(50 * 1024 * 1024); // 50MB limit for medical files
+      
+      allow delete: if hasRole('admin') || hasRole('provider');
+    }
+
+    // Prescription documents
+    match /prescriptions/{patientId}/{prescriptionId}/{fileName} {
+      allow read: if isValidUser() && (
+        isOwner(patientId) || 
+        hasRole('provider') || 
+        hasRole('admin') ||
+        hasRole('pharmacy')
+      );
+      
+      allow write: if isValidUser() && (
+        hasRole('provider') || 
+        hasRole('admin')
+      ) && isValidFileType([
+        'application/pdf', 'image/jpeg', 'image/png'
+      ]) && isValidFileSize(10 * 1024 * 1024); // 10MB limit
+      
+      allow delete: if hasRole('admin');
+    }
+
+    // Lab results and reports
+    match /lab_results/{patientId}/{testId}/{fileName} {
+      allow read: if isValidUser() && (
+        isOwner(patientId) || 
+        hasRole('provider') || 
+        hasRole('admin') ||
+        hasRole('lab_tech')
+      );
+      
+      allow write: if isValidUser() && (
+        hasRole('provider') || 
+        hasRole('admin') ||
+        hasRole('lab_tech')
+      ) && isValidFileType([
+        'application/pdf', 'image/jpeg', 'image/png', 'image/tiff',
+        'text/csv', 'application/json'
+      ]) && isValidFileSize(25 * 1024 * 1024); // 25MB limit
+      
+      allow delete: if hasRole('admin');
+    }
+
+    // Insurance documents
+    match /insurance/{patientId}/{documentType}/{fileName} {
+      allow read: if isValidUser() && (
+        isOwner(patientId) || 
+        hasRole('admin') ||
+        hasRole('billing')
+      );
+      
+      allow write: if isValidUser() && (
+        isOwner(patientId) || 
+        hasRole('admin') ||
+        hasRole('billing')
+      ) && isValidFileType([
+        'application/pdf', 'image/jpeg', 'image/png'
+      ]) && isValidFileSize(10 * 1024 * 1024); // 10MB limit
+      
+      allow delete: if hasRole('admin');
+    }
+
+    // Telemedicine recordings (if enabled and compliant)
+    match /telemedicine/{sessionId}/{fileName} {
+      allow read: if isValidUser() && hasRole('admin'); // Highly restricted
+      
+      allow write: if isValidUser() && (
+        hasRole('provider') || 
+        hasRole('admin')
+      ) && isValidFileType([
+        'video/mp4', 'video/webm', 'audio/mp3', 'audio/wav'
+      ]) && isValidFileSize(500 * 1024 * 1024); // 500MB limit
+      
+      allow delete: if hasRole('admin');
+    }
+
+    // System backups and exports (admin only)
+    match /system/{category}/{fileName} {
+      allow read: if hasRole('admin');
+      allow write: if hasRole('admin');
+      allow delete: if hasRole('admin');
+    }
+
+    // Temporary uploads (24-hour expiry)
+    match /temp/{userId}/{fileName} {
+      allow read, write: if isValidUser() && 
+                        isOwner(userId) &&
+                        isValidFileSize(100 * 1024 * 1024); // 100MB limit
+      
+      allow delete: if isValidUser() && (
+        isOwner(userId) || 
+        hasRole('admin')
+      );
+    }
+
+    // Public assets (logos, etc.)
+    match /public/{fileName} {
+      allow read: if true; // Public read access
+      allow write: if hasRole('admin');
+      allow delete: if hasRole('admin');
+    }
+
+    // Default deny all other paths
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

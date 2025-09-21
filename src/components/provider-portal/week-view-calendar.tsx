@@ -41,56 +41,90 @@ const activeColorClasses = {
     gray: 'bg-muted/80 border-2 border-gray-400 text-muted-foreground',
 };
 
-export function WeekViewCalendar() {
-  const slotHeight = 3; // 3rem per 30 minutes, so 6rem per hour.
+interface WeekViewCalendarProps {
+  currentDate: Date;
+}
+
+export function WeekViewCalendar({ currentDate }: WeekViewCalendarProps) {
+  const slotHeight = 4; // 4rem per hour for better spacing
 
   return (
-    <div className="grid grid-cols-[auto_1fr] h-full bg-background">
-      {/* Time column */}
-      <div className="border-r">
-         <div className="py-2 border-b h-[5.5rem] sticky top-0 bg-card z-10"></div>
-        <div className="divide-y text-xs text-muted-foreground text-right pr-2">
-          {timeSlots.map((time, index) => (
-            <div key={index} style={{ height: `${slotHeight * 2}rem`}} className={`flex items-center justify-end`}>
-              {parseInt(time) % 12 || 12}:00 {parseInt(time) < 12 ? 'AM' : 'PM'}
+    <div className="h-full overflow-auto calendar-scroll">
+      <div className="grid grid-cols-[80px_1fr] min-h-full bg-background calendar-grid">
+        {/* Time column */}
+        <div className="border-r bg-muted/30">
+          <div className="h-16 border-b bg-card sticky top-0 z-20"></div>
+          <div className="text-xs text-muted-foreground">
+            {timeSlots.map((time, index) => (
+              <div 
+                key={index} 
+                style={{ height: `${slotHeight}rem` }} 
+                className="flex items-start justify-end pr-3 pt-1 border-b border-muted/50 calendar-time-slot"
+              >
+                <span className="font-medium">
+                  {parseInt(time) === 0 ? '12:00 AM' : 
+                   parseInt(time) < 12 ? `${parseInt(time)}:00 AM` : 
+                   parseInt(time) === 12 ? '12:00 PM' : 
+                   `${parseInt(time) - 12}:00 PM`}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Days columns */}
+        <div className="grid grid-cols-5 min-h-full">
+          {days.map((day, dayIndex) => (
+            <div key={day.day} className="border-r last:border-r-0 relative">
+              {/* Header */}
+              <div className="text-center h-16 border-b flex flex-col items-center justify-center sticky top-0 bg-card z-10 shadow-sm">
+                <span className="font-semibold text-sm text-muted-foreground uppercase tracking-wide">
+                  {day.day}
+                </span>
+                <span className="font-bold text-2xl text-foreground">{day.date}</span>
+              </div>
+              
+              {/* Time grid background */}
+              <div className="relative">
+                {timeSlots.map((_, index) => (
+                  <div 
+                    key={index} 
+                    style={{ height: `${slotHeight}rem` }} 
+                    className="border-b border-muted/50 hover:bg-muted/20 transition-colors"
+                  />
+                ))}
+                
+                {/* Appointments */}
+                {day.appointments.map((apt, aptIndex) => {
+                  const colorSet = apt.active ? activeColorClasses : colorClasses;
+                  const topPosition = apt.start * slotHeight;
+                  const height = apt.duration * slotHeight;
+                  
+                  return (
+                    <div 
+                      key={`${apt.title}-${apt.name}-${aptIndex}`} 
+                      className="absolute left-1 right-1 cursor-pointer calendar-appointment" 
+                      style={{ 
+                        top: `${topPosition}rem`, 
+                        height: `${height - 0.25}rem` 
+                      }}
+                    >
+                      <div className={`p-2 rounded-lg border-l-4 h-full overflow-hidden shadow-sm ${colorSet[apt.color as keyof typeof colorSet]} ${apt.type === 'break' ? 'opacity-75' : ''}`}>
+                        <p className="font-semibold text-xs uppercase tracking-wide truncate mb-1">
+                          {apt.title}
+                        </p>
+                        {apt.name && (
+                          <p className="font-medium text-sm truncate mb-1">{apt.name}</p>
+                        )}
+                        <p className="text-xs opacity-75 truncate">{apt.time}</p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           ))}
         </div>
-      </div>
-
-      {/* Days columns */}
-      <div className="grid grid-cols-5">
-        {days.map((day) => (
-          <div key={day.day} className="border-r last:border-r-0">
-            {/* Header */}
-            <div className={`text-center py-2 border-b h-[5.5rem] flex flex-col items-center justify-center sticky top-0 bg-card z-10`}>
-                <span className='font-medium text-sm'>{day.day.toUpperCase()}</span>
-                <span className='font-bold text-3xl'>{day.date}</span>
-            </div>
-            {/* Grid */}
-            <div className={`relative h-full divide-y`}>
-              {timeSlots.map((_, index) => (
-                <div key={index} style={{ height: `${slotHeight * 2}rem`}}></div>
-              ))}
-              
-              {/* Appointments */}
-              {day.appointments.map(apt => {
-                const colorSet = apt.active ? activeColorClasses : colorClasses;
-                const topPosition = apt.start * (slotHeight * 2 / 2);
-                const height = apt.duration * (slotHeight * 2 / 2);
-                return (
-                    <div key={apt.title + apt.name} className="absolute inset-x-0.5" style={{ top: `${topPosition}rem`, height: `calc(${height}rem - 4px)`}}>
-                        <div className={`p-1 rounded-md border h-full overflow-hidden text-xs ${colorSet[apt.color as keyof typeof colorSet]} ${apt.type === 'break' ? 'bg-stripes' : ''}`}>
-                            <p className="font-bold uppercase truncate">{apt.title}</p>
-                            <p className="font-semibold truncate">{apt.name}</p>
-                            <p className="truncate">{apt.time}</p>
-                        </div>
-                    </div>
-                )
-              })}
-            </div>
-          </div>
-        ))}
       </div>
     </div>
   );

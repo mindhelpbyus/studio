@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES2017",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": ["dom", "dom.iterable", "es6"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -18,10 +17,41 @@
         "name": "next"
       }
     ],
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
-    }
+      "@/*": ["./src/*"],
+      "@/core/*": ["./src/core/*"],
+      "@/application/*": ["./src/application/*"],
+      "@/presentation/*": ["./src/presentation/*"],
+      "@/infrastructure/*": ["./src/infrastructure/*"],
+      "@/security/*": ["./src/security/*"],
+      "@/healthcare/*": ["./src/healthcare/*"],
+      "@/monitoring/*": ["./src/monitoring/*"],
+      "@/shared/*": ["./src/shared/*"],
+      "@/config/*": ["./config/*"],
+      "@/tests/*": ["./tests/*"],
+      "@/compliance/*": ["./compliance/*"],
+      "@/docs/*": ["./docs/*"]
+    },
+    "target": "ES2017",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "strictPropertyInitialization": false,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true,
+    "noImplicitOverride": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    ".next",
+    "src-backup"
+  ]
 }

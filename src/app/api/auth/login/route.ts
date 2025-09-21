@@ -1,61 +1,68 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { z } from 'zod';
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
-import { usersDb } from '@/lib/users';
 import { cookies } from 'next/headers';
-
-const loginSchema = z.object({
-  email: z.string().email(),
-  password: z.string(),
-});
+import { loginSchema } from '@/lib/validation/schemas';
+import { userRepository } from '@/lib/database/repositories/user-repository';
+import { generateToken } from '@/lib/auth';
+import { handleApiError, ValidationError, AuthError, logError } from '@/lib/errors/error-handler';
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const validation = loginSchema.safeParse(body);
-
-    if (!validation.success) {
-      return NextResponse.json({ message: 'Invalid input', errors: validation.error.errors }, { status: 400 });
-    }
-
-    const { email, password } = validation.data;
-
-    const user = await usersDb.findByEmail(email);
-
-    if (!user) {
-      return NextResponse.json({ message: 'Invalid credentials' }, { status: 401 });
-    }
-
-    const passwordMatch = await bcrypt.compare(password, user.passwordHash);
-
-    if (!passwordMatch) {
-      return NextResponse.json({ message: 'Invalid credentials' }, { status: 401 });
-    }
     
-    const secret = process.env.JWT_SECRET;
-    if (!secret) {
-        throw new Error('JWT_SECRET is not set in the environment variables.');
+    // Validate input
+    const validationResult = loginSchema.safeParse(body);
+    if (!validationResult.success) {
+      throw new ValidationError('Invalid input data', validationResult.error.errors);
     }
 
-    const token = jwt.sign({ userId: user.id, email: user.email }, secret, {
-      expiresIn: '1h',
+    const { email, password } = validationResult.data;
+
+    // Find user by email
+    const user = await userRepository.findByEmail(email);
+    if (!user) {
+      throw new AuthError('Invalid credentials');
+    }
+
+    // Check if user is active
+    if (!user.isActive) {
+      throw new AuthError('Account is deactivated');
+    }
+
+    // Verify password
+    const passwordMatch = await bcrypt.compare(password, user.passwordHash);
+    if (!passwordMatch) {
+      throw new AuthError('Invalid credentials');
+    }
+
+    // Generate JWT token
+    const token = generateToken({
+      id: user.id,
+      email: user.email,
+      role: user.role,
     });
 
-    cookies().set('token', token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'lax',
-        path: '/',
-        maxAge: 60 * 60, // 1 hour
+    // Set secure cookie
+    const cookieStore = await cookies();
+    cookieStore.set('token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      path: '/',
+      maxAge: 24 * 60 * 60, // 24 hours
     });
 
+    // Return user data (without password)
     const { passwordHash, ...userWithoutPassword } = user;
 
-    return NextResponse.json({ message: 'Login successful', user: userWithoutPassword }, { status: 200 });
+    return NextResponse.json({
+      success: true,
+      message: 'Login successful',
+      user: userWithoutPassword,
+    });
 
   } catch (error) {
-    console.error('Login error:', error);
-    return NextResponse.json({ message: 'An unexpected error occurred.' }, { status: 500 });
+    logError(error, 'POST /api/auth/login');
+    return handleApiError(error);
   }
 }

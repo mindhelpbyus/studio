@@ -170,3 +170,53 @@
         transparent 8px
     );
 }
+
+/* Calendar specific styles */
+.calendar-grid {
+  scroll-behavior: smooth;
+}
+
+.calendar-time-slot {
+  position: relative;
+}
+
+.calendar-time-slot::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 0;
+  width: 8px;
+  height: 1px;
+  background-color: hsl(var(--muted-foreground));
+  opacity: 0.3;
+}
+
+.calendar-appointment {
+  transition: all 0.2s ease-in-out;
+}
+
+.calendar-appointment:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Scrollbar styling for calendar */
+.calendar-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.calendar-scroll::-webkit-scrollbar-track {
+  background: hsl(var(--muted));
+  border-radius: 3px;
+}
+
+.calendar-scroll::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted-foreground));
+  border-radius: 3px;
+  opacity: 0.5;
+}
+
+.calendar-scroll::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--foreground));
+  opacity: 0.7;
+}

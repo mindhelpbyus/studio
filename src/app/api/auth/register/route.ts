@@ -1,43 +1,72 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { z } from 'zod';
 import bcrypt from 'bcrypt';
-import { usersDb } from '@/lib/users';
-
-const registerSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(8, { message: "Password must be at least 8 characters long" }),
-});
+import { registerSchema } from '@/lib/validation/schemas';
+import { userRepository } from '@/lib/database/repositories/user-repository';
+import { generateToken } from '@/lib/auth';
+import { handleApiError, ValidationError, ConflictError, logError } from '@/lib/errors/error-handler';
+import { cookies } from 'next/headers';
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const validation = registerSchema.safeParse(body);
-
-    if (!validation.success) {
-      return NextResponse.json({ message: 'Invalid input', errors: validation.error.errors }, { status: 400 });
+    
+    // Validate input
+    const validationResult = registerSchema.safeParse(body);
+    if (!validationResult.success) {
+      throw new ValidationError('Invalid input data', validationResult.error.errors);
     }
 
-    const { email, password } = validation.data;
+    const { email, password, firstName, lastName, role } = validationResult.data;
 
-    const existingUser = await usersDb.findByEmail(email);
+    // Check if user already exists
+    const existingUser = await userRepository.findByEmail(email);
     if (existingUser) {
-      return NextResponse.json({ message: 'User with this email already exists' }, { status: 409 });
+      throw new ConflictError('User with this email already exists');
     }
 
-    const passwordHash = await bcrypt.hash(password, 10);
+    // Hash password
+    const saltRounds = 12;
+    const passwordHash = await bcrypt.hash(password, saltRounds);
 
-    const newUser = await usersDb.createUser({
+    // Create user
+    const user = await userRepository.create({
       email,
       passwordHash,
+      firstName,
+      lastName,
+      role,
+      isActive: true,
+      emailVerified: false, // In production, send verification email
     });
-    
-    // In a real app, you might want to automatically log the user in here
-    // by generating a JWT and setting a cookie.
 
-    return NextResponse.json({ message: 'User registered successfully', userId: newUser.id }, { status: 201 });
+    // Generate JWT token
+    const token = generateToken({
+      id: user.id,
+      email: user.email,
+      role: user.role,
+    });
+
+    // Set secure cookie
+    const cookieStore = await cookies();
+    cookieStore.set('token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      path: '/',
+      maxAge: 24 * 60 * 60, // 24 hours
+    });
+
+    // Return user data (without password)
+    const { passwordHash: _, ...userWithoutPassword } = user;
+
+    return NextResponse.json({
+      success: true,
+      message: 'Registration successful',
+      user: userWithoutPassword,
+    }, { status: 201 });
 
   } catch (error) {
-    console.error('Registration error:', error);
-    return NextResponse.json({ message: 'An unexpected error occurred.' }, { status: 500 });
+    logError(error, 'POST /api/auth/register');
+    return handleApiError(error);
   }
 }

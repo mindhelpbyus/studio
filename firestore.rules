@@ -1,0 +1,172 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return request.auth.uid == userId;
+    }
+    
+    function hasRole(role) {
+      return isAuthenticated() && 
+             request.auth.token.roles != null && 
+             role in request.auth.token.roles;
+    }
+    
+    function hasPermission(resource, action) {
+      return isAuthenticated() && 
+             request.auth.token.permissions != null &&
+             request.auth.token.permissions[resource] != null &&
+             action in request.auth.token.permissions[resource];
+    }
+    
+    function isValidUser() {
+      return isAuthenticated() && 
+             request.auth.token.email_verified == true;
+    }
+
+    // Users collection - user profile data
+    match /users/{userId} {
+      allow read: if isOwner(userId) || hasRole('admin') || hasRole('provider');
+      allow write: if isOwner(userId) || hasRole('admin');
+      allow create: if isAuthenticated() && isOwner(userId);
+      allow delete: if hasRole('admin');
+    }
+
+    // Appointments collection
+    match /appointments/{appointmentId} {
+      allow read: if isValidUser() && (
+        isOwner(resource.data.patientId) || 
+        isOwner(resource.data.providerId) || 
+        hasRole('admin') ||
+        hasRole('staff')
+      );
+      
+      allow create: if isValidUser() && (
+        isOwner(request.resource.data.patientId) ||
+        hasRole('provider') ||
+        hasRole('admin') ||
+        hasRole('staff')
+      );
+      
+      allow update: if isValidUser() && (
+        isOwner(resource.data.patientId) || 
+        isOwner(resource.data.providerId) || 
+        hasRole('admin') ||
+        hasRole('staff')
+      );
+      
+      allow delete: if hasRole('admin') || hasRole('provider');
+    }
+
+    // Medical records - highly sensitive
+    match /medical_records/{recordId} {
+      allow read: if isValidUser() && (
+        isOwner(resource.data.patientId) || 
+        isOwner(resource.data.providerId) || 
+        hasRole('admin')
+      );
+      
+      allow create: if isValidUser() && (
+        hasRole('provider') || 
+        hasRole('admin')
+      );
+      
+      allow update: if isValidUser() && (
+        isOwner(resource.data.providerId) || 
+        hasRole('admin')
+      );
+      
+      allow delete: if hasRole('admin');
+    }
+
+    // Prescriptions
+    match /prescriptions/{prescriptionId} {
+      allow read: if isValidUser() && (
+        isOwner(resource.data.patientId) || 
+        isOwner(resource.data.providerId) || 
+        hasRole('admin') ||
+        hasRole('pharmacy')
+      );
+      
+      allow create: if isValidUser() && (
+        hasRole('provider') || 
+        hasRole('admin')
+      );
+      
+      allow update: if isValidUser() && (
+        isOwner(resource.data.providerId) || 
+        hasRole('admin')
+      );
+      
+      allow delete: if hasRole('admin');
+    }
+
+    // Messages/Chat
+    match /messages/{messageId} {
+      allow read: if isValidUser() && (
+        isOwner(resource.data.senderId) || 
+        isOwner(resource.data.recipientId) || 
+        hasRole('admin')
+      );
+      
+      allow create: if isValidUser() && 
+                   isOwner(request.resource.data.senderId);
+      
+      allow update: if isValidUser() && 
+                   isOwner(resource.data.senderId);
+      
+      allow delete: if isValidUser() && (
+        isOwner(resource.data.senderId) || 
+        hasRole('admin')
+      );
+    }
+
+    // Notifications
+    match /notifications/{notificationId} {
+      allow read: if isValidUser() && isOwner(resource.data.userId);
+      allow create: if hasRole('admin') || hasRole('system');
+      allow update: if isValidUser() && isOwner(resource.data.userId);
+      allow delete: if isValidUser() && (
+        isOwner(resource.data.userId) || 
+        hasRole('admin')
+      );
+    }
+
+    // Audit logs - read-only for most users
+    match /audit_logs/{logId} {
+      allow read: if hasRole('admin') || hasRole('auditor');
+      allow create: if hasRole('system') || hasRole('admin');
+      allow update: if false; // Audit logs should be immutable
+      allow delete: if hasRole('admin'); // Only for data retention policies
+    }
+
+    // System configuration - admin only
+    match /system_config/{configId} {
+      allow read: if hasRole('admin');
+      allow write: if hasRole('admin');
+    }
+
+    // Analytics data - restricted access
+    match /analytics/{analyticsId} {
+      allow read: if hasRole('admin') || hasRole('analyst');
+      allow create: if hasRole('system') || hasRole('admin');
+      allow update: if hasRole('admin');
+      allow delete: if hasRole('admin');
+    }
+
+    // Health check document
+    match /_health/check {
+      allow read, write: if true; // Allow health checks
+    }
+
+    // Default deny all other documents
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
