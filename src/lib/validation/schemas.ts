@@ -3,7 +3,7 @@ import { z } from 'zod';
 // Authentication schemas
 export const loginSchema = z.object({
   email: z.string().email('Invalid email address'),
-  password: z.string().min(8, 'Password must be at least 8 characters'),
+  password: z.string().min(1, 'Password is required'),
 });
 
 export const registerSchema = z.object({
@@ -37,8 +37,23 @@ export const appointmentSchema = z.object({
   path: ["endTime"],
 });
 
-export const updateAppointmentSchema = appointmentSchema.partial().extend({
+export const updateAppointmentSchema = z.object({
   id: z.string().uuid('Invalid appointment ID'),
+  providerId: z.string().uuid('Invalid provider ID').optional(),
+  patientId: z.string().uuid('Invalid patient ID').optional(),
+  startTime: z.string().datetime('Invalid start time').optional(),
+  endTime: z.string().datetime('Invalid end time').optional(),
+  type: z.enum(['consultation', 'follow-up', 'emergency', 'telehealth']).optional(),
+  notes: z.string().optional(),
+  status: z.enum(['scheduled', 'confirmed', 'cancelled', 'completed']).optional(),
+}).refine((data) => {
+  if (data.startTime && data.endTime) {
+    return new Date(data.endTime) > new Date(data.startTime);
+  }
+  return true;
+}, {
+  message: "End time must be after start time",
+  path: ["endTime"],
 });
 
 // Provider schemas

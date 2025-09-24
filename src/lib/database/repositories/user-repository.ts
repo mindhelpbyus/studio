@@ -1,6 +1,6 @@
 import { User, UserRepository } from '../types';
 import { NotFoundError, ConflictError } from '@/lib/errors/error-handler';
-import { v4 as uuidv4 } from 'uuid';
+import { randomUUID } from 'crypto';
 
 // In-memory implementation for now - replace with actual database
 class InMemoryUserRepository implements UserRepository {
@@ -17,7 +17,7 @@ class InMemoryUserRepository implements UserRepository {
       {
         id: '1',
         email: 'patient@example.com',
-        passwordHash: '$2b$10$rQZ9QmjlQ8ZvQ8ZvQ8ZvQeJ8ZvQ8ZvQ8ZvQ8ZvQ8ZvQ8ZvQ8ZvQ8Z', // password123
+        passwordHash: '$2b$10$K2hl3HItOBvBv8JtFy6Cg.VoKz5QF49OeCQ2NeCHUfoneVpdMWmYa', // password123
         firstName: 'John',
         lastName: 'Doe',
         role: 'patient',
@@ -29,7 +29,7 @@ class InMemoryUserRepository implements UserRepository {
       {
         id: '2',
         email: 'provider@example.com',
-        passwordHash: '$2b$10$rQZ9QmjlQ8ZvQ8ZvQ8ZvQeJ8ZvQ8ZvQ8ZvQ8ZvQ8ZvQ8ZvQ8ZvQ8Z', // password123
+        passwordHash: '$2b$10$K2hl3HItOBvBv8JtFy6Cg.VoKz5QF49OeCQ2NeCHUfoneVpdMWmYa', // password123
         firstName: 'Dr. Jane',
         lastName: 'Smith',
         role: 'provider',
@@ -65,7 +65,7 @@ class InMemoryUserRepository implements UserRepository {
 
     const user: User = {
       ...userData,
-      id: uuidv4(),
+      id: randomUUID(),
       createdAt: new Date(),
       updatedAt: new Date(),
     };

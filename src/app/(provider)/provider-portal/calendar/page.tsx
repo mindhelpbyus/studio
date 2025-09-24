@@ -54,16 +54,16 @@ export default function CalendarPage() {
 
   return (
     <div className="flex h-screen flex-col bg-background">
-      <header className="flex shrink-0 items-center justify-between gap-4 border-b bg-card p-4 shadow-sm">
+      <header className="flex shrink-0 items-center justify-between gap-4 border-b bg-card/80 backdrop-blur-sm p-6 shadow-sm">
         <div className="flex items-center gap-4">
-          <Button onClick={handleToday} variant="outline" className="font-semibold uppercase text-xs">
+          <Button onClick={handleToday} variant="outline" className="font-semibold uppercase text-xs hover:bg-primary hover:text-primary-foreground transition-colors">
             Today
           </Button>
           <div className="flex items-center gap-2">
             <Button onClick={handlePrev} variant="ghost" size="icon" className="h-8 w-8">
               <ChevronLeft className="h-4 w-4" />
             </Button>
-            <span className="text-lg font-semibold min-w-[200px] text-center">
+            <span className="text-xl font-bold min-w-[250px] text-center bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
               {view === 'day' 
                 ? format(currentDate, 'EEEE, MMMM d, yyyy') 
                 : `${format(currentDate, 'MMM d')} - ${format(addDays(currentDate, 6), 'MMM d, yyyy')}`
@@ -75,20 +75,20 @@ export default function CalendarPage() {
           </div>
         </div>
         <div className="flex items-center gap-4">
-          <Button variant="outline" className="gap-2 hidden sm:flex">
+          <Button variant="outline" className="gap-2 hidden sm:flex hover:bg-muted/50 transition-colors">
             <SlidersHorizontal size={16} />
             Filters
           </Button>
-          <div className="flex items-center rounded-lg border bg-background text-sm font-medium overflow-hidden">
+          <div className="flex items-center rounded-lg border bg-background text-sm font-medium overflow-hidden shadow-sm">
             <button
               onClick={() => setView('day')}
-              className={`px-4 py-2 transition-colors ${view === 'day' ? 'bg-primary text-primary-foreground' : 'hover:bg-muted/50'}`}
+              className={`px-6 py-2.5 transition-all duration-200 ${view === 'day' ? 'bg-primary text-primary-foreground shadow-md' : 'hover:bg-muted/50'}`}
             >
               Day
             </button>
             <button
               onClick={() => setView('week')}
-              className={`px-4 py-2 border-l transition-colors ${view === 'week' ? 'bg-primary text-primary-foreground' : 'hover:bg-muted/50'}`}
+              className={`px-6 py-2.5 border-l transition-all duration-200 ${view === 'week' ? 'bg-primary text-primary-foreground shadow-md' : 'hover:bg-muted/50'}`}
             >
               Week
             </button>
@@ -99,7 +99,7 @@ export default function CalendarPage() {
         <main className="flex-1 overflow-hidden">
           {view === 'week' ? <WeekViewCalendar currentDate={currentDate} /> : <DayViewCalendar currentDate={currentDate} />}
         </main>
-        <aside className="w-[380px] shrink-0 border-l bg-card hidden lg:block">
+        <aside className="w-[380px] shrink-0 border-l bg-card/50 backdrop-blur-sm hidden lg:block">
           <AppointmentDetail />
         </aside>
       </div>

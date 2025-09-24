@@ -79,6 +79,11 @@ export default function Home() {
                 Provider Portal
               </Button>
             </Link>
+            <Link href="/calendar-demo">
+              <Button variant="link" size="sm" className="text-blue-600 font-medium">
+                📅 Calendar Demo
+              </Button>
+            </Link>
           </div>
         </div>
       </footer>

@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useFormState, useFormStatus } from 'react-dom';
+import { useActionState, useFormStatus } from 'react-dom';
 import Link from 'next/link';
 import { login } from '@/app/actions';
 
@@ -79,7 +79,7 @@ function PatientJoinForm() {
 
 export default function LoginPage() {
   const initialState = { error: null, message: '' };
-  const [state, formAction] = useFormState(login, initialState);
+  const [state, formAction] = useActionState(login, initialState);
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center gap-10 bg-muted/50 p-4">

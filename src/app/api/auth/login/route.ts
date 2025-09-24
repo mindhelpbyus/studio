@@ -4,7 +4,8 @@ import { cookies } from 'next/headers';
 import { loginSchema } from '@/lib/validation/schemas';
 import { userRepository } from '@/lib/database/repositories/user-repository';
 import { generateToken } from '@/lib/auth';
-import { handleApiError, ValidationError, AuthError, logError } from '@/lib/errors/error-handler';
+import { handleApiError, ValidationError, logError } from '@/lib/errors/error-handler';
+import { AuthError } from '@/lib/auth';
 
 export async function POST(req: NextRequest) {
   try {
