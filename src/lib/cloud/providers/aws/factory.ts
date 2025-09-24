@@ -3,13 +3,13 @@
  */
 
 import { CloudConfig, CloudServiceFactory } from '../../interfaces';
-import { AWSStorageService } from './storage';
+import { AWSComputeService } from './compute';
 import { AWSDatabaseService } from './database';
-import { AWSSecretsService } from './secrets';
+import { AWSIAMService } from './iam';
 import { AWSMessagingService } from './messaging';
 import { AWSMonitoringService } from './monitoring';
-import { AWSComputeService } from './compute';
-import { AWSIAMService } from './iam';
+import { AWSSecretsService } from './secrets';
+import { AWSStorageService } from './storage';
 
 export class AWSServiceFactory implements CloudServiceFactory {
   constructor(private config: CloudConfig) {}

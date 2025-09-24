@@ -1,13 +1,13 @@
 'use client';
 
-import React from 'react';
-import { CalendarAppointment, Therapist } from '@/lib/calendar-types';
 import { format } from 'date-fns';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { Card } from '@/components/ui/card';
+import { AlertOctagon, Clock, ArrowRightLeft } from 'lucide-react';
+import React from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { AlertOctagon, Clock, ArrowRightLeft } from 'lucide-react';
+import { Card } from '@/components/ui/card';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { CalendarAppointment, Therapist } from '@/lib/calendar-types';
 
 interface ConflictViewProps {
   appointments: CalendarAppointment[];

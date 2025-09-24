@@ -1,8 +1,8 @@
-import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi } from '@jest/globals';
-import { CalendarFilters } from '../calendar-filters';
+import { render, screen, fireEvent } from '@testing-library/react';
+import React from 'react';
 import { CalendarFilter, Therapist } from '@/lib/calendar-types';
+import { CalendarFilters } from '../calendar-filters';
 
 describe('CalendarFilters', () => {
   const mockTherapists: Therapist[] = [

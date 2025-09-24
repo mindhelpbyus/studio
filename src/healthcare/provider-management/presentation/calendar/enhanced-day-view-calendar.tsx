@@ -1,23 +1,23 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
 import { format } from 'date-fns';
-import { CalendarAppointment, AppointmentType, AppointmentStatus, AppointmentColor } from '@/lib/calendar-types';
-import { CalendarFormAppointment, TimeSlot } from '@/core/calendar/types/calendar.types';
+import React, { useState, useMemo } from 'react';
 import { Therapist, Service } from '@/core/calendar/calendar-types';
+import { calculateAppointmentPosition } from '@/core/calendar/calendar-utils';
+import { MOCK_APPOINTMENTS } from '@/core/calendar/mock-data';
+import { CalendarFormAppointment, TimeSlot } from '@/core/calendar/types/calendar.types';
+import { AppointmentDetailSidebar } from '@/healthcare/appointment-management/presentation/components/calendar/appointment-detail-sidebar';
+import type { AppointmentDetailSidebarProps } from '@/healthcare/appointment-management/presentation/components/calendar/appointment-detail-sidebar.types';
+import { AppointmentForm } from '@/healthcare/appointment-management/presentation/components/calendar/appointment-form';
+import type { AppointmentFormProps } from '@/healthcare/appointment-management/presentation/components/calendar/appointment-form.types';
+import { useContextMenu } from '@/hooks/use-context-menu';
+import { CalendarAppointment, AppointmentType, AppointmentStatus, AppointmentColor } from '@/lib/calendar-types';
+import { ConflictDetectionService } from '@/lib/conflict-detection';
+import { ContextMenu, ContextMenuBuilder } from '@/shared/components/calendar/context-menu';
+import { CustomDragLayer } from '@/shared/components/calendar/custom-drag-layer';
 import { DragDropProvider } from '@/shared/components/calendar/drag-drop-provider';
 import { DraggableAppointmentBlock } from '@/shared/components/calendar/draggable-appointment-block';
 import { DropZone } from '@/shared/components/calendar/drop-zone';
-import { ContextMenu, ContextMenuBuilder } from '@/shared/components/calendar/context-menu';
-import { AppointmentForm } from '@/healthcare/appointment-management/presentation/components/calendar/appointment-form';
-import type { AppointmentFormProps } from '@/healthcare/appointment-management/presentation/components/calendar/appointment-form.types';
-import { AppointmentDetailSidebar } from '@/healthcare/appointment-management/presentation/components/calendar/appointment-detail-sidebar';
-import type { AppointmentDetailSidebarProps } from '@/healthcare/appointment-management/presentation/components/calendar/appointment-detail-sidebar.types';
-import { CustomDragLayer } from '@/shared/components/calendar/custom-drag-layer';
-import { useContextMenu } from '@/hooks/use-context-menu';
-import { ConflictDetectionService } from '@/lib/conflict-detection';
-import { calculateAppointmentPosition } from '@/core/calendar/calendar-utils';
-import { MOCK_APPOINTMENTS } from '@/core/calendar/mock-data';
 
 // Convert your existing sample data to the new format
 const sampleTherapists: Therapist[] = [

@@ -1,13 +1,13 @@
 
 'use client';
 
-import * as React from 'react';
 import { format, addDays } from 'date-fns';
+import * as React from 'react';
 import { EnhancedCalendarContainer } from '@/components/calendar/enhanced-calendar-container';
+import { toast } from '@/hooks/use-toast';
+import { AdvancedConflictDetectionService } from '@/lib/advanced-conflict-detection';
 import { CalendarAppointment, AppointmentColor, Service } from '@/lib/calendar-types';
 import { ConflictDetectionService } from '@/lib/conflict-detection';
-import { AdvancedConflictDetectionService } from '@/lib/advanced-conflict-detection';
-import { toast } from '@/hooks/use-toast';
 
 const MOCK_APPOINTMENTS: CalendarAppointment[] = [
   {

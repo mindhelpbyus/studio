@@ -1,6 +1,6 @@
 import { format, startOfWeek, addDays, isSameDay, differenceInMinutes, startOfDay, addMinutes } from 'date-fns';
-import { CalendarAppointment, CalendarView } from './calendar-types';
 import { CALENDAR_CONSTANTS, appointmentColors, SERVICE_COLORS, STATUS_MODIFIERS } from './calendar-styles';
+import { CalendarAppointment, CalendarView } from './calendar-types';
 
 /**
  * Generate time slots for a day (24 hours)

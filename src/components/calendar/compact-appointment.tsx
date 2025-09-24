@@ -1,10 +1,10 @@
 'use client';
 
-import React from 'react';
 import { format } from 'date-fns';
+import React from 'react';
+import { getAppointmentColor } from '@/lib/calendar-utils';
 import { CalendarAppointment } from '@/lib/enhanced-appointments';
 import { cn } from '@/lib/utils';
-import { getAppointmentColor } from '@/lib/calendar-utils';
 
 interface CompactAppointmentProps {
   appointment: CalendarAppointment;

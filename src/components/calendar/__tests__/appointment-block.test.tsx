@@ -1,8 +1,8 @@
-import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi } from '@jest/globals';
-import { AppointmentBlock } from '../appointment-block';
+import { render, screen, fireEvent } from '@testing-library/react';
+import React from 'react';
 import { CalendarAppointment } from '@/lib/calendar-types';
+import { AppointmentBlock } from '../appointment-block';
 
 // Mock the utility functions
 vi.mock('@/lib/calendar-utils', () => ({

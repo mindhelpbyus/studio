@@ -1,11 +1,11 @@
 'use client';
 
+import { format } from 'date-fns';
 import React from 'react';
 import { useDragLayer } from 'react-dnd';
-import { format } from 'date-fns';
 import { CalendarAppointment } from '@/lib/calendar-types';
-import { cn } from '@/lib/utils';
 import { getAppointmentColor } from '@/lib/calendar-utils';
+import { cn } from '@/lib/utils';
 import { ItemTypes } from './draggable-appointment-block';
 
 interface DragItem {

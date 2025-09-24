@@ -2,12 +2,12 @@
 
 import React, { useState, useCallback } from 'react';
 import { CalendarViewConfig, CalendarFilter, CalendarAppointment, Therapist, UserRole, CalendarView } from '@/lib/calendar-types';
-import { WaitlistView } from './views/waitlist-view';
-import { ConflictView } from './views/conflict-view';
+import { MockDataService } from '@/lib/enhanced-appointments';
+import { AppointmentDetailSidebar } from './appointment-detail-sidebar';
 import { CalendarGrid } from './calendar-grid';
 import { CalendarHeader } from './calendar-header';
-import { AppointmentDetailSidebar } from './appointment-detail-sidebar';
-import { MockDataService } from '@/lib/enhanced-appointments';
+import { ConflictView } from './views/conflict-view';
+import { WaitlistView } from './views/waitlist-view';
 
 interface CalendarContainerProps {
   userRole: UserRole;

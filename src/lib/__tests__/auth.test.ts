@@ -1,5 +1,5 @@
-import { verifyToken, generateToken, AuthError } from '../auth';
 import jwt from 'jsonwebtoken';
+import { verifyToken, generateToken, AuthError } from '../auth';
 
 // Mock environment variable
 const mockJwtSecret = 'test-jwt-secret-for-testing-purposes-only';

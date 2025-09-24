@@ -1,11 +1,11 @@
 'use client';
 
-import React from 'react';
-import { CalendarAppointment, Therapist } from '@/lib/calendar-types';
 import { format, addHours, startOfDay, endOfDay, isSameDay } from 'date-fns';
-import { EnhancedAppointmentBlock } from '../../calendar/enhanced-appointment-block';
-import { ScrollArea } from '@/components/ui/scroll-area';
+import React from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { CalendarAppointment, Therapist } from '@/lib/calendar-types';
+import { EnhancedAppointmentBlock } from '../../calendar/enhanced-appointment-block';
 
 interface ResourceTimelineProps {
   date: Date;

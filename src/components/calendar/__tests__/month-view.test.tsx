@@ -1,8 +1,8 @@
-import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { format, addDays, startOfMonth } from 'date-fns';
-import { MonthView } from '../month-view';
+import React from 'react';
 import { CalendarAppointment, Therapist } from '@/lib/calendar-types';
+import { MonthView } from '../month-view';
 
 // Mock the utility functions
 jest.mock('@/lib/calendar-utils', () => ({

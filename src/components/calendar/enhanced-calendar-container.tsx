@@ -1,24 +1,5 @@
 'use client';
 
-import React, { useState, useCallback } from 'react';
-import { DayView } from './DayView';
-import { WeekView } from './WeekView';
-import { MonthView } from './MonthView';
-import { AgendaView } from './views/agenda-view';
-import { ResourceTimeline } from './views/resource-timeline';
-import { CalendarView, CalendarAppointment, Therapist, Service } from '@/lib/calendar-types';
-import { AppointmentForm } from '@/healthcare/appointment-management/presentation/components/calendar/appointment-form';
-import { AppointmentDetailSidebar } from './appointment-detail-sidebar';
-import { CalendarWithContextMenu } from './calendar-with-context-menu';
-import { CalendarWithDragDrop } from './calendar-with-drag-drop';
-import { ConflictDetectionService } from '@/lib/conflict-detection';
-import { AdvancedConflictDetectionService } from '@/lib/advanced-conflict-detection';
-import { Button } from '../ui/button';
-import { Tabs, TabsList, TabsTrigger } from '../ui/tabs';
-import { Calendar as CalendarIcon, ChevronLeft, ChevronRight, Plus, Settings } from 'lucide-react';
-import { KeyboardShortcutsDialog } from './keyboard-shortcuts-dialog';
-import { defaultTheme, CalendarTheme } from '@/core/calendar/theme';
-import { useKeyboardNavigation } from '@/lib/use-keyboard-navigation';
 import {
   addDays,
   addMonths,
@@ -30,6 +11,25 @@ import {
   endOfWeek,
   addHours
 } from 'date-fns';
+import { Calendar as CalendarIcon, ChevronLeft, ChevronRight, Plus, Settings } from 'lucide-react';
+import React, { useState, useCallback } from 'react';
+import { defaultTheme, CalendarTheme } from '@/core/calendar/theme';
+import { AppointmentForm } from '@/healthcare/appointment-management/presentation/components/calendar/appointment-form';
+import { AdvancedConflictDetectionService } from '@/lib/advanced-conflict-detection';
+import { CalendarView, CalendarAppointment, Therapist, Service } from '@/lib/calendar-types';
+import { ConflictDetectionService } from '@/lib/conflict-detection';
+import { useKeyboardNavigation } from '@/lib/use-keyboard-navigation';
+import { Button } from '../ui/button';
+import { AppointmentDetailSidebar } from './appointment-detail-sidebar';
+import { DayView } from './DayView';
+import { WeekView } from './WeekView';
+import { MonthView } from './MonthView';
+import { AgendaView } from './views/agenda-view';
+import { ResourceTimeline } from './views/resource-timeline';
+import { CalendarWithContextMenu } from './calendar-with-context-menu';
+import { CalendarWithDragDrop } from './calendar-with-drag-drop';
+import { Tabs, TabsList, TabsTrigger } from '../ui/tabs';
+import { KeyboardShortcutsDialog } from './keyboard-shortcuts-dialog';
 
 type CalendarViewType = 'day' | 'week' | 'month' | 'agenda' | 'timeline';
 

@@ -1,11 +1,11 @@
 'use client';
 
 import React from 'react';
-import { CalendarAppointment, Therapist, CalendarViewConfig } from '@/lib/calendar-types';
-import { AppointmentBlock } from './appointment-block';
-import { generateTimeSlots, getWeekDays, filterAppointmentsForDay } from '@/lib/calendar-utils';
-import { CALENDAR_CONSTANTS } from '@/lib/calendar-styles';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { CalendarAppointment, Therapist, CalendarViewConfig } from '@/lib/calendar-types';
+import { generateTimeSlots, getWeekDays, filterAppointmentsForDay } from '@/lib/calendar-utils';
+import { AppointmentBlock } from './appointment-block';
+import { CALENDAR_CONSTANTS } from '@/lib/calendar-styles';
 
 interface CalendarColumnProps {
   therapist: Therapist;

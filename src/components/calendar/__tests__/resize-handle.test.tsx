@@ -1,7 +1,7 @@
-import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { ResizeHandle } from '../resize-handle';
+import React from 'react';
 import { CalendarAppointment } from '@/lib/calendar-types';
+import { ResizeHandle } from '../resize-handle';
 
 const mockAppointment: CalendarAppointment = {
   id: 'apt-1',

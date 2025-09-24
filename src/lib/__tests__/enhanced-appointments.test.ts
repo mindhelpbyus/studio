@@ -1,6 +1,6 @@
 import { describe, it, expect } from '@jest/globals';
-import { AppointmentService, WorkingHoursService, MockDataService } from '../enhanced-appointments';
 import { CalendarAppointment } from '../calendar-types';
+import { AppointmentService, WorkingHoursService, MockDataService } from '../enhanced-appointments';
 
 describe('AppointmentService', () => {
   describe('validateAppointment', () => {

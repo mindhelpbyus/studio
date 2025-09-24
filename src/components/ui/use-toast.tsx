@@ -1,5 +1,5 @@
-import * as React from 'react';
 import { ToastAction } from '@radix-ui/react-toast';
+import * as React from 'react';
 import { useToast as useRadixToast } from '@/hooks/use-toast';
 
 type ToastActionElement = React.ReactElement<typeof ToastAction>;

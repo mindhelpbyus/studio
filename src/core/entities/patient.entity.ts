@@ -4,10 +4,10 @@
  * @compliance HIPAA, GDPR, ISO/IEC 27799
  */
 
-import { BaseEntity } from './base.entity';
-import { PersonalHealthInformation } from '../value-objects/phi.vo';
 import { ContactInformation } from '../value-objects/contact.vo';
 import { InsuranceInformation } from '../value-objects/insurance.vo';
+import { PersonalHealthInformation } from '../value-objects/phi.vo';
+import { BaseEntity } from './base.entity';
 
 export interface PatientEntity extends BaseEntity {
   readonly patientId: string;

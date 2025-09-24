@@ -1,5 +1,5 @@
-import { CalendarAppointment } from './calendar-types';
 import { addDays, addWeeks, addMonths, setDate, getDate } from 'date-fns';
+import { CalendarAppointment } from './calendar-types';
 
 export type RecurrencePattern = {
   frequency: 'daily' | 'weekly' | 'monthly';

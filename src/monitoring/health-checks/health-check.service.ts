@@ -4,8 +4,8 @@
  * @compliance ISO/IEC 27001, NIST Cybersecurity Framework
  */
 
-import { Injectable } from '../../security/decorators/injectable.decorator';
 import { AuditLogger } from '../../security/audit/audit-logger.service';
+import { Injectable } from '../../security/decorators/injectable.decorator';
 
 export interface HealthCheckResult {
   readonly status: 'healthy' | 'degraded' | 'unhealthy';

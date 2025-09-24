@@ -8,8 +8,8 @@
  * - CheckSymptomsOutput - The return type for the checkSymptoms function.
  */
 
-import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
+import {ai} from '@/ai/genkit';
 
 const CheckSymptomsInputSchema = z.object({
   symptoms: z

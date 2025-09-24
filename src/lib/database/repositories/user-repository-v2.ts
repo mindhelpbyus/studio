@@ -3,10 +3,10 @@
  * Supports multiple database backends through abstraction layer
  */
 
-import { AbstractRepository, QueryOptions } from '../abstract-repository';
 import { CloudDatabaseService } from '../../cloud/interfaces';
-import { User } from '../types';
 import { NotFoundError, ConflictError } from '../../errors/error-handler';
+import { AbstractRepository, QueryOptions } from '../abstract-repository';
+import { User } from '../types';
 
 export class UserRepository extends AbstractRepository<User, string> {
   constructor(db: CloudDatabaseService) {

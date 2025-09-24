@@ -1,8 +1,8 @@
-import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { AppointmentForm } from '../appointment-form';
+import React from 'react';
 import { CalendarAppointment, Therapist, Service } from '@/lib/calendar-types';
+import { AppointmentForm } from '../appointment-form';
 
 // Mock the enhanced appointments service
 jest.mock('@/lib/enhanced-appointments', () => ({

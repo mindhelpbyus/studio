@@ -1,7 +1,7 @@
-import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { CalendarWithDragDrop } from '../calendar-with-drag-drop';
+import React from 'react';
 import { CalendarAppointment, Therapist, CalendarViewConfig, CalendarFilter } from '@/lib/calendar-types';
+import { CalendarWithDragDrop } from '../calendar-with-drag-drop';
 
 // Mock the drag and drop dependencies
 jest.mock('react-dnd', () => ({

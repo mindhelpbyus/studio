@@ -1,7 +1,7 @@
-import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { ContextMenu, ContextMenuBuilder } from '../context-menu';
+import React from 'react';
 import { CalendarAppointment, TimeSlot, ContextMenuAction } from '@/lib/calendar-types';
+import { ContextMenu, ContextMenuBuilder } from '../context-menu';
 
 const mockAppointment: CalendarAppointment = {
   id: 'apt-1',

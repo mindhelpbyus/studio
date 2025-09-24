@@ -1,12 +1,12 @@
 'use client';
 
+import { User, Clock, AlertTriangle } from 'lucide-react';
 import React from 'react';
 import { CalendarAppointment } from '@/lib/calendar-types';
 import { calculateAppointmentPosition, formatTime } from '@/lib/calendar-utils';
 import { cn } from '@/lib/utils';
-import { User, Clock, AlertTriangle } from 'lucide-react';
-import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip';
 import { Badge } from '../ui/badge';
+import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip';
 
 interface AppointmentBlockProps {
   appointment: CalendarAppointment;

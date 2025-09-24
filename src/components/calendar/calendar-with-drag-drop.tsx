@@ -2,12 +2,12 @@
 
 import React, { useState, useCallback } from 'react';
 import { CalendarAppointment, Therapist, CalendarViewConfig, CalendarFilter } from '@/lib/calendar-types';
-import { ConflictDetectionService } from '@/lib/conflict-detection';
-import { DragDropProvider } from './drag-drop-provider';
-import { CustomDragLayer } from './custom-drag-layer';
-import { DropZone } from './drop-zone';
-import { DraggableAppointmentBlock } from './draggable-appointment-block';
 import { generateTimeSlots, calculateAppointmentPosition } from '@/lib/calendar-utils';
+import { ConflictDetectionService } from '@/lib/conflict-detection';
+import { CustomDragLayer } from './custom-drag-layer';
+import { DragDropProvider } from './drag-drop-provider';
+import { DraggableAppointmentBlock } from './draggable-appointment-block';
+import { DropZone } from './drop-zone';
 
 interface CalendarWithDragDropProps {
   appointments: CalendarAppointment[];

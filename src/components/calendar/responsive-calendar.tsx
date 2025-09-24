@@ -1,11 +1,11 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { CalendarContainer } from './calendar-container';
-import { UserRole, CalendarView } from '@/lib/calendar-types';
-import { Button } from '@/components/ui/button';
 import { Menu, X } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Button } from '@/components/ui/button';
+import { UserRole, CalendarView } from '@/lib/calendar-types';
 import { cn } from '@/lib/utils';
+import { CalendarContainer } from './calendar-container';
 
 interface ResponsiveCalendarProps {
   userRole: UserRole;

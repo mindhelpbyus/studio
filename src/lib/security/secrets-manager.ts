@@ -4,8 +4,8 @@
  */
 
 import crypto from 'crypto';
-import { CloudProvider } from '../cloud/interfaces';
 import { getCloudFactory } from '../cloud/factory';
+import { CloudProvider } from '../cloud/interfaces';
 
 export interface SecretConfig {
   provider: CloudProvider;

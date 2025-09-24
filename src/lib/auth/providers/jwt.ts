@@ -3,9 +3,12 @@
  * Implements JWT-based authentication with support for access and refresh tokens
  */
 
-import jwt from 'jsonwebtoken';
-import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import QRCode from 'qrcode';
+import speakeasy from 'speakeasy';
+import { DatabaseManager } from '../../database/database-factory';
 import {
   AuthProvider,
   AuthConfig,
@@ -20,9 +23,6 @@ import {
   MFARequiredError,
   InvalidMFACodeError,
 } from '../interfaces';
-import { DatabaseManager } from '../../database/database-factory';
-import speakeasy from 'speakeasy';
-import QRCode from 'qrcode';
 
 export class JWTProvider implements AuthProvider {
   private config: AuthConfig;

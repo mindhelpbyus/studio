@@ -3,9 +3,9 @@
 import React from 'react';
 import { CalendarAppointment } from '@/lib/calendar-types';
 import { calculateAppointmentPosition, formatAppointmentTime } from '@/lib/calendar-utils';
-import { appointmentColors, activeAppointmentColors, breakAppointmentStyles, STATUS_MODIFIERS, TYPOGRAPHY } from '@/lib/calendar-styles';
 import { AppointmentService } from '@/lib/enhanced-appointments';
 import { cn } from '@/lib/utils';
+import { appointmentColors, activeAppointmentColors, breakAppointmentStyles, STATUS_MODIFIERS, TYPOGRAPHY } from '@/lib/calendar-styles';
 
 interface AppointmentBlockProps {
   appointment: CalendarAppointment;

@@ -1,8 +1,8 @@
 'use client';
 
+import { ToastAction } from '@radix-ui/react-toast';
 import * as React from 'react';
 import { useToast as useRadixToast } from '@/hooks/use-toast';
-import { ToastAction } from '@radix-ui/react-toast';
 
 export type ToastActionElement = React.ReactElement<typeof ToastAction>;
 

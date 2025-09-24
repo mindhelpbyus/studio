@@ -4,8 +4,8 @@
  * @compliance GDPR Articles 15-22
  */
 
-import { Injectable } from '../../security/decorators/injectable.decorator';
 import { AuditLogger } from '../../security/audit/audit-logger.service';
+import { Injectable } from '../../security/decorators/injectable.decorator';
 import { EncryptionService } from '../../security/encryption/encryption.service';
 
 export interface DataSubjectRequest {

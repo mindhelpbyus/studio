@@ -1,20 +1,5 @@
 'use client';
 
-import React from 'react';
-import { CalendarAppointment } from '@/lib/calendar-types';
-import { formatAppointmentTime } from '@/lib/calendar-utils';
-import { AppointmentService, MockDataService } from '@/lib/enhanced-appointments';
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetDescription,
-} from '@/components/ui/sheet';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Separator } from '@/components/ui/separator';
 import { 
   Clock, 
   User, 
@@ -26,6 +11,21 @@ import {
   Calendar,
   MapPin
 } from 'lucide-react';
+import React from 'react';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+} from '@/components/ui/sheet';
+import { CalendarAppointment } from '@/lib/calendar-types';
+import { formatAppointmentTime } from '@/lib/calendar-utils';
+import { AppointmentService, MockDataService } from '@/lib/enhanced-appointments';
 import { cn } from '@/lib/utils';
 
 export interface AppointmentDetailSidebarProps {

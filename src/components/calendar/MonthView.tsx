@@ -1,8 +1,8 @@
 'use client';
 
+import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameMonth } from 'date-fns';
 import React from 'react';
 import { CalendarAppointment } from '@/lib/calendar-types';
-import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameMonth } from 'date-fns';
 
 interface MonthViewProps {
   date: Date;
@@ -19,7 +19,16 @@ export const MonthView: React.FC<MonthViewProps> = ({
 }) => {
   const monthStart = startOfMonth(date);
   const monthEnd = endOfMonth(date);
-  const days = eachDayOfInterval({ start: monthStart, end: monthEnd });
+  
+  // Adjust the start date to include days from previous month to fill the first week
+  const calendarStart = new Date(monthStart);
+  calendarStart.setDate(calendarStart.getDate() - monthStart.getDay());
+  
+  // Adjust the end date to include days from next month to fill the last week
+  const calendarEnd = new Date(monthEnd);
+  calendarEnd.setDate(calendarEnd.getDate() + (6 - monthEnd.getDay()));
+  
+  const days = eachDayOfInterval({ start: calendarStart, end: calendarEnd });
 
   const getAppointmentsForDay = (day: Date) => {
     return appointments.filter((apt) => {
@@ -52,9 +61,8 @@ export const MonthView: React.FC<MonthViewProps> = ({
         return (
           <div
             key={day.toISOString()}
-            className={`bg-white p-2 min-h-[120px] ${
-              !isCurrentMonth ? 'text-gray-400' : ''
-            } hover:bg-gray-50 cursor-pointer`}
+            className={`bg-white p-2 min-h-[120px] relative ${                !isCurrentMonth ? 'text-gray-400 bg-gray-50' : 'hover:bg-gray-50'
+            } ${dayAppointments.length > 0 ? 'font-semibold' : ''} cursor-pointer border border-gray-100`}
             onClick={() => onDateClick(day)}
           >
             <div className="font-medium text-sm mb-1">

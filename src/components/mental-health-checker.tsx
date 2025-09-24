@@ -1,16 +1,16 @@
 
 'use client';
 
-import { useFormStatus } from 'react-dom';
+import { AlertCircle, Bot, HandHelping, Loader2, Sparkles, Stethoscope } from 'lucide-react';
+import Link from 'next/link';
 import { useActionState } from 'react';
+import { useFormStatus } from 'react-dom';
 import { getSymptomAnalysis } from '@/app/actions';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { AlertCircle, Bot, HandHelping, Loader2, Sparkles, Stethoscope } from 'lucide-react';
+import { Textarea } from '@/components/ui/textarea';
 import { Alert, AlertDescription, AlertTitle } from './ui/alert';
-import Link from 'next/link';
 
 function SubmitButton() {
   const { pending } = useFormStatus();

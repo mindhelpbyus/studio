@@ -4,8 +4,8 @@
  * @compliance HIPAA, GDPR, NIST, FIPS 140-2
  */
 
-import { Injectable } from '../decorators/injectable.decorator';
 import { randomBytes, createCipher, createDecipher, pbkdf2Sync, createHash } from 'crypto';
+import { Injectable } from '../decorators/injectable.decorator';
 
 export interface EncryptionResult {
   readonly encryptedData: string;

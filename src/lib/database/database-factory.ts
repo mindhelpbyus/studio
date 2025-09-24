@@ -3,9 +3,9 @@
  * Supports PostgreSQL, MySQL, MongoDB, DynamoDB, CosmosDB
  */
 
-import { DatabaseAdapter, DatabaseConfig, QueryResult, Transaction } from './interfaces';
-import { PostgreSQLAdapter } from './adapters/postgresql';
 import { FirestoreAdapter } from './adapters/firestore';
+import { PostgreSQLAdapter } from './adapters/postgresql';
+import { DatabaseAdapter, DatabaseConfig, QueryResult, Transaction } from './interfaces';
 // Note: Other adapters are stubs - implement as needed
 // import { MySQLAdapter } from './adapters/mysql';
 // import { MongoDBAdapter } from './adapters/mongodb';

@@ -1,6 +1,6 @@
-import { User, UserRepository } from '../types';
-import { NotFoundError, ConflictError } from '@/lib/errors/error-handler';
 import { randomUUID } from 'crypto';
+import { NotFoundError, ConflictError } from '@/lib/errors/error-handler';
+import { User, UserRepository } from '../types';
 
 // In-memory implementation for now - replace with actual database
 class InMemoryUserRepository implements UserRepository {

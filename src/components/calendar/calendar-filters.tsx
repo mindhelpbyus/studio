@@ -1,7 +1,8 @@
 'use client';
 
+import { Filter, X } from 'lucide-react';
 import React, { useState } from 'react';
-import { CalendarFilter, Therapist, AppointmentStatus } from '@/lib/calendar-types';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
@@ -10,9 +11,8 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import { Badge } from '@/components/ui/badge';
-import { Filter, X } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
+import { CalendarFilter, Therapist, AppointmentStatus } from '@/lib/calendar-types';
 
 interface CalendarFiltersProps {
   filters: CalendarFilter;

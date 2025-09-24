@@ -4,8 +4,8 @@
  * @compliance SOC 2 Type II Trust Services Criteria
  */
 
-import { Injectable } from '../../security/decorators/injectable.decorator';
 import { AuditLogger } from '../../security/audit/audit-logger.service';
+import { Injectable } from '../../security/decorators/injectable.decorator';
 
 export interface ControlTest {
   readonly testId: string;

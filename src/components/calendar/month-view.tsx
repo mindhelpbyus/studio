@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useMemo } from 'react';
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameMonth, isSameDay, isToday } from 'date-fns';
+import React, { useMemo } from 'react';
 import { CalendarAppointment, Therapist } from '@/lib/enhanced-appointments';
 import { cn } from '@/lib/utils';
 import { CompactAppointment } from './compact-appointment';

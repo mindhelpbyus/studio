@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import {
   CalendarDays,
   CreditCard,
@@ -21,6 +20,7 @@ import {
   ChevronDown,
   ChevronRight
 } from 'lucide-react';
+import { useState } from 'react';
 
 type Feature = {
   name: string;

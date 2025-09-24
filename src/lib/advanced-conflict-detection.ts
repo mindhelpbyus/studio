@@ -1,6 +1,6 @@
+import { isSameDay, addDays, eachDayOfInterval } from 'date-fns';
 import { CalendarAppointment, Therapist } from './calendar-types';
 import { ConflictDetectionService, ConflictResult } from './conflict-detection';
-import { isSameDay, addDays, eachDayOfInterval } from 'date-fns';
 
 export class AdvancedConflictDetectionService extends ConflictDetectionService {
   /**

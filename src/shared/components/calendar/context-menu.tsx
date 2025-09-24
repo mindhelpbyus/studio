@@ -1,8 +1,5 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
-import { CalendarAppointment, TimeSlot, ContextMenuAction, ContextMenuProps } from '@/lib/calendar-types';
-import { cn } from '@/lib/utils';
 import { 
   Edit, 
   Trash2, 
@@ -15,6 +12,9 @@ import {
   Move,
   MoreHorizontal
 } from 'lucide-react';
+import React, { useEffect, useRef } from 'react';
+import { CalendarAppointment, TimeSlot, ContextMenuAction, ContextMenuProps } from '@/lib/calendar-types';
+import { cn } from '@/lib/utils';
 
 const iconMap = {
   edit: Edit,

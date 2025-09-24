@@ -1,10 +1,7 @@
 'use client';
 
-import React from 'react';
-import { CalendarAppointment } from '@/lib/calendar-types';
 import { format, isSameDay, startOfDay, endOfDay } from 'date-fns';
-import { EnhancedAppointmentBlock } from '../../calendar/enhanced-appointment-block';
-import { ScrollArea } from '@/components/ui/scroll-area';
+import React from 'react';
 import { 
   Card, 
   CardContent, 
@@ -12,6 +9,9 @@ import {
   CardHeader, 
   CardTitle 
 } from '@/components/ui/card';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { CalendarAppointment } from '@/lib/calendar-types';
+import { EnhancedAppointmentBlock } from '../../calendar/enhanced-appointment-block';
 
 interface AgendaViewProps {
   appointments: CalendarAppointment[];

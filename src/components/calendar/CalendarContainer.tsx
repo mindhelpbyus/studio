@@ -1,15 +1,17 @@
 'use client';
 
-import React, { useState } from 'react';
-import { DayView } from './DayView';
-import { WeekView } from './WeekView';
-import { MonthView } from './MonthView';
-import { CalendarView, CalendarAppointment, Therapist } from '@/lib/calendar-types';
-import { AppointmentForm } from './appointment-form';
-import { AppointmentDetailSidebar } from './appointment-detail-sidebar';
-import { Button } from '../ui/button';
+import { addDays, addMonths, addWeeks, format, startOfDay, startOfMonth, startOfWeek, isSameDay } from 'date-fns';
 import { Calendar as CalendarIcon, ChevronLeft, ChevronRight } from 'lucide-react';
-import { addDays, addMonths, addWeeks, format, startOfDay, startOfMonth, startOfWeek } from 'date-fns';
+import React, { useState } from 'react';
+import { CalendarView, CalendarAppointment, Therapist } from '@/lib/calendar-types';
+import { Button } from '../ui/button';
+import { AppointmentDetailSidebar } from './appointment-detail-sidebar';
+import { AppointmentForm } from './appointment-form';
+import { CustomDragLayer } from './custom-drag-layer';
+import { DayView } from './DayView';
+import { DragDropProvider } from './drag-drop-provider';
+import { MonthView } from './MonthView';
+import { WeekView } from './WeekView';
 
 interface CalendarContainerProps {
   therapists: Therapist[];
@@ -38,6 +40,23 @@ const CalendarContainer: React.FC<CalendarContainerProps> = ({
     currentTherapist ? [currentTherapist.id] : []
   );
 
+  const handleAppointmentDrop = async (appointment: CalendarAppointment, newTime: Date) => {
+    const updatedAppointment = {
+      ...appointment,
+      startTime: newTime,
+      endTime: new Date(newTime.getTime() + (appointment.endTime.getTime() - appointment.startTime.getTime()))
+    };
+    await onAppointmentUpdate(updatedAppointment);
+    return true;
+  };
+
+  const handleDateClick = (date: Date) => {
+    setCurrentDate(date);
+    if (view !== 'day') {
+      setView('day');
+    }
+  };
+
   const handleDateChange = (amount: number) => {
     switch (view) {
       case 'day':
@@ -57,6 +76,12 @@ const CalendarContainer: React.FC<CalendarContainerProps> = ({
     switch (newView) {
       case 'day':
         setCurrentDate(startOfDay(currentDate));
+        break;
+      case 'week':
+        setCurrentDate(startOfWeek(currentDate));
+        break;
+      case 'month':
+        setCurrentDate(startOfMonth(currentDate));
         break;
       case 'week':
         setCurrentDate(startOfWeek(currentDate));
@@ -116,8 +141,27 @@ const CalendarContainer: React.FC<CalendarContainerProps> = ({
       </div>
 
       <div className="flex-1 relative">
-        {view === 'day' && (
-          <DayView
+        <DragDropProvider
+          onAppointmentDrop={handleAppointmentDrop}
+          onAppointmentResize={async (appointment, newDuration) => {
+            const updatedAppointment = {
+              ...appointment,
+              endTime: new Date(appointment.startTime.getTime() + newDuration * 60000)
+            };
+            await onAppointmentUpdate(updatedAppointment);
+            return true;
+          }}
+          onConflictCheck={async (appointment, newTime, newDuration) => {
+            return appointments.filter(apt =>
+              apt.id !== appointment.id &&
+              isSameDay(apt.startTime, newTime) &&
+              apt.therapistId === appointment.therapistId
+            );
+          }}
+        >
+          <CustomDragLayer />
+          {view === 'day' && (
+            <DayView
             date={currentDate}
             appointments={filteredAppointments}
             onAppointmentClick={handleAppointmentClick}
@@ -133,23 +177,21 @@ const CalendarContainer: React.FC<CalendarContainerProps> = ({
           />
         )}
         {view === 'month' && (
-          <MonthView
+                    <MonthView
             date={currentDate}
             appointments={filteredAppointments}
-            onDateClick={(date) => {
-              setCurrentDate(date);
-              handleViewChange('day');
-            }}
+            onDateClick={handleDateClick}
             onAppointmentClick={handleAppointmentClick}
           />
         )}
+        </DragDropProvider>
       </div>
 
       {selectedAppointment && (
         <AppointmentDetailSidebar
           appointment={selectedAppointment}
           onClose={handleCloseDetailPanel}
-          onEdit={(apt) => {
+          onEdit={(apt: CalendarAppointment) => {
             setSelectedAppointment(apt);
             setIsFormOpen(true);
           }}

@@ -4,11 +4,11 @@
  * @compliance HIPAA, Database Security Standards
  */
 
-import { Injectable } from '../../../security/decorators/injectable.decorator';
-import { PatientRepository, PatientSearchCriteria } from '../../../core/repositories/patient.repository';
 import { PatientEntity } from '../../../core/entities/patient.entity';
-import { EncryptionService } from '../../../security/encryption/encryption.service';
+import { PatientRepository, PatientSearchCriteria } from '../../../core/repositories/patient.repository';
 import { AuditLogger } from '../../../security/audit/audit-logger.service';
+import { Injectable } from '../../../security/decorators/injectable.decorator';
+import { EncryptionService } from '../../../security/encryption/encryption.service';
 
 // Mock database interface - in production this would be a real database client
 interface DatabaseClient {

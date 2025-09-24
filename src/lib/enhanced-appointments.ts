@@ -1,5 +1,5 @@
-import { CalendarAppointment, ExtendedAppointment, Therapist, Service, AppointmentStatus } from './calendar-types';
 import { Appointment, appointmentsDb } from './appointments';
+import { CalendarAppointment, ExtendedAppointment, Therapist, Service, AppointmentStatus } from './calendar-types';
 import { Provider, providersDb } from './providers';
 
 /**

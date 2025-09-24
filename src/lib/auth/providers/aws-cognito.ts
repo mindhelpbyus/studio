@@ -4,6 +4,7 @@
  * @compliance HIPAA, GDPR, SOC 2
  */
 
+import { createHmac } from 'crypto';
 import {
   CognitoIdentityProviderClient,
   InitiateAuthCommand,
@@ -26,7 +27,6 @@ import {
   AdminListGroupsForUserCommand
 } from '@aws-sdk/client-cognito-identity-provider';
 import { AuthProvider, AuthConfig, AuthResult, User, TokenInfo } from '../interfaces';
-import { createHmac } from 'crypto';
 
 export interface CognitoConfig extends AuthConfig {
   userPoolId: string;

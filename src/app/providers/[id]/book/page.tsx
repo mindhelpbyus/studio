@@ -1,7 +1,7 @@
-import { providersDb } from '@/lib/providers';
 import { notFound } from 'next/navigation';
-import { Header } from '@/components/header';
 import { AppointmentBooking } from '@/components/appointments/appointment-booking';
+import { Header } from '@/components/header';
+import { providersDb } from '@/lib/providers';
 import type { Provider } from '@/lib/providers';
 
 async function getProvider(id: string): Promise<Provider | undefined> {

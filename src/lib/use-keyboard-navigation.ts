@@ -1,6 +1,5 @@
 'use client';
 
-import { useEffect, useCallback } from 'react';
 import { 
   addDays, 
   subDays, 
@@ -9,6 +8,7 @@ import {
   addMonths, 
   subMonths 
 } from 'date-fns';
+import { useEffect, useCallback } from 'react';
 import { CalendarView } from '@/lib/calendar-types';
 
 type KeyboardNavigationProps = {

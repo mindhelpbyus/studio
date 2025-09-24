@@ -1,5 +1,5 @@
-import { VideoCall } from '@/components/patient-portal/video-call';
 import { PatientPortalHeader } from '@/components/patient-portal/header';
+import { VideoCall } from '@/components/patient-portal/video-call';
 
 // Mock data - in a real app, you would fetch appointment details
 const mockAppointment = {

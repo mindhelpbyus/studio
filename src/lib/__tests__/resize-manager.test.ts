@@ -1,5 +1,5 @@
-import { ResizeManager } from '../resize-manager';
 import { CalendarAppointment } from '../calendar-types';
+import { ResizeManager } from '../resize-manager';
 
 // Mock the conflict detection service
 jest.mock('../conflict-detection', () => ({

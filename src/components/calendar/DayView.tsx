@@ -1,9 +1,9 @@
 'use client';
 
+import { format, addHours, startOfDay, endOfDay } from 'date-fns';
 import React from 'react';
 import { CalendarAppointment } from '@/lib/calendar-types';
 import { AppointmentBlock } from './appointment-block';
-import { format, addHours, startOfDay, endOfDay } from 'date-fns';
 
 interface DayViewProps {
   date: Date;

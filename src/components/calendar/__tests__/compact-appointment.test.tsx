@@ -1,7 +1,7 @@
-import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { CompactAppointment } from '../compact-appointment';
+import React from 'react';
 import { CalendarAppointment } from '@/lib/calendar-types';
+import { CompactAppointment } from '../compact-appointment';
 
 // Mock the utility functions
 jest.mock('@/lib/calendar-utils', () => ({

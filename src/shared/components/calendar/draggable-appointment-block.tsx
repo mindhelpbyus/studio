@@ -1,12 +1,12 @@
 'use client';
 
+import { format } from 'date-fns';
 import React, { useRef, useEffect } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
-import { format } from 'date-fns';
 import { CalendarAppointment, DraggableAppointmentBlockProps } from '@/lib/calendar-types';
-import { cn } from '@/lib/utils';
 import { getAppointmentColor } from '@/lib/calendar-utils';
+import { cn } from '@/lib/utils';
 import { useDragDrop } from './drag-drop-provider';
 import { ResizeHandle } from './resize-handle';
 

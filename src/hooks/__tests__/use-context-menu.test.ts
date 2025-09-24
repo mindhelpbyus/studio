@@ -1,6 +1,6 @@
 import { renderHook, act } from '@testing-library/react';
-import { useContextMenu, useContextMenuKeyboard } from '../use-context-menu';
 import { CalendarAppointment, ContextMenuAction } from '@/lib/calendar-types';
+import { useContextMenu, useContextMenuKeyboard } from '../use-context-menu';
 
 const mockAppointment: CalendarAppointment = {
   id: 'apt-1',

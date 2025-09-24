@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from 'next';
-import { Toaster } from '@/components/ui/toaster';
 import ErrorBoundary from '@/components/error-boundary';
+import { Toaster } from '@/components/ui/toaster';
 import './globals.css';
 import { Manrope } from 'next/font/google';
 

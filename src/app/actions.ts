@@ -1,10 +1,10 @@
 
 'use server';
 
-import { checkSymptoms, CheckSymptomsOutput } from '@/ai/flows/ai-mental-health-checker';
-import { z } from 'zod';
-import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
+import { z } from 'zod';
+import { checkSymptoms, CheckSymptomsOutput } from '@/ai/flows/ai-mental-health-checker';
 
 const SymptomSchema = z.object({
   symptoms: z.string().min(10, {

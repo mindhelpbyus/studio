@@ -1,11 +1,11 @@
-import { NextRequest, NextResponse } from 'next/server';
 import bcrypt from 'bcrypt';
 import { cookies } from 'next/headers';
-import { loginSchema } from '@/lib/validation/schemas';
-import { userRepository } from '@/lib/database/repositories/user-repository';
+import { NextRequest, NextResponse } from 'next/server';
 import { generateToken } from '@/lib/auth';
-import { handleApiError, ValidationError, logError } from '@/lib/errors/error-handler';
 import { AuthError } from '@/lib/auth';
+import { userRepository } from '@/lib/database/repositories/user-repository';
+import { handleApiError, ValidationError, logError } from '@/lib/errors/error-handler';
+import { loginSchema } from '@/lib/validation/schemas';
 
 export async function POST(req: NextRequest) {
   try {

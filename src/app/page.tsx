@@ -1,12 +1,12 @@
 
-import Image from 'next/image';
-import { Button } from '@/components/ui/button';
-import { PlaceHolderImages } from '@/lib/placeholder-images';
-import { MentalHealthChecker } from '@/components/mental-health-checker';
-import { Header } from '@/components/header';
 import { ArrowRight } from 'lucide-react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { FeaturesList } from '@/components/features-list';
+import { Header } from '@/components/header';
+import { MentalHealthChecker } from '@/components/mental-health-checker';
+import { Button } from '@/components/ui/button';
+import { PlaceHolderImages } from '@/lib/placeholder-images';
 
 export default function Home() {
 

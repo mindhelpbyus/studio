@@ -1,12 +1,12 @@
 'use client';
 
-import React from 'react';
-import { CalendarAppointment, Therapist } from '@/lib/calendar-types';
 import { format, startOfWeek, endOfWeek, eachDayOfInterval } from 'date-fns';
+import React from 'react';
+import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Badge } from '@/components/ui/badge';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
+import { CalendarAppointment, Therapist } from '@/lib/calendar-types';
 
 interface AnalyticsViewProps {
   appointments: CalendarAppointment[];

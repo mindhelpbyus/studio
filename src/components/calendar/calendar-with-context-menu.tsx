@@ -1,9 +1,9 @@
 'use client';
 
 import React, { useCallback } from 'react';
+import { useContextMenu } from '@/hooks/use-context-menu';
 import { CalendarAppointment, Therapist, TimeSlot } from '@/lib/calendar-types';
 import { ContextMenu, ContextMenuBuilder } from './context-menu';
-import { useContextMenu } from '@/hooks/use-context-menu';
 import { DraggableAppointmentBlock } from './draggable-appointment-block';
 import { DropZone } from './drop-zone';
 

@@ -2,9 +2,9 @@
 
 import React from 'react';
 import { CalendarGridProps } from '@/lib/calendar-types';
-import { TimeColumn } from './time-column';
-import { CalendarColumn } from './calendar-column';
 import { calculateGridColumns } from '@/lib/calendar-utils';
+import { CalendarColumn } from './calendar-column';
+import { TimeColumn } from './time-column';
 
 export function CalendarGrid({
   appointments,

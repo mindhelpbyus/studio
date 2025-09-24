@@ -1,4 +1,5 @@
 import { describe, it, expect } from '@jest/globals';
+import { CalendarAppointment } from '../calendar-types';
 import {
   generateTimeSlots,
   formatTimeSlot,
@@ -8,7 +9,6 @@ import {
   appointmentsOverlap,
   formatAppointmentTime
 } from '../calendar-utils';
-import { CalendarAppointment } from '../calendar-types';
 
 describe('Calendar Utils', () => {
   describe('generateTimeSlots', () => {

@@ -1,10 +1,10 @@
+import { createClient } from '@/infrastructure/database';
 import { 
   Appointment, 
   RecurringAppointment,
   AppointmentWithDetails 
 } from '../domain/appointment.entity';
 import { AppointmentRepository } from '../domain/appointment.repository';
-import { createClient } from '@/infrastructure/database';
 
 export class AppointmentRepositoryImpl implements AppointmentRepository {
   private readonly db = createClient();

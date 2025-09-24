@@ -5,12 +5,12 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { Injectable } from '../../security/decorators/injectable.decorator';
+import { ComplianceValidatorService } from '../../compliance/validators/compliance-validator.service';
 import { CreatePatientUseCase, CreatePatientRequest } from '../../core/use-cases/create-patient.use-case';
 import { PatientService } from '../../healthcare/patient-management/patient.service';
-import { AuthenticationService } from '../../security/authentication/auth.service';
-import { ComplianceValidatorService } from '../../compliance/validators/compliance-validator.service';
 import { AuditLogger } from '../../security/audit/audit-logger.service';
+import { AuthenticationService } from '../../security/authentication/auth.service';
+import { Injectable } from '../../security/decorators/injectable.decorator';
 
 export interface CreatePatientDto {
   personalInfo: {

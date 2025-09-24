@@ -4,8 +4,8 @@
  * @compliance HIPAA, GDPR, PCI DSS, ISO/IEC 27001
  */
 
-import { Injectable } from '../../security/decorators/injectable.decorator';
 import { AuditLogger } from '../../security/audit/audit-logger.service';
+import { Injectable } from '../../security/decorators/injectable.decorator';
 import { HIPAACompliancePolicy, DEFAULT_HIPAA_POLICY } from '../policies/hipaa-policy';
 
 export interface ComplianceValidationResult {

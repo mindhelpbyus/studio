@@ -4,11 +4,11 @@
  * @compliance HIPAA, Clean Architecture
  */
 
+import { ComplianceValidatorService } from '../../compliance/validators/compliance-validator.service';
+import { AuditLogger } from '../../security/audit/audit-logger.service';
 import { Injectable } from '../../security/decorators/injectable.decorator';
 import { PatientEntity } from '../entities/patient.entity';
 import { PatientRepository } from '../repositories/patient.repository';
-import { AuditLogger } from '../../security/audit/audit-logger.service';
-import { ComplianceValidatorService } from '../../compliance/validators/compliance-validator.service';
 
 export interface CreatePatientRequest {
   readonly personalInfo: {

@@ -1,6 +1,4 @@
 
-import Link from 'next/link';
-import Image from 'next/image';
 import {
   Calendar,
   Users,
@@ -12,9 +10,11 @@ import {
   Package,
   LayoutGrid
 } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Badge } from '../ui/badge';
 import { AnimatedLogoIcon } from '../animated-logo-icon';
+import { Badge } from '../ui/badge';
 
 const navLinks = [
   { href: '/provider-portal/calendar', icon: Calendar, label: 'Calendar', active: true, notification: 2 },

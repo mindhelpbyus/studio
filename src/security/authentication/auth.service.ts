@@ -4,8 +4,8 @@
  * @compliance HIPAA, NIST, ISO/IEC 27001
  */
 
-import { Injectable } from '../decorators/injectable.decorator';
 import { AuditLogger } from '../audit/audit-logger.service';
+import { Injectable } from '../decorators/injectable.decorator';
 import { EncryptionService } from '../encryption/encryption.service';
 
 export interface AuthenticationResult {

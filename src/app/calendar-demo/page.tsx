@@ -1,10 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
 import { addDays, subDays, format } from 'date-fns';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { 
   Calendar, 
   ChevronLeft, 
@@ -16,6 +12,10 @@ import {
   Eye,
   TestTube
 } from 'lucide-react';
+import React, { useState } from 'react';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 export default function CalendarDemoPage() {
   const [currentDate, setCurrentDate] = useState(new Date());

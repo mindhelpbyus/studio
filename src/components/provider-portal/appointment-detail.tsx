@@ -1,7 +1,6 @@
 
 'use client';
 
-import * as React from 'react';
 import {
   MoreHorizontal,
   Pencil,
@@ -10,11 +9,12 @@ import {
   ChevronDown,
   Video,
 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import * as React from 'react';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
-import { Separator } from '@/components/ui/separator';
+import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { Separator } from '@/components/ui/separator';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 
 const pastAppointments = [

@@ -4,11 +4,11 @@
  * @compliance HIPAA, GDPR, HL7 FHIR
  */
 
-import { Injectable } from '../../security/decorators/injectable.decorator';
-import { AuditLogger } from '../../security/audit/audit-logger.service';
-import { EncryptionService } from '../../security/encryption/encryption.service';
 import { PatientEntity } from '../../core/entities/patient.entity';
 import { PatientRepository } from '../../core/repositories/patient.repository';
+import { AuditLogger } from '../../security/audit/audit-logger.service';
+import { Injectable } from '../../security/decorators/injectable.decorator';
+import { EncryptionService } from '../../security/encryption/encryption.service';
 
 export interface PatientSearchCriteria {
   readonly mrn?: string;

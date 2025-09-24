@@ -1,9 +1,9 @@
 'use client';
 
+import { format, addDays, startOfDay, endOfDay, addHours } from 'date-fns';
 import React from 'react';
 import { CalendarAppointment } from '@/lib/calendar-types';
 import { AppointmentBlock } from './appointment-block';
-import { format, addDays, startOfDay, endOfDay, addHours } from 'date-fns';
 
 interface WeekViewProps {
   startDate: Date;
@@ -15,6 +15,11 @@ interface WeekViewProps {
 const HOURS = Array.from({ length: 24 }, (_, i) => i);
 const DAYS = Array.from({ length: 7 }, (_, i) => i);
 
+const getCurrentTimePosition = () => {
+  const now = new Date();
+  return (now.getHours() + now.getMinutes() / 60) * 60;
+};
+
 export const WeekView: React.FC<WeekViewProps> = ({
   startDate,
   appointments,
@@ -22,8 +27,10 @@ export const WeekView: React.FC<WeekViewProps> = ({
   onSlotSelect,
 }) => {
   const weekStart = startOfDay(startDate);
+  const weekDays = DAYS.map(i => addDays(weekStart, i));
 
   const getPositionStyles = (appointment: CalendarAppointment) => {
+    const overlappingAppts = getOverlappingAppointments(appointment);
     const startHour = appointment.startTime.getHours();
     const startMinutes = appointment.startTime.getMinutes();
     const endHour = appointment.endTime.getHours();
@@ -32,8 +39,22 @@ export const WeekView: React.FC<WeekViewProps> = ({
 
     const top = (startHour + startMinutes / 60) * 60;
     const height = ((endHour - startHour) * 60 + (endMinutes - startMinutes));
-    const left = `${(dayIndex * 100) / 7}%`;
-    const width = `${100 / 7}%`;
+    const columnWidth = 100 / 7;
+    const left = dayIndex * columnWidth;
+    
+    // Handle overlapping appointments
+    const position = overlappingAppts.indexOf(appointment);
+    const total = overlappingAppts.length;
+    const width = columnWidth / total;
+    const offsetLeft = left + (position * width);
+
+    return {
+      top: `${top}px`,
+      height: `${height}px`,
+      left: `${offsetLeft}%`,
+      width: `${width}%`,
+      zIndex: 10 + position
+    };
 
     return {
       top: `${top}px`,
@@ -50,14 +71,55 @@ export const WeekView: React.FC<WeekViewProps> = ({
   };
 
   return (
-    <div className="relative h-[1440px] border rounded-lg overflow-auto bg-white">
+        <div className="relative h-[calc(100vh-12rem)] border rounded-lg overflow-auto bg-white">
+      {/* Week header */}
+      <div className="sticky top-0 z-20 flex border-b bg-white">
+        <div className="w-16" /> {/* Spacer for time column */}
+        {DAYS.map((day) => {
+          const date = addDays(weekStart, day);
+          return (
+            <div key={day} className="flex-1 text-center py-2">
+              <div className="text-sm font-medium">{format(date, 'EEE')}</div>
+              <div className="text-xs text-gray-500">{format(date, 'MMM d')}</div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Current time indicator */}
+      <div className="sticky top-0 z-10 flex border-b bg-white">
+        <div className="w-16" /> {/* Spacer for time column */}
+        {weekDays.map((day) => (
+          <div key={day.toISOString()} className="flex-1 text-center py-2 font-medium">
+            <div className="text-sm">{format(day, 'EEE')}</div>
+            <div className="text-xs text-gray-500">{format(day, 'MMM d')}</div>
+          </div>
+        ))}
+      </div>
       {/* Time column */}
-      <div className="absolute left-0 top-8 w-16 h-full border-r">
+            {/* Grid */}
+      <div className="absolute left-16 top-8 right-0 h-full grid grid-cols-7 divide-x divide-gray-100">
+        {DAYS.map((day) => (
+          <div key={day} className="relative h-full">
+            {HOURS.map((hour) => (
+              <div
+                key={hour}
+                className="h-[60px] border-b border-gray-100 group cursor-pointer hover:bg-gray-50"
+                onClick={() => handleSlotClick(day, hour)}
+              />
+            ))}
+          </div>
+        ))}
+      </div>
+
+      {/* Time column */}
+      <div className="absolute left-0 top-8 w-16 h-full border-r bg-white sticky">
         {HOURS.map((hour) => (
           <div
             key={hour}
-            className="h-[60px] border-b text-xs px-2 py-1 text-gray-500"
+            className="h-[60px] border-b text-xs px-2 py-1 text-gray-500 sticky left-0 bg-white"
           >
+            {format(addHours(new Date(), hour), 'h a')}
             {format(addHours(weekStart, hour), 'h a')}
           </div>
         ))}
