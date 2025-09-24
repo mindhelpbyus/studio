@@ -131,9 +131,12 @@ export const SERVICE_COLORS: Record<string, AppointmentColor> = {
 };
 
 // Status-based styling modifiers
-export const STATUS_MODIFIERS = {
-  cancelled: 'opacity-50 line-through',
-  'no-show': 'opacity-60 border-red-400',
-  'checked-in': 'ring-2 ring-green-300',
-  completed: 'opacity-80'
+// Status modifier classes
+export const STATUS_MODIFIERS: Record<string, string> = {
+  'scheduled': '',
+  'checked-in': 'opacity-75 line-through',
+  'cancelled': 'opacity-50 line-through',
+  'no-show': 'opacity-50 line-through',
+  'completed': 'opacity-75 line-through',
+  'waitlist': 'opacity-75',
 };

@@ -2,6 +2,8 @@
 
 import React, { useState, useCallback } from 'react';
 import { CalendarViewConfig, CalendarFilter, CalendarAppointment, Therapist, UserRole, CalendarView } from '@/lib/calendar-types';
+import { WaitlistView } from './views/waitlist-view';
+import { ConflictView } from './views/conflict-view';
 import { CalendarGrid } from './calendar-grid';
 import { CalendarHeader } from './calendar-header';
 import { AppointmentDetailSidebar } from './appointment-detail-sidebar';
@@ -23,9 +25,9 @@ export function CalendarContainer({
   // State management
   const [viewConfig, setViewConfig] = useState<CalendarViewConfig>({
     userRole,
-    viewType: initialView,
+    viewType: initialView || 'week',
     currentDate: initialDate,
-    selectedTherapistId: currentTherapistId
+    selectedTherapistId: currentTherapistId || ''
   });
 
   const [filters, setFilters] = useState<CalendarFilter>({
@@ -82,11 +84,11 @@ export function CalendarContainer({
     setSelectedAppointment(null);
   }, []);
 
-  const handleAppointmentAction = useCallback((action: string, appointmentId: string) => {
+  const handleAppointmentAction = (action: string, appointmentId?: string) => {
     // Handle appointment actions (check-in, cancel, reschedule)
     console.log('Appointment action:', action, appointmentId);
     // In real app, this would make API calls and update state
-  }, []);
+  };
 
   return (
     <div className="h-full flex flex-col bg-background">
@@ -100,25 +102,49 @@ export function CalendarContainer({
         onFilterChange={handleFilterChange}
       />
 
-      {/* Calendar Grid */}
+      {/* Calendar Views */}
       <div className="flex-1 overflow-hidden">
-        <CalendarGrid
-          appointments={appointments}
-          therapists={visibleTherapists}
-          viewConfig={viewConfig}
-          filters={filters}
-          onAppointmentClick={handleAppointmentClick}
-          onTimeSlotClick={handleTimeSlotClick}
-        />
+        {viewConfig.viewType === 'waitlist' ? (
+          <WaitlistView
+            appointments={appointments}
+            therapists={visibleTherapists}
+            onAppointmentClick={handleAppointmentClick}
+            onAcceptWaitlist={(appointment) => {
+              // Handle accepting waitlist appointment
+              console.log('Accept waitlist:', appointment);
+            }}
+          />
+        ) : viewConfig.viewType === 'conflicts' ? (
+          <ConflictView
+            appointments={appointments}
+            therapists={visibleTherapists}
+            onAppointmentClick={handleAppointmentClick}
+            onResolveConflict={(conflictingAppointments) => {
+              // Handle resolving conflicts
+              console.log('Resolve conflict:', conflictingAppointments);
+            }}
+          />
+        ) : (
+          <CalendarGrid
+            appointments={appointments}
+            therapists={visibleTherapists}
+            viewConfig={viewConfig}
+            filters={filters}
+            onAppointmentClick={handleAppointmentClick}
+            onTimeSlotClick={handleTimeSlotClick}
+          />
+        )}
       </div>
 
       {/* Appointment Detail Sidebar */}
-      <AppointmentDetailSidebar
-        appointment={selectedAppointment}
-        isOpen={sidebarOpen}
-        onClose={handleSidebarClose}
-        onAction={handleAppointmentAction}
-      />
+      {selectedAppointment && (
+        <AppointmentDetailSidebar
+          appointment={selectedAppointment}
+          isOpen={sidebarOpen}
+          onClose={handleSidebarClose}
+          onAction={handleAppointmentAction}
+        />
+      )}
     </div>
   );
 }

@@ -2,17 +2,22 @@
 
 import React, { useState, useMemo } from 'react';
 import { format } from 'date-fns';
-import { CalendarAppointment, Therapist, Service } from '@/lib/calendar-types';
-import { DragDropProvider } from '@/components/calendar/drag-drop-provider';
-import { DraggableAppointmentBlock } from '@/components/calendar/draggable-appointment-block';
-import { DropZone } from '@/components/calendar/drop-zone';
-import { ContextMenu, ContextMenuBuilder } from '@/components/calendar/context-menu';
-import { AppointmentForm } from '@/components/calendar/appointment-form';
-import { AppointmentDetailSidebar } from '@/components/calendar/appointment-detail-sidebar';
-import { CustomDragLayer } from '@/components/calendar/custom-drag-layer';
+import { CalendarAppointment, AppointmentType, AppointmentStatus, AppointmentColor } from '@/lib/calendar-types';
+import { CalendarFormAppointment, TimeSlot } from '@/core/calendar/types/calendar.types';
+import { Therapist, Service } from '@/core/calendar/calendar-types';
+import { DragDropProvider } from '@/shared/components/calendar/drag-drop-provider';
+import { DraggableAppointmentBlock } from '@/shared/components/calendar/draggable-appointment-block';
+import { DropZone } from '@/shared/components/calendar/drop-zone';
+import { ContextMenu, ContextMenuBuilder } from '@/shared/components/calendar/context-menu';
+import { AppointmentForm } from '@/healthcare/appointment-management/presentation/components/calendar/appointment-form';
+import type { AppointmentFormProps } from '@/healthcare/appointment-management/presentation/components/calendar/appointment-form.types';
+import { AppointmentDetailSidebar } from '@/healthcare/appointment-management/presentation/components/calendar/appointment-detail-sidebar';
+import type { AppointmentDetailSidebarProps } from '@/healthcare/appointment-management/presentation/components/calendar/appointment-detail-sidebar.types';
+import { CustomDragLayer } from '@/shared/components/calendar/custom-drag-layer';
 import { useContextMenu } from '@/hooks/use-context-menu';
 import { ConflictDetectionService } from '@/lib/conflict-detection';
-import { calculateAppointmentPosition } from '@/lib/calendar-utils';
+import { calculateAppointmentPosition } from '@/core/calendar/calendar-utils';
+import { MOCK_APPOINTMENTS } from '@/core/calendar/mock-data';
 
 // Convert your existing sample data to the new format
 const sampleTherapists: Therapist[] = [
@@ -38,7 +43,17 @@ const sampleTherapists: Therapist[] = [
   }
 ];
 
-const sampleServices: Service[] = sampleTherapists[0].services;
+interface EnhancedDayViewCalendarProps {
+  currentDate: Date;
+  currentTherapistId: string;
+  therapists: Therapist[];
+  services: Service[];
+  onCreateAppointment?: (appointment: CalendarAppointment) => Promise<void>;
+  onUpdateAppointment?: (appointment: CalendarAppointment) => Promise<void>;
+  onDeleteAppointment?: (appointmentId: string) => Promise<void>;
+}
+
+const sampleServices: Service[] = sampleTherapists[0]?.services ?? [];
 
 // Convert your existing appointments to the new format
 function createSampleAppointments(date: Date): CalendarAppointment[] {
@@ -56,7 +71,7 @@ function createSampleAppointments(date: Date): CalendarAppointment[] {
       status: 'scheduled',
       type: 'appointment',
       title: 'DEEP TISSUE MASSAGE',
-      clientName: 'Lisa Brown',
+      patientName: 'Lisa Brown',
       color: 'blue',
       createdBy: 'therapist',
       isDraggable: true,
@@ -72,7 +87,7 @@ function createSampleAppointments(date: Date): CalendarAppointment[] {
       status: 'scheduled',
       type: 'appointment',
       title: 'SWEDISH MASSAGE',
-      clientName: 'Mike Davis',
+      patientName: 'Mike Davis',
       color: 'blue',
       createdBy: 'therapist',
       isDraggable: true,
@@ -88,7 +103,7 @@ function createSampleAppointments(date: Date): CalendarAppointment[] {
       status: 'scheduled',
       type: 'break',
       title: 'LUNCH BREAK',
-      clientName: '',
+      patientName: '',
       color: 'gray',
       createdBy: 'therapist',
       isDraggable: true,
@@ -104,7 +119,7 @@ function createSampleAppointments(date: Date): CalendarAppointment[] {
       status: 'checked-in',
       type: 'appointment',
       title: '50-MINUTE FACIAL',
-      clientName: 'Lucy Carmichael',
+      patientName: 'Lucy Carmichael',
       color: 'pink',
       createdBy: 'patient', // This one was booked by patient
       isDraggable: true,
@@ -120,7 +135,7 @@ function createSampleAppointments(date: Date): CalendarAppointment[] {
       status: 'scheduled',
       type: 'appointment',
       title: 'GEL MANICURE',
-      clientName: 'Kelly Green',
+      patientName: 'Kelly Green',
       color: 'orange',
       createdBy: 'therapist',
       isDraggable: true,
@@ -138,12 +153,19 @@ export function EnhancedDayViewCalendar({ currentDate }: EnhancedDayViewCalendar
     createSampleAppointments(currentDate)
   );
   const [selectedAppointmentId, setSelectedAppointmentId] = useState<string | null>(null);
-  const [showAppointmentForm, setShowAppointmentForm] = useState(false);
+  // Use a single canonical form open state
+  const [isFormOpen, setIsFormOpen] = useState(false);
   const [formMode, setFormMode] = useState<'create' | 'edit'>('create');
   const [formAppointment, setFormAppointment] = useState<CalendarAppointment | undefined>();
   const [formInitialTime, setFormInitialTime] = useState<Date | undefined>();
-  const [showSidebar, setShowSidebar] = useState(false);
+  // Sidebar state
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [sidebarAppointment, setSidebarAppointment] = useState<CalendarAppointment | undefined>();
+
+  const handleSidebarClose = () => {
+    setIsSidebarOpen(false);
+    setSidebarAppointment(undefined);
+  };
 
   const { contextMenu, openContextMenu, closeContextMenu, handleActionClick } = useContextMenu();
 
@@ -174,14 +196,14 @@ export function EnhancedDayViewCalendar({ currentDate }: EnhancedDayViewCalendar
     } else {
       await handleAppointmentUpdate(appointment);
     }
-    setShowAppointmentForm(false);
+    setIsFormOpen(false);
   };
 
   // Handle appointment deletion
   const handleAppointmentDelete = async (appointmentId: string): Promise<void> => {
     setAppointments(prev => prev.filter(apt => apt.id !== appointmentId));
-    setShowAppointmentForm(false);
-    setShowSidebar(false);
+    setIsFormOpen(false);
+    setIsSidebarOpen(false);
   };
 
   // Conflict checking
@@ -201,7 +223,7 @@ export function EnhancedDayViewCalendar({ currentDate }: EnhancedDayViewCalendar
   const handleAppointmentEdit = (appointment: CalendarAppointment) => {
     setFormMode('edit');
     setFormAppointment(appointment);
-    setShowAppointmentForm(true);
+    setIsFormOpen(true);
   };
 
   const handleAppointmentCopy = (appointment: CalendarAppointment) => {
@@ -218,13 +240,13 @@ export function EnhancedDayViewCalendar({ currentDate }: EnhancedDayViewCalendar
     setFormMode('create');
     setFormInitialTime(time);
     setFormAppointment(undefined);
-    setShowAppointmentForm(true);
+    setIsFormOpen(true);
   };
 
   const handleAppointmentClick = (appointment: CalendarAppointment) => {
     setSelectedAppointmentId(appointment.id);
     setSidebarAppointment(appointment);
-    setShowSidebar(true);
+    setIsSidebarOpen(true);
   };
 
   const handleAppointmentContextMenu = (event: React.MouseEvent, appointment: CalendarAppointment) => {
@@ -236,7 +258,7 @@ export function EnhancedDayViewCalendar({ currentDate }: EnhancedDayViewCalendar
       handleAppointmentCopy,
       (apt) => console.log('Move appointment:', apt)
     );
-    openContextMenu(event, appointment, actions);
+    openContextMenu(event, appointment as CalendarAppointment, actions);
   };
 
   const handleTimeSlotContextMenu = (event: React.MouseEvent, time: Date) => {
@@ -256,10 +278,22 @@ export function EnhancedDayViewCalendar({ currentDate }: EnhancedDayViewCalendar
   };
 
   return (
-    <DragDropProvider
-      onAppointmentDrop={handleAppointmentUpdate}
-      onAppointmentResize={handleAppointmentUpdate}
-      onConflictCheck={handleConflictCheck}
+  <DragDropProvider
+      onAppointmentDrop={(appointment, newTime) => {
+        const updatedAppointment: CalendarAppointment = { ...appointment, startTime: newTime };
+        return handleAppointmentUpdate(updatedAppointment);
+      }}
+      onAppointmentResize={(appointment, newDuration) => {
+        const updatedAppointment: CalendarAppointment = { 
+          ...appointment, 
+          endTime: new Date(appointment.startTime.getTime() + newDuration)
+        };
+        return handleAppointmentUpdate(updatedAppointment);
+      }}
+      onConflictCheck={(appointment, newTime) => {
+        const updatedAppointment: CalendarAppointment = newTime ? { ...appointment, startTime: newTime } : appointment;
+        return handleConflictCheck(updatedAppointment);
+      }}
     >
       <div className="h-full overflow-auto">
         <div className="grid grid-cols-[80px_1fr] min-h-full bg-background">
@@ -309,7 +343,7 @@ export function EnhancedDayViewCalendar({ currentDate }: EnhancedDayViewCalendar
                 );
 
                 return (
-                  <DropZone
+            <DropZone
                     key={index}
                     timeSlot={{
                       time: slotTime,
@@ -374,15 +408,16 @@ export function EnhancedDayViewCalendar({ currentDate }: EnhancedDayViewCalendar
 
         {/* Appointment Form */}
         <AppointmentForm
-          isOpen={showAppointmentForm}
+          key={formAppointment?.id || 'new'}
+          isOpen={isFormOpen}
           mode={formMode}
-          appointment={formAppointment}
-          initialTime={formInitialTime}
+          appointment={formAppointment || null}
+          initialTime={formInitialTime || null}
           therapistId="therapist-1"
           therapists={sampleTherapists}
           services={sampleServices}
           onSave={handleAppointmentSave}
-          onCancel={() => setShowAppointmentForm(false)}
+          onCancel={() => setIsFormOpen(false)}
           onDelete={handleAppointmentDelete}
           onConflictCheck={handleConflictCheck}
         />
@@ -390,25 +425,29 @@ export function EnhancedDayViewCalendar({ currentDate }: EnhancedDayViewCalendar
         {/* Appointment Detail Sidebar */}
         {sidebarAppointment && (
           <AppointmentDetailSidebar
-            isOpen={showSidebar}
+            isOpen={isSidebarOpen}
             appointment={sidebarAppointment}
-            onClose={() => setShowSidebar(false)}
-            onEdit={() => {
-              handleAppointmentEdit(sidebarAppointment);
-              setShowSidebar(false);
+            onClose={handleSidebarClose}
+            onAction={(action, id) => {
+              // handle common actions from sidebar
+              if (action === 'edit' && id) {
+                const apt = appointments.find(a => a.id === id);
+                if (apt) {
+                  setFormMode('edit');
+                  setFormAppointment(apt);
+                  setIsFormOpen(true);
+                }
+              }
+              if (action === 'delete' && id) {
+                handleAppointmentDelete(id);
+              }
+              if (action === 'check-in' && id) {
+                const apt = appointments.find(a => a.id === id);
+                if (apt) handleAppointmentUpdate({ ...apt, status: 'checked-in' } as CalendarAppointment);
+              }
             }}
-            onDelete={() => {
-              handleAppointmentDelete(sidebarAppointment.id);
-            }}
-            onCheckIn={() => {
-              const updatedAppointment = { ...sidebarAppointment, status: 'checked-in' as const };
-              handleAppointmentUpdate(updatedAppointment);
-              setSidebarAppointment(updatedAppointment);
-            }}
-            onCancel={() => {
-              const updatedAppointment = { ...sidebarAppointment, status: 'cancelled' as const };
-              handleAppointmentUpdate(updatedAppointment);
-              setSidebarAppointment(updatedAppointment);
+            onDelete={async (id?: string) => {
+              if (id) await handleAppointmentDelete(id);
             }}
           />
         )}

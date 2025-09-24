@@ -47,12 +47,21 @@ export function CalendarHeader({
 
   // Format date display
   const formatDateDisplay = () => {
-    if (viewType === 'day') {
-      return format(currentDate, 'EEEE, MMMM d, yyyy');
-    } else {
-      const weekStart = subDays(currentDate, currentDate.getDay());
-      const weekEnd = addDays(weekStart, 6);
-      return `${format(weekStart, 'MMM d')} - ${format(weekEnd, 'MMM d, yyyy')}`;
+    switch (viewType) {
+      case 'day':
+        return format(currentDate, 'EEEE, MMMM d, yyyy');
+      case 'week':
+        const weekStart = subDays(currentDate, currentDate.getDay());
+        const weekEnd = addDays(weekStart, 6);
+        return `${format(weekStart, 'MMM d')} - ${format(weekEnd, 'MMM d, yyyy')}`;
+      case 'month':
+        return format(currentDate, 'MMMM yyyy');
+      case 'waitlist':
+        return 'Appointment Waitlist';
+      case 'conflicts':
+        return 'Schedule Conflicts';
+      default:
+        return format(currentDate, 'MMMM d, yyyy');
     }
   };
 
@@ -100,7 +109,7 @@ export function CalendarHeader({
           variant={viewType === 'day' ? 'default' : 'ghost'}
           size="sm"
           onClick={() => onViewChange('day')}
-          className="px-4"
+          className="px-3"
         >
           Day
         </Button>
@@ -108,9 +117,53 @@ export function CalendarHeader({
           variant={viewType === 'week' ? 'default' : 'ghost'}
           size="sm"
           onClick={() => onViewChange('week')}
-          className="px-4"
+          className="px-3"
         >
           Week
+        </Button>
+        <Button
+          variant={viewType === 'month' ? 'default' : 'ghost'}
+          size="sm"
+          onClick={() => onViewChange('month')}
+          className="px-3"
+        >
+          Month
+        </Button>
+        <Button
+          variant={viewType === 'agenda' ? 'default' : 'ghost'}
+          size="sm"
+          onClick={() => onViewChange('agenda')}
+          className="px-3"
+        >
+          Agenda
+        </Button>
+        <Button
+          variant={viewType === 'timeline' ? 'default' : 'ghost'}
+          size="sm"
+          onClick={() => onViewChange('timeline')}
+          className="px-3"
+        >
+          Timeline
+        </Button>
+      </div>
+      
+      {/* Right side - Special Views */}
+      <div className="flex items-center space-x-2">
+        <Button
+          variant={viewType === 'waitlist' ? 'default' : 'ghost'}
+          size="sm"
+          onClick={() => onViewChange('waitlist')}
+          className="px-3"
+        >
+          Waitlist
+        </Button>
+        <Button
+          variant={viewType === 'conflicts' ? 'default' : 'ghost'}
+          size="sm"
+          onClick={() => onViewChange('conflicts')}
+          className="px-3"
+        >
+          Conflicts
         </Button>
       </div>
 

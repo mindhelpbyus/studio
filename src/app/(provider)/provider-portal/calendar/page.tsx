@@ -2,107 +2,222 @@
 'use client';
 
 import * as React from 'react';
-import { WeekViewCalendar } from '@/components/provider-portal/week-view-calendar';
-import { DayViewCalendar } from '@/components/provider-portal/day-view-calendar';
-import { AppointmentDetail } from '@/components/provider-portal/appointment-detail';
-import { ChevronLeft, ChevronRight, SlidersHorizontal } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { addDays, format, subDays } from 'date-fns';
+import { format, addDays } from 'date-fns';
+import { EnhancedCalendarContainer } from '@/components/calendar/enhanced-calendar-container';
+import { CalendarAppointment, AppointmentColor, Service } from '@/lib/calendar-types';
+import { ConflictDetectionService } from '@/lib/conflict-detection';
+import { AdvancedConflictDetectionService } from '@/lib/advanced-conflict-detection';
+import { toast } from '@/hooks/use-toast';
+
+const MOCK_APPOINTMENTS: CalendarAppointment[] = [
+  {
+    id: '1',
+    therapistId: 'th1',
+    clientId: 'cl1',
+    serviceId: 'srv1',
+    startTime: new Date(2025, 8, 23, 10, 0), // 10:00 AM
+    endTime: new Date(2025, 8, 23, 11, 0),   // 11:00 AM
+    status: 'scheduled',
+    type: 'appointment',
+    title: 'Therapy Session with John',
+    patientName: 'John Doe',
+    color: 'blue',
+    isDraggable: true,
+    isResizable: true,
+  },
+  // Add more mock appointments as needed
+];
+
+const MOCK_THERAPIST = {
+  id: 'th1',
+  name: 'Dr. Smith',
+  specialty: 'Psychotherapy',
+  workingHours: {
+    monday: { 
+      start: '09:00', 
+      end: '17:00',
+      breaks: [{ start: '12:00', end: '13:00', title: 'Lunch Break' }]
+    },
+    tuesday: { 
+      start: '09:00', 
+      end: '17:00',
+      breaks: [{ start: '12:00', end: '13:00', title: 'Lunch Break' }]
+    },
+    wednesday: { 
+      start: '09:00', 
+      end: '17:00',
+      breaks: [{ start: '12:00', end: '13:00', title: 'Lunch Break' }]
+    },
+    thursday: { 
+      start: '09:00', 
+      end: '17:00',
+      breaks: [{ start: '12:00', end: '13:00', title: 'Lunch Break' }]
+    },
+    friday: { 
+      start: '09:00', 
+      end: '17:00',
+      breaks: [{ start: '12:00', end: '13:00', title: 'Lunch Break' }]
+    }
+  },
+  services: [
+    { 
+      id: 'srv1', 
+      name: 'Individual Therapy', 
+      duration: 60,
+      price: 150,
+      category: 'therapy',
+      color: 'blue' as AppointmentColor
+    },
+    { 
+      id: 'srv2', 
+      name: 'Group Therapy', 
+      duration: 90,
+      price: 100,
+      category: 'group',
+      color: 'green' as AppointmentColor
+    },
+  ],
+  allowPatientBooking: true
+};
+
+const MOCK_SERVICES: Service[] = [
+  { 
+    id: 'srv1', 
+    name: 'Individual Therapy', 
+    duration: 60,
+    price: 150,
+    category: 'therapy',
+    color: 'blue' as AppointmentColor
+  },
+  { 
+    id: 'srv2', 
+    name: 'Group Therapy', 
+    duration: 90,
+    price: 100,
+    category: 'group',
+    color: 'green' as AppointmentColor
+  },
+  {
+    id: 'srv3',
+    name: 'Couples Therapy',
+    duration: 75,
+    price: 180,
+    category: 'therapy',
+    color: 'purple' as AppointmentColor
+  },
+];
 
 export default function CalendarPage() {
-  const [view, setView] = React.useState<'day' | 'week'>('day');
-  // Initialize with null to prevent hydration mismatch. Date will be set on client mount.
-  const [currentDate, setCurrentDate] = React.useState<Date | null>(null);
+  const [currentTherapist] = React.useState(MOCK_THERAPIST);
+  const [appointments, setAppointments] = React.useState<CalendarAppointment[]>(MOCK_APPOINTMENTS);
 
-  React.useEffect(() => {
-    // Set the date only on the client-side after the component has mounted.
-    setCurrentDate(new Date());
-  }, []);
+  const handleAppointmentCreate = async (appointment: Omit<CalendarAppointment, 'id'>) => {
+    try {
+      // Check for conflicts
+      const conflicts = await ConflictDetectionService.checkAppointmentConflicts(
+        appointment as CalendarAppointment,
+        appointment.startTime,
+        undefined,
+        appointments,
+        currentTherapist
+      );
 
-  const handleNext = () => {
-    if (currentDate) {
-        if (view === 'day') {
-        setCurrentDate(addDays(currentDate, 1));
-        } else {
-        setCurrentDate(addDays(currentDate, 7));
-        }
+      if (conflicts.hasConflict) {
+        toast({
+          title: "Scheduling Conflict",
+          description: conflicts.reason || "This time slot is not available.",
+          variant: "destructive"
+        });
+        return;
+      }
+
+      // Create new appointment
+      const newAppointment: CalendarAppointment = {
+        ...appointment,
+        id: `apt-${Date.now()}`, // In production, use proper ID generation
+      };
+
+      setAppointments(prev => [...prev, newAppointment]);
+      toast({
+        title: "Success",
+        description: "Appointment created successfully",
+      });
+    } catch (error) {
+      console.error('Error creating appointment:', error);
+      toast({
+        title: "Error",
+        description: "Failed to create appointment. Please try again.",
+        variant: "destructive"
+      });
     }
   };
 
-  const handlePrev = () => {
-    if (currentDate) {
-        if (view === 'day') {
-        setCurrentDate(subDays(currentDate, 1));
-        } else {
-        setCurrentDate(subDays(currentDate, 7));
-        }
+  const handleAppointmentUpdate = async (appointment: CalendarAppointment) => {
+    try {
+      // Check for conflicts excluding the current appointment
+      const conflicts = await ConflictDetectionService.checkAppointmentConflicts(
+        appointment,
+        appointment.startTime,
+        undefined,
+        appointments.filter(apt => apt.id !== appointment.id),
+        currentTherapist
+      );
+
+      if (conflicts.hasConflict) {
+        toast({
+          title: "Scheduling Conflict",
+          description: conflicts.reason || "This time slot is not available.",
+          variant: "destructive"
+        });
+        return;
+      }
+
+      setAppointments(prev =>
+        prev.map(apt => apt.id === appointment.id ? appointment : apt)
+      );
+      toast({
+        title: "Success",
+        description: "Appointment updated successfully",
+      });
+    } catch (error) {
+      console.error('Error updating appointment:', error);
+      toast({
+        title: "Error",
+        description: "Failed to update appointment. Please try again.",
+        variant: "destructive"
+      });
     }
   };
 
-  const handleToday = () => {
-    setCurrentDate(new Date());
+  const handleAppointmentDelete = async (appointmentId: string) => {
+    try {
+      setAppointments(prev => prev.filter(apt => apt.id !== appointmentId));
+      toast({
+        title: "Success",
+        description: "Appointment deleted successfully",
+      });
+    } catch (error) {
+      console.error('Error deleting appointment:', error);
+      toast({
+        title: "Error",
+        description: "Failed to delete appointment. Please try again.",
+        variant: "destructive"
+      });
+    }
   };
-
-  // Render a loading state or nothing until the date is set on the client
-  if (!currentDate) {
-    return (
-      <div className="flex h-full items-center justify-center">
-        <div className="animate-pulse text-muted-foreground">Loading calendar...</div>
-      </div>
-    );
-  }
 
   return (
     <div className="flex h-screen flex-col bg-background">
-      <header className="flex shrink-0 items-center justify-between gap-4 border-b bg-card/80 backdrop-blur-sm p-6 shadow-sm">
-        <div className="flex items-center gap-4">
-          <Button onClick={handleToday} variant="outline" className="font-semibold uppercase text-xs hover:bg-primary hover:text-primary-foreground transition-colors">
-            Today
-          </Button>
-          <div className="flex items-center gap-2">
-            <Button onClick={handlePrev} variant="ghost" size="icon" className="h-8 w-8">
-              <ChevronLeft className="h-4 w-4" />
-            </Button>
-            <span className="text-xl font-bold min-w-[250px] text-center bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-              {view === 'day' 
-                ? format(currentDate, 'EEEE, MMMM d, yyyy') 
-                : `${format(currentDate, 'MMM d')} - ${format(addDays(currentDate, 6), 'MMM d, yyyy')}`
-              }
-            </span>
-            <Button onClick={handleNext} variant="ghost" size="icon" className="h-8 w-8">
-              <ChevronRight className="h-4 w-4" />
-            </Button>
-          </div>
-        </div>
-        <div className="flex items-center gap-4">
-          <Button variant="outline" className="gap-2 hidden sm:flex hover:bg-muted/50 transition-colors">
-            <SlidersHorizontal size={16} />
-            Filters
-          </Button>
-          <div className="flex items-center rounded-lg border bg-background text-sm font-medium overflow-hidden shadow-sm">
-            <button
-              onClick={() => setView('day')}
-              className={`px-6 py-2.5 transition-all duration-200 ${view === 'day' ? 'bg-primary text-primary-foreground shadow-md' : 'hover:bg-muted/50'}`}
-            >
-              Day
-            </button>
-            <button
-              onClick={() => setView('week')}
-              className={`px-6 py-2.5 border-l transition-all duration-200 ${view === 'week' ? 'bg-primary text-primary-foreground shadow-md' : 'hover:bg-muted/50'}`}
-            >
-              Week
-            </button>
-          </div>
-        </div>
-      </header>
-      <div className="flex flex-1 overflow-hidden">
-        <main className="flex-1 overflow-hidden">
-          {view === 'week' ? <WeekViewCalendar currentDate={currentDate} /> : <DayViewCalendar currentDate={currentDate} />}
-        </main>
-        <aside className="w-[380px] shrink-0 border-l bg-card/50 backdrop-blur-sm hidden lg:block">
-          <AppointmentDetail />
-        </aside>
-      </div>
+      <EnhancedCalendarContainer
+        therapists={[currentTherapist]}
+        services={MOCK_SERVICES}
+        currentTherapist={currentTherapist}
+        userRole="therapist"
+        appointments={appointments}
+        onAppointmentCreate={handleAppointmentCreate}
+        onAppointmentUpdate={handleAppointmentUpdate}
+        onAppointmentDelete={handleAppointmentDelete}
+      />
     </div>
   );
 }

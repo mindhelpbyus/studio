@@ -197,10 +197,8 @@ export interface ContextMenuProps {
 export interface AppointmentFormProps {
   isOpen: boolean;
   mode: 'create' | 'edit';
-  // appointment may be null when creating a new appointment
-  appointment?: CalendarAppointment | null;
-  // initialTime may be null when unspecified
-  initialTime?: Date | null;
+  appointment?: CalendarAppointment;
+  initialTime?: Date;
   therapistId?: string;
   onSave: (appointment: CalendarAppointment) => void;
   onCancel: () => void;

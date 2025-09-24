@@ -21,6 +21,20 @@ export function formatTimeSlot(time: string): string {
 }
 
 /**
+ * Format a date object to display time in 12-hour format
+ */
+export function formatTime(date: Date): string {
+  return format(date, 'h:mm a');
+}
+
+/**
+ * Format appointment time for display
+ */
+export function formatAppointmentTime(date: Date): string {
+  return format(date, 'h:mm a');
+}
+
+/**
  * Get days for week view
  */
 export function getWeekDays(currentDate: Date): Array<{ day: string; date: number; fullDate: Date }> {
@@ -162,15 +176,6 @@ export function generateAvailableSlots(
 }
 
 /**
- * Format appointment time range for display
- */
-export function formatAppointmentTime(appointment: CalendarAppointment): string {
-  const startTime = format(appointment.startTime, 'h:mm a');
-  const endTime = format(appointment.endTime, 'h:mm a');
-  return `${startTime} - ${endTime}`;
-}
-
-/**
  * Get current time indicator position
  */
 export function getCurrentTimePosition(currentDate: Date): number | null {
@@ -217,7 +222,7 @@ export function getAppointmentColor(appointment: CalendarAppointment) {
   // Add status modifiers
   let statusClasses = '';
   if (appointment.status && STATUS_MODIFIERS[appointment.status]) {
-    statusClasses = STATUS_MODIFIERS[appointment.status];
+    statusClasses = STATUS_MODIFIERS[appointment.status] || '';
   }
   
   return {

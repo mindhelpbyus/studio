@@ -28,12 +28,15 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-interface AppointmentDetailSidebarProps {
-  appointment: CalendarAppointment | null;
+export interface AppointmentDetailSidebarProps {
   isOpen: boolean;
+  appointment: CalendarAppointment;
   onClose: () => void;
-  onAction: (action: string, appointmentId: string) => void;
+  onAction: (action: string, id?: string) => void;
+  onDelete?: (id: string) => Promise<void>;
 }
+
+
 
 export function AppointmentDetailSidebar({
   appointment,
@@ -61,7 +64,7 @@ export function AppointmentDetailSidebar({
   // Mock client data
   const mockClient = {
     id: appointment.clientId,
-    name: appointment.clientName || 'Unknown Client',
+    name: appointment.patientName || 'Unknown Client',
     phone: '+1 (555) 123-4567',
     email: 'client@example.com',
     membershipType: 'Premium',
@@ -116,7 +119,7 @@ export function AppointmentDetailSidebar({
             <div className="flex items-center space-x-3">
               <Clock className="h-5 w-5 text-muted-foreground" />
               <div>
-                <p className="font-medium">{formatAppointmentTime(appointment)}</p>
+                <p className="font-medium">{formatAppointmentTime(appointment.startTime)}</p>
                 <p className="text-sm text-muted-foreground">{duration} minutes</p>
               </div>
             </div>
@@ -136,7 +139,7 @@ export function AppointmentDetailSidebar({
                 <Avatar className="h-10 w-10">
                   <AvatarImage src={`https://picsum.photos/seed/${mockClient.id}/100/100`} />
                   <AvatarFallback>
-                    {mockClient.name.split(' ').map(n => n[0]).join('')}
+                    {mockClient.name.split(' ').map((n: string) => n[0]).join('')}
                   </AvatarFallback>
                 </Avatar>
                 <div className="flex-1">

@@ -3,7 +3,7 @@
 import React, { createContext, useContext, useReducer, ReactNode } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { CalendarAppointment, TimeSlot } from '@/lib/calendar-types';
+import { CalendarAppointment, TimeSlot } from '@/core/calendar/calendar-types';
 
 // Drag and drop context types
 interface DragDropState {
