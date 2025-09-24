@@ -11,7 +11,10 @@ export const MOCK_APPOINTMENTS: CalendarAppointment[] = [
     startTime: new Date(2025, 8, 23, 10, 0),
     endTime: new Date(2025, 8, 23, 11, 0),
     status: 'scheduled',
-    color: '#4CAF50'
+    type: 'appointment',
+    title: 'Initial Consultation',
+    patientName: 'Lisa Brown',
+    color: 'green'
   },
   {
     id: '2',
@@ -23,6 +26,9 @@ export const MOCK_APPOINTMENTS: CalendarAppointment[] = [
     startTime: new Date(2025, 8, 23, 11, 30),
     endTime: new Date(2025, 8, 23, 12, 0),
     status: 'scheduled',
-    color: '#2196F3'
+    type: 'appointment',
+    title: 'Follow-up Session',
+    patientName: 'Mike Davis',
+    color: 'blue'
   }
 ];
