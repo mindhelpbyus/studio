@@ -117,8 +117,12 @@ export class ConflictDetectionService {
   private static checkBreakConflicts(
     startTime: Date,
     endTime: Date,
-    breaks: Array<{ start: string; end: string; title: string }>
+    breaks: Array<{ start: string; end: string; title: string }> | undefined
   ): ConflictResult {
+    if (!breaks) {
+      return { hasConflict: false, conflicts: [] };
+    }
+
     for (const breakPeriod of breaks) {
       const [breakStartHour, breakStartMinute] = breakPeriod.start.split(':').map(Number);
       const [breakEndHour, breakEndMinute] = breakPeriod.end.split(':').map(Number);
@@ -243,8 +247,13 @@ export class ConflictDetectionService {
     
     if (!workingHours) return [];
 
-    const [startHour, startMinute] = workingHours.start.split(':').map(Number);
-    const [endHour, endMinute] = workingHours.end.split(':').map(Number);
+    const startParts = workingHours.start.split(':');
+    const startHour = parseInt(startParts[0] ?? '0', 10) || 0;
+    const startMinute = parseInt(startParts[1] ?? '0', 10) || 0;
+
+    const endParts = workingHours.end.split(':');
+    const endHour = parseInt(endParts[0] ?? '0', 10) || 0;
+    const endMinute = parseInt(endParts[1] ?? '0', 10) || 0;
 
     const dayStart = new Date(date);
     dayStart.setHours(startHour || 0, startMinute || 0, 0, 0);
@@ -308,5 +317,22 @@ export class ConflictDetectionService {
       .slice(0, maxSuggestions);
 
     return sortedSlots;
+  }
+
+  /**
+   * Get all overlapping appointments for a given appointment, excluding itself.
+   * This is useful for display purposes in a calendar view.
+   */
+  static getOverlappingAppointmentsForDisplay(
+    appointment: CalendarAppointment,
+    allAppointments: CalendarAppointment[]
+  ): CalendarAppointment[] {
+    return this.findOverlappingAppointments(
+      appointment.id,
+      appointment.therapistId,
+      appointment.startTime,
+      appointment.endTime,
+      allAppointments
+    );
   }
 }

@@ -19,13 +19,14 @@ interface ErrorBoundaryProps {
 
 interface ErrorFallbackProps {
   error: Error;
-  resetError: () => void;
+  resetErrorBoundary: () => void;
 }
 
 class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
   constructor(props: ErrorBoundaryProps) {
     super(props);
     this.state = { hasError: false };
+    this.resetErrorBoundary = this.resetErrorBoundary.bind(this);
   }
 
   static getDerivedStateFromError(error: Error): ErrorBoundaryState {
@@ -35,46 +36,58 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
     };
   }
 
-  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    console.error('Error caught by boundary:', error, errorInfo);
-    
-    // Log error to monitoring service
-    this.logErrorToService(error, errorInfo);
-    
-    // Call custom error handler if provided
-    this.props.onError?.(error, errorInfo);
-    
-    this.setState({
-      error,
-      errorInfo,
-    });
-  }
+  override componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+    try {
+      console.error('Error caught by boundary:', error, errorInfo);
+      
+      // Log error to monitoring service
+      this.logErrorToService(error, errorInfo);
+      
+      // Call custom error handler if provided
+      if (this.props.onError) {
+        this.props.onError(error, errorInfo);
+      }
+      
+      this.setState({
+        error,
+        errorInfo,
+      });
+    } catch (e) {
+      console.error('Error in error boundary:', e);
+      this.setState({ hasError: true, error: new Error('Error handling failed') });
+    }
+  } // Closes componentDidCatch
 
   private logErrorToService(error: Error, errorInfo: React.ErrorInfo) {
     // In production, send to error monitoring service (Sentry, DataDog, etc.)
-    const errorData = {
-      message: error.message,
-      stack: error.stack,
-      componentStack: errorInfo.componentStack,
-      timestamp: new Date().toISOString(),
-      userAgent: typeof window !== 'undefined' ? window.navigator.userAgent : 'SSR',
-      url: typeof window !== 'undefined' ? window.location.href : 'SSR',
-    };
+    try {
+      const errorData = {
+        name: error.name,
+        message: error.message,
+        stack: error.stack,
+        componentStack: errorInfo?.componentStack || 'No component stack available',
+        timestamp: new Date().toISOString(),
+        userAgent: typeof window !== 'undefined' ? window.navigator.userAgent : 'SSR',
+        url: typeof window !== 'undefined' ? window.location.href : 'SSR',
+      };
 
-    console.error('Error Boundary - Full Error Data:', errorData);
-  }
+      console.error('Error Boundary - Full Error Data:', errorData);
+    } catch (logError) {
+      console.error('Failed to log error to service:', logError);
+    }
+  } // Closes logErrorToService
 
-  resetError = () => {
-    this.setState({ hasError: false, error: undefined, errorInfo: undefined });
+  resetErrorBoundary = () => {
+    this.setState({ hasError: false, error: undefined as any, errorInfo: undefined as any });
   };
 
-  render() {
+  override render() {
     if (this.state.hasError) {
       const FallbackComponent = this.props.fallback || DefaultErrorFallback;
       return (
-        <FallbackComponent 
-          error={this.state.error!} 
-          resetError={this.resetError} 
+        <FallbackComponent
+          error={this.state.error!}
+          resetErrorBoundary={this.resetErrorBoundary}
         />
       );
     }
@@ -83,7 +96,7 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
   }
 }
 
-function DefaultErrorFallback({ error, resetError }: ErrorFallbackProps) {
+function DefaultErrorFallback({ error, resetErrorBoundary }: ErrorFallbackProps) {
   const isDevelopment = process.env.NODE_ENV === 'development';
 
   return (
@@ -110,7 +123,7 @@ function DefaultErrorFallback({ error, resetError }: ErrorFallbackProps) {
             </div>
           )}
           <div className="flex flex-col gap-2">
-            <Button onClick={resetError} className="w-full">
+            <Button onClick={resetErrorBoundary} className="w-full">
               <RefreshCw className="mr-2 h-4 w-4" />
               Try Again
             </Button>
@@ -132,7 +145,7 @@ function DefaultErrorFallback({ error, resetError }: ErrorFallbackProps) {
 export function ApiErrorBoundary({ children }: { children: React.ReactNode }) {
   return (
     <ErrorBoundary
-      fallback={({ error, resetError }) => (
+      fallback={({ error, resetErrorBoundary }) => (
         <div className="rounded-md border border-destructive/20 bg-destructive/5 p-4">
           <div className="flex items-center gap-2 text-destructive mb-2">
             <AlertTriangle className="h-4 w-4" />
@@ -141,7 +154,7 @@ export function ApiErrorBoundary({ children }: { children: React.ReactNode }) {
           <p className="text-sm text-muted-foreground mb-3">
             Failed to load data. Please try again.
           </p>
-          <Button size="sm" onClick={resetError}>
+          <Button size="sm" onClick={resetErrorBoundary}>
             Retry
           </Button>
         </div>
@@ -155,13 +168,13 @@ export function ApiErrorBoundary({ children }: { children: React.ReactNode }) {
 export function ComponentErrorBoundary({ children }: { children: React.ReactNode }) {
   return (
     <ErrorBoundary
-      fallback={({ error, resetError }) => (
+      fallback={({ error, resetErrorBoundary }) => (
         <div className="rounded-md border border-muted bg-muted/20 p-4 text-center">
           <AlertTriangle className="mx-auto h-8 w-8 text-muted-foreground mb-2" />
           <p className="text-sm text-muted-foreground mb-3">
             This component failed to load
           </p>
-          <Button size="sm" variant="outline" onClick={resetError}>
+          <Button size="sm" variant="outline" onClick={resetErrorBoundary}>
             Retry
           </Button>
         </div>

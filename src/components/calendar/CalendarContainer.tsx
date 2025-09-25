@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 import { CalendarView, CalendarAppointment, Therapist } from '@/lib/calendar-types';
 import { Button } from '../ui/button';
 import { AppointmentDetailSidebar } from './appointment-detail-sidebar';
-import { AppointmentForm } from './appointment-form';
+import { AppointmentForm } from '@/healthcare/appointment-management/presentation/components/calendar/appointment-form';
 import { CustomDragLayer } from './custom-drag-layer';
 import { DayView } from './DayView';
 import { DragDropProvider } from './drag-drop-provider';
@@ -76,12 +76,6 @@ const CalendarContainer: React.FC<CalendarContainerProps> = ({
     switch (newView) {
       case 'day':
         setCurrentDate(startOfDay(currentDate));
-        break;
-      case 'week':
-        setCurrentDate(startOfWeek(currentDate));
-        break;
-      case 'month':
-        setCurrentDate(startOfMonth(currentDate));
         break;
       case 'week':
         setCurrentDate(startOfWeek(currentDate));
@@ -201,12 +195,12 @@ const CalendarContainer: React.FC<CalendarContainerProps> = ({
 
       <AppointmentForm
         isOpen={isFormOpen}
-        onClose={() => setIsFormOpen(false)}
+        onCancel={() => setIsFormOpen(false)}
         mode={selectedAppointment ? 'edit' : 'create'}
-        initialAppointment={selectedAppointment}
+        appointment={selectedAppointment}
         therapists={therapists}
         services={currentTherapist?.services || []}
-        onSubmit={selectedAppointment ? onAppointmentUpdate : onAppointmentCreate}
+        onSave={selectedAppointment ? onAppointmentUpdate : onAppointmentCreate}
       />
     </div>
   );

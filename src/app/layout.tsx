@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import ErrorBoundary from '@/components/error-boundary';
-import { Toaster } from '@/components/ui/toaster';
+import Providers from '@/components/providers';
 import './globals.css';
 import { Manrope } from 'next/font/google';
 
@@ -89,14 +88,9 @@ export default function RootLayout({
         <link rel="manifest" href="/manifest.json" />
       </head>
       <body className="font-body min-h-screen bg-background antialiased">
-        <ErrorBoundary>
-          <div className="relative flex min-h-screen flex-col">
-            <main className="flex-1">
-              {children}
-            </main>
-          </div>
-          <Toaster />
-        </ErrorBoundary>
+        <Providers>
+          {children}
+        </Providers>
       </body>
     </html>
   );

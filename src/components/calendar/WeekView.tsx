@@ -4,6 +4,7 @@ import { format, addDays, startOfDay, endOfDay, addHours } from 'date-fns';
 import React from 'react';
 import { CalendarAppointment } from '@/lib/calendar-types';
 import { AppointmentBlock } from './appointment-block';
+import { ConflictDetectionService } from '@/lib/conflict-detection';
 
 interface WeekViewProps {
   startDate: Date;
@@ -30,7 +31,10 @@ export const WeekView: React.FC<WeekViewProps> = ({
   const weekDays = DAYS.map(i => addDays(weekStart, i));
 
   const getPositionStyles = (appointment: CalendarAppointment) => {
-    const overlappingAppts = getOverlappingAppointments(appointment);
+    const overlappingAppts = ConflictDetectionService.getOverlappingAppointmentsForDisplay(
+      appointment,
+      appointments
+    );
     const startHour = appointment.startTime.getHours();
     const startMinutes = appointment.startTime.getMinutes();
     const endHour = appointment.endTime.getHours();

@@ -17,6 +17,7 @@ interface DraggableAppointmentBlockProps {
   onDragStart: () => void;
   onDragEnd: (newTime: Date) => void;
   onResize: (newDuration: number) => void;
+  children?: React.ReactNode; // Add children prop
 }
 
 export const DraggableAppointmentBlock: React.FC<DraggableAppointmentBlockProps> = ({
@@ -31,6 +32,7 @@ export const DraggableAppointmentBlock: React.FC<DraggableAppointmentBlockProps>
   onDragStart,
   onDragEnd,
   onResize,
+  children, // Destructure children
 }) => {
   const [{ isDragging }, drag] = useDrag(() => ({
     type: ItemTypes.APPOINTMENT,
@@ -51,15 +53,18 @@ export const DraggableAppointmentBlock: React.FC<DraggableAppointmentBlockProps>
         width: '100%',
         opacity: isDragging ? 0.5 : 1,
         cursor: canDrag ? 'move' : 'default',
+        backgroundColor: isActive ? undefined : appointment.color, // Apply appointment color when not active
+        color: isActive ? undefined : (appointment.color ? 'white' : 'black'), // Ensure text is readable
       }}
       className={`p-2 rounded-lg shadow-md ${
-        isActive ? 'bg-blue-500 text-white' : 'bg-white text-gray-900'
+        isActive ? 'bg-blue-500 text-white' : ''
       }`}
       onClick={onClick}
       onContextMenu={onContextMenu}
     >
       <p className="font-bold">{appointment.patientName}</p>
       <p>{`${appointment.startTime.toLocaleTimeString()} - ${appointment.endTime.toLocaleTimeString()}`}</p>
+      {children} {/* Render children */}
     </div>
   );
 };

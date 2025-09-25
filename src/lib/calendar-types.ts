@@ -1,6 +1,6 @@
 export type AppointmentStatus = 'scheduled' | 'checked-in' | 'completed' | 'cancelled' | 'no-show' | 'waitlist';
 export type AppointmentType = 'appointment' | 'break' | 'blocked';
-export type AppointmentColor = 'blue' | 'pink' | 'orange' | 'purple' | 'green' | 'gray';
+export type AppointmentColor = string; // Allow any string for color
 export type UserRole = 'therapist' | 'admin';
 export type CalendarView = 'day' | 'week' | 'month' | 'agenda' | 'timeline' | 'waitlist' | 'conflicts';
 
@@ -15,6 +15,7 @@ export interface CalendarAppointment {
   type: AppointmentType;
   title: string;
   patientName: string;
+  clientName?: string; // Added clientName
   notes?: string | undefined;
   color: AppointmentColor;
   createdBy?: 'therapist' | 'patient' | 'admin' | undefined;
@@ -45,6 +46,7 @@ export interface Therapist {
   workingHours: WorkingHours;
   services: Service[];
   allowPatientBooking?: boolean;
+  color?: string; // Added color property
 }
 
 export interface Service {
@@ -60,7 +62,7 @@ export interface WorkingHours {
   [key: string]: { // day of week (monday, tuesday, etc.)
     start: string; // HH:mm format
     end: string;   // HH:mm format
-    breaks: Array<{
+    breaks?: Array<{ // Made breaks optional
       start: string;
       end: string;
       title: string;
@@ -83,7 +85,7 @@ export interface CalendarViewConfig {
   userRole: UserRole;
   viewType: CalendarView;
   currentDate: Date;
-  selectedTherapistId: string; // for therapist role
+  // selectedTherapistId: string; // Removed, as multi-therapist selection is handled by filters.therapistIds
 }
 
 export interface ExtendedAppointment extends CalendarAppointment {
@@ -201,7 +203,7 @@ export interface AppointmentFormProps {
   appointment?: CalendarAppointment | null;
   // initialTime may be null when unspecified
   initialTime?: Date | null;
-  therapistId?: string;
+  therapistId?: string; // Made optional
   onSave: (appointment: CalendarAppointment) => void;
   onCancel: () => void;
   onDelete?: (appointmentId: string) => void;

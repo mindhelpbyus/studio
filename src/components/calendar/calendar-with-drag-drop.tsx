@@ -8,6 +8,9 @@ import { CustomDragLayer } from './custom-drag-layer';
 import { DragDropProvider } from './drag-drop-provider';
 import { DraggableAppointmentBlock } from './draggable-appointment-block';
 import { DropZone } from './drop-zone';
+import { isSameDay, addHours, eachDayOfInterval, startOfWeek, endOfWeek, format } from 'date-fns';
+import { Users } from 'lucide-react'; // Import Users icon
+import { HOUR_HEIGHT } from '@/lib/calendar-utils'; // Import HOUR_HEIGHT
 
 interface CalendarWithDragDropProps {
   appointments: CalendarAppointment[];
@@ -16,8 +19,8 @@ interface CalendarWithDragDropProps {
   filters: CalendarFilter;
   onAppointmentUpdate: (appointment: CalendarAppointment) => Promise<boolean>;
   onAppointmentClick: (appointment: CalendarAppointment) => void;
-  onTimeSlotClick: (time: Date, therapistId?: string) => void;
-  selectedAppointmentId?: string;
+  onTimeSlotClick: (time: Date, therapistId: string) => void; // Changed to require string
+  selectedAppointmentId: string; // Changed to required string
 }
 
 export const CalendarWithDragDrop: React.FC<CalendarWithDragDropProps> = ({
@@ -157,91 +160,153 @@ export const CalendarWithDragDrop: React.FC<CalendarWithDragDropProps> = ({
   // Generate time slots for drop zones
   const timeSlots = generateTimeSlots();
 
+  // Current time indicator component (adapted from ResourceTimeline)
+  const CurrentTimeIndicator = () => {
+    const now = new Date();
+    const currentDay = viewConfig.currentDate;
+
+    const top = (now.getHours() + now.getMinutes() / 60) * HOUR_HEIGHT;
+
+    return isSameDay(now, currentDay) && viewConfig.viewType === 'day' ? (
+      <div
+        className="absolute left-0 right-0 flex items-center z-10"
+        style={{ top: `${top}px` }}
+      >
+        <div className="w-2 h-2 rounded-full bg-red-500" />
+        <div className="flex-1 h-px bg-red-500" />
+      </div>
+    ) : null;
+  };
+
   // Render calendar grid with drag and drop
   const renderCalendarGrid = () => {
-    const filteredTherapists = therapists.filter(therapist => 
+    const filteredTherapists = therapists.filter(therapist =>
       filters.therapistIds.length === 0 || filters.therapistIds.includes(therapist.id)
     );
 
+    const daysToDisplay = viewConfig.viewType === 'week'
+      ? eachDayOfInterval({ start: startOfWeek(viewConfig.currentDate), end: endOfWeek(viewConfig.currentDate) })
+      : [viewConfig.currentDate];
+
+    const isWeekView = viewConfig.viewType === 'week';
+    const isDayView = viewConfig.viewType === 'day';
+
+    // Determine grid columns based on view type
+    let gridTemplateColumns: string;
+    if (isWeekView || isDayView) {
+      // For week/day view, one column per day (plus time column)
+      gridTemplateColumns = `100px repeat(${daysToDisplay.length}, 1fr)`; // Increased time column width
+    } else {
+      // For other views (e.g., timeline), keep therapist columns
+      gridTemplateColumns = `100px repeat(${daysToDisplay.length * filteredTherapists.length}, 1fr)`; // Increased time column width
+    }
+
+    // If no therapists are selected and it's a week/day view, show a message
+    if (filteredTherapists.length === 0 && (isWeekView || isDayView)) {
+      return (
+        <div className="flex items-center justify-center h-full">
+          <div className="text-center space-y-4">
+            <div className="w-16 h-16 mx-auto bg-muted/50 rounded-full flex items-center justify-center">
+              <Users className="h-8 w-8 text-muted-foreground" />
+            </div>
+            <div>
+              <h3 className="text-lg font-medium text-muted-foreground">No Doctors Selected</h3>
+              <p className="text-sm text-muted-foreground mt-1">
+                Please select one or more doctors from the dropdown to view their calendars.
+              </p>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div className="relative flex-1 overflow-auto">
-        {/* Time column */}
-        <div className="absolute left-0 top-0 w-20 bg-gray-50 border-r border-gray-200">
-          {timeSlots.map((time, index) => (
+        <div className="grid h-full" style={{ gridTemplateColumns: gridTemplateColumns }}>
+          {/* Top-left corner (empty or calendar icon) */}
+          <div className="sticky top-0 z-20 border-b border-r border-gray-200 p-4"></div>
+
+          {/* Day Headers */}
+          {daysToDisplay.map((day, dayIndex) => (
             <div
-              key={time}
-              className="h-16 border-b border-gray-100 flex items-center justify-center text-sm text-gray-600"
+              key={day.toISOString()}
+              className="sticky top-0 z-10 border-b border-r border-gray-200 p-4 text-center"
+              style={{ gridColumn: `span 1` }} // Span 1 column for week/day view
             >
-              {time}
+              <h3 className="font-semibold text-gray-900">{format(day, isWeekView ? 'EEE d' : 'EEEE, MMM d')}</h3>
             </div>
           ))}
-        </div>
 
-        {/* Therapist columns */}
-        <div className="ml-20 grid" style={{ gridTemplateColumns: `repeat(${filteredTherapists.length}, 1fr)` }}>
-          {filteredTherapists.map((therapist, therapistIndex) => (
-            <div key={therapist.id} className="relative border-r border-gray-200 min-h-full">
-              {/* Column header */}
-              <div className="sticky top-0 z-10 bg-white border-b border-gray-200 p-4">
-                <div className="flex items-center space-x-3">
-                  {therapist.avatar && (
-                    <img
-                      src={therapist.avatar}
-                      alt={therapist.name}
-                      className="w-8 h-8 rounded-full"
-                    />
-                  )}
-                  <div>
-                    <h3 className="font-semibold text-gray-900">{therapist.name}</h3>
-                    <p className="text-sm text-gray-500">{therapist.specialty}</p>
-                  </div>
-                </div>
+          {/* Time Column */}
+          <div className="sticky left-0 z-10 border-r border-gray-200">
+            {timeSlots.map((time, index) => (
+              <div
+                key={time}
+                className="border-b border-gray-100 flex items-center justify-center text-sm text-gray-600"
+                style={{ height: `${HOUR_HEIGHT}px` }}
+              >
+                {time}
               </div>
+            ))}
+          </div>
 
-              {/* Time slots and drop zones */}
+          {/* Main Content Grid (Days and Appointments) */}
+          {daysToDisplay.map((day, dayIndex) => (
+            <div key={day.toISOString()} className="relative border-r border-gray-200 min-h-full">
+              {/* Time slots and drop zones for the day */}
               <div className="relative">
                 {timeSlots.map((time, timeIndex) => {
-                  const slotTime = new Date();
-                  const [hours] = time.split(':');
+                  const slotTime = new Date(day);
+                  const [hours = '0'] = time.split(':');
                   slotTime.setHours(parseInt(hours), 0, 0, 0);
 
-                  const isAvailable = ConflictDetectionService.isTimeSlotAvailable(
-                    slotTime,
-                    30, // 30-minute default slot
-                    therapist.id,
-                    appointments,
-                    therapist
+                  // For week/day view, we need to consider all selected therapists for availability
+                  const isAnyTherapistAvailable = filteredTherapists.some(therapist =>
+                    ConflictDetectionService.isTimeSlotAvailable(
+                      slotTime,
+                      30, // Assuming a default appointment duration for slot availability check
+                      therapist.id,
+                      appointments,
+                      therapist
+                    )
                   );
+
+                  // Determine therapistId for onTimeSlotClick
+                  // If only one therapist is selected, use their ID. Otherwise, pass an empty string or handle later.
+                  const defaultTherapistIdForSlot = filteredTherapists.length > 0 ? filteredTherapists[0]?.id || '' : '';
 
                   return (
                     <DropZone
-                      key={`${therapist.id}-${time}`}
+                      key={`${day.toISOString()}-${time}`}
                       timeSlot={{
                         time: slotTime,
-                        therapistId: therapist.id,
-                        isAvailable,
+                        therapistId: defaultTherapistIdForSlot, // Pass a default or selected therapist ID
+                        isAvailable: isAnyTherapistAvailable,
                       }}
-                      height={64} // 4rem
-                      top={timeIndex * 64}
+                      height={HOUR_HEIGHT}
+                      top={timeIndex * HOUR_HEIGHT}
                       onDrop={handleAppointmentDrop}
                       onConflictCheck={handleConflictCheck}
                       className="border-b border-gray-100 hover:bg-gray-50"
                     >
-                      {/* Time slot content */}
                       <div
                         className="h-full w-full cursor-pointer"
-                        onClick={() => onTimeSlotClick(slotTime, therapist.id)}
+                        onClick={() => onTimeSlotClick(slotTime, defaultTherapistIdForSlot)}
                       />
                     </DropZone>
                   );
                 })}
 
-                {/* Appointments */}
+                {/* Appointments for this day (all therapists) */}
                 {appointments
-                  .filter(apt => apt.therapistId === therapist.id)
+                  .filter(apt =>
+                    isSameDay(apt.startTime, day) &&
+                    (filters.therapistIds.length === 0 || filters.therapistIds.includes(apt.therapistId))
+                  )
                   .map(appointment => {
                     const { top, height } = calculateAppointmentPosition(appointment);
-                    
+                    const therapist = therapists.find(t => t.id === appointment.therapistId);
+
                     return (
                       <DraggableAppointmentBlock
                         key={appointment.id}
@@ -251,28 +316,29 @@ export const CalendarWithDragDrop: React.FC<CalendarWithDragDropProps> = ({
                         onClick={() => onAppointmentClick(appointment)}
                         onContextMenu={(e) => {
                           e.preventDefault();
-                          // Handle context menu
                         }}
                         isActive={selectedAppointmentId === appointment.id}
                         canDrag={appointment.isDraggable !== false}
                         canResize={appointment.isResizable !== false}
-                        onDragStart={() => {
-                          // Optional: Handle drag start
-                        }}
-                        onDragEnd={(newTime) => {
-                          // Optional: Handle drag end
-                        }}
+                        onDragStart={() => {}}
+                        onDragEnd={(newTime) => {}}
                         onResize={(newDuration) => {
                           handleAppointmentResize(appointment, newDuration);
                         }}
-                      />
+                      >
+                        {viewConfig.userRole === 'admin' && therapist?.name && (
+                          <div className="absolute bottom-1 left-1 text-xs text-gray-600">
+                            {therapist.name}
+                          </div>
+                        )}
+                      </DraggableAppointmentBlock>
                     );
                   })}
               </div>
+              {isDayView && isSameDay(day, viewConfig.currentDate) && <CurrentTimeIndicator />}
             </div>
           ))}
         </div>
-
         {/* Drag feedback */}
         {dragFeedback.isVisible && (
           <div className="fixed top-4 right-4 z-50">

@@ -25,14 +25,15 @@ interface AppointmentFormData {
   endTime: string;   // HH:mm format
   date: string;      // YYYY-MM-DD format
   notes: string;
-  status: 'scheduled' | 'checked-in' | 'completed' | 'cancelled' | 'no-show';
+  status: 'scheduled' | 'checked-in' | 'completed' | 'cancelled' | 'no-show' | 'waitlist'; // Added 'waitlist'
   type: 'appointment' | 'break' | 'blocked';
 }
 
-interface ExtendedAppointmentFormProps extends AppointmentFormProps {
+export interface ExtendedAppointmentFormProps extends AppointmentFormProps { // Exported
   therapists: Therapist[];
   services: Service[];
   onConflictCheck?: (appointment: CalendarAppointment) => Promise<CalendarAppointment[]>;
+  therapistId?: string; // Explicitly make optional here as well
 }
 
 export const AppointmentForm: React.FC<ExtendedAppointmentFormProps> = ({
@@ -40,7 +41,7 @@ export const AppointmentForm: React.FC<ExtendedAppointmentFormProps> = ({
   mode,
   appointment,
   initialTime,
-  therapistId,
+  therapistId: propTherapistId, // Renamed to avoid conflict with state
   therapists,
   services,
   onSave,
@@ -54,7 +55,7 @@ export const AppointmentForm: React.FC<ExtendedAppointmentFormProps> = ({
     clientPhone: '',
     clientEmail: '',
     serviceId: '',
-    therapistId: therapistId || '',
+    therapistId: propTherapistId || '', // Use propTherapistId
     startTime: '',
     endTime: '',
     date: '',
@@ -96,7 +97,7 @@ export const AppointmentForm: React.FC<ExtendedAppointmentFormProps> = ({
           clientPhone: '',
           clientEmail: '',
           serviceId: '',
-          therapistId: therapistId || '',
+          therapistId: propTherapistId || '', // Use propTherapistId here
           startTime: format(defaultDate, 'HH:mm'),
           endTime: format(defaultEndTime, 'HH:mm'),
           date: format(defaultDate, 'yyyy-MM-dd'),
@@ -108,17 +109,19 @@ export const AppointmentForm: React.FC<ExtendedAppointmentFormProps> = ({
       setErrors({});
       setConflicts([]);
     }
-  }, [isOpen, mode, appointment, initialTime, therapistId]);
+  }, [isOpen, mode, appointment, initialTime, propTherapistId]);
 
   // Update end time when service changes
   useEffect(() => {
     if (formData.serviceId) {
       const service = services.find(s => s.id === formData.serviceId);
       if (service && formData.startTime) {
-        const [hours, minutes] = formData.startTime.split(':').map(Number);
-        const startDate = new Date();
-        startDate.setHours(hours, minutes, 0, 0);
-        const endDate = new Date(startDate.getTime() + service.duration * 60 * 1000);
+      const timeParts = formData.startTime.split(':');
+      const hours = parseInt(timeParts[0] ?? '0', 10) || 0;
+      const minutes = parseInt(timeParts[1] ?? '0', 10) || 0;
+      const startDate = new Date();
+      startDate.setHours(hours, minutes, 0, 0);
+      const endDate = new Date(startDate.getTime() + service.duration * 60 * 1000);
         
         setFormData(prev => ({
           ...prev,
@@ -158,8 +161,13 @@ export const AppointmentForm: React.FC<ExtendedAppointmentFormProps> = ({
     }
 
     if (formData.startTime && formData.endTime) {
-      const [startHours, startMinutes] = formData.startTime.split(':').map(Number);
-      const [endHours, endMinutes] = formData.endTime.split(':').map(Number);
+      const startTimeParts = formData.startTime.split(':');
+      const startHours = parseInt(startTimeParts[0] ?? '0', 10) || 0;
+      const startMinutes = parseInt(startTimeParts[1] ?? '0', 10) || 0;
+
+      const endTimeParts = formData.endTime.split(':');
+      const endHours = parseInt(endTimeParts[0] ?? '0', 10) || 0;
+      const endMinutes = parseInt(endTimeParts[1] ?? '0', 10) || 0;
       
       const startMinutesTotal = startHours * 60 + startMinutes;
       const endMinutesTotal = endHours * 60 + endMinutes;
@@ -197,35 +205,41 @@ export const AppointmentForm: React.FC<ExtendedAppointmentFormProps> = ({
     
     if (!validateForm()) return;
 
-    setIsLoading(true);
+      setIsLoading(true);
 
-    try {
-      // Create appointment object
-      const [startHours, startMinutes] = formData.startTime.split(':').map(Number);
-      const [endHours, endMinutes] = formData.endTime.split(':').map(Number);
-      
-      const appointmentDate = new Date(formData.date);
-      const startTime = new Date(appointmentDate);
-      startTime.setHours(startHours, startMinutes, 0, 0);
-      
-      const endTime = new Date(appointmentDate);
-      endTime.setHours(endHours, endMinutes, 0, 0);
+      try {
+        // Create appointment object
+        const startTimeParts = formData.startTime.split(':');
+        const startHours = parseInt(startTimeParts[0] ?? '0', 10) || 0;
+        const startMinutes = parseInt(startTimeParts[1] ?? '0', 10) || 0;
 
-      const appointmentData: CalendarAppointment = {
-        id: appointment?.id || `apt-${Date.now()}`,
-        therapistId: formData.therapistId,
-        clientId: appointment?.clientId || `client-${Date.now()}`,
-        serviceId: formData.serviceId,
-        startTime,
-        endTime,
-        status: formData.status,
-        type: formData.type,
-        title: formData.title,
-        clientName: formData.clientName,
-        notes: formData.notes,
-        color: 'blue', // Would be determined by service
-        createdBy: 'therapist',
-      };
+        const endTimeParts = formData.endTime.split(':');
+        const endHours = parseInt(endTimeParts[0] ?? '0', 10) || 0;
+        const endMinutes = parseInt(endTimeParts[1] ?? '0', 10) || 0;
+        
+        const appointmentDate = new Date(formData.date);
+        const startTime = new Date(appointmentDate);
+        startTime.setHours(startHours, startMinutes, 0, 0);
+        
+        const endTime = new Date(appointmentDate);
+        endTime.setHours(endHours, endMinutes, 0, 0);
+
+        const appointmentData: CalendarAppointment = {
+          id: appointment?.id || `apt-${Date.now()}`,
+          therapistId: formData.therapistId,
+          clientId: appointment?.clientId || `client-${Date.now()}`,
+          serviceId: formData.serviceId,
+          startTime,
+          endTime,
+          status: formData.status,
+          type: formData.type,
+          title: formData.title,
+          patientName: formData.clientName, // Use clientName for patientName
+          clientName: formData.clientName,   // Add clientName
+          notes: formData.notes,
+          color: 'blue', // Would be determined by service
+          createdBy: 'therapist',
+        };
 
       // Validate appointment business rules
       const validationErrors = AppointmentService.validateAppointment(appointmentData);
@@ -261,9 +275,8 @@ export const AppointmentForm: React.FC<ExtendedAppointmentFormProps> = ({
   };
 
   // Get available therapists
-  const availableTherapists = therapists.filter(t => 
-    formData.type === 'appointment' ? true : t.id === formData.therapistId
-  );
+  // Always show all therapists in the dropdown, validation will handle if a therapist is required.
+  const availableTherapists = therapists;
 
   // Get available services for selected therapist
   const availableServices = formData.therapistId 
