@@ -1,0 +1,218 @@
+/* Venture CRM Dashboard - Semantic Color System */
+
+:root {
+  /* Global Colors - Neutral */
+  --global-neutral-0: #FFFFFF;
+  --global-neutral-10: #FAFAFA;
+  --global-neutral-20: #F5F5F5;
+  --global-neutral-30: #EEEEEE;
+  --global-neutral-40: #E0E0E0;
+  --global-neutral-50: #BDBDBD;
+  --global-neutral-60: #9E9E9E;
+  --global-neutral-70: #757575;
+  --global-neutral-80: #616161;
+  --global-neutral-90: #424242;
+  --global-neutral-100: #212121;
+
+  /* Global Colors - Blue */
+  --global-blue-10: #E3F2FD;
+  --global-blue-20: #BBDEFB;
+  --global-blue-30: #90CAF9;
+  --global-blue-40: #64B5F6;
+  --global-blue-50: #42A5F5;
+  --global-blue-60: #2196F3;
+  --global-blue-70: #1E88E5;
+  --global-blue-80: #1976D2;
+  --global-blue-90: #1565C0;
+  --global-blue-100: #0D47A1;
+
+  /* Global Colors - Green */
+  --global-green-10: #E8F5E9;
+  --global-green-20: #C8E6C9;
+  --global-green-30: #A5D6A7;
+  --global-green-40: #81C784;
+  --global-green-50: #66BB6A;
+  --global-green-60: #4CAF50;
+  --global-green-70: #43A047;
+  --global-green-80: #388E3C;
+  --global-green-90: #2E7D32;
+  --global-green-100: #1B5E20;
+
+  /* Global Colors - Red */
+  --global-red-10: #FFEBEE;
+  --global-red-20: #FFCDD2;
+  --global-red-30: #EF9A9A;
+  --global-red-40: #E57373;
+  --global-red-50: #EF5350;
+  --global-red-60: #F44336;
+  --global-red-70: #E53935;
+  --global-red-80: #D32F2F;
+  --global-red-90: #C62828;
+  --global-red-100: #B71C1C;
+
+  /* Global Colors - Orange */
+  --global-orange-10: #FFF3E0;
+  --global-orange-20: #FFE0B2;
+  --global-orange-30: #FFCC80;
+  --global-orange-40: #FFB74D;
+  --global-orange-50: #FFA726;
+  --global-orange-60: #FF9800;
+  --global-orange-70: #FB8C00;
+  --global-orange-80: #F57C00;
+  --global-orange-90: #EF6C00;
+  --global-orange-100: #E65100;
+
+  /* Global Colors - Purple */
+  --global-purple-10: #F3E5F5;
+  --global-purple-20: #E1BEE7;
+  --global-purple-30: #CE93D8;
+  --global-purple-40: #BA68C8;
+  --global-purple-50: #AB47BC;
+  --global-purple-60: #9C27B0;
+  --global-purple-70: #8E24AA;
+  --global-purple-80: #7B1FA2;
+  --global-purple-90: #6A1B9A;
+  --global-purple-100: #4A148C;
+
+  /* Global Colors - Yellow */
+  --global-yellow-10: #FFFDE7;
+  --global-yellow-20: #FFF9C4;
+  --global-yellow-30: #FFF59D;
+  --global-yellow-40: #FFF176;
+  --global-yellow-50: #FFEE58;
+  --global-yellow-60: #FFEB3B;
+  --global-yellow-70: #FDD835;
+  --global-yellow-80: #FBC02D;
+  --global-yellow-90: #F9A825;
+  --global-yellow-100: #F57F17;
+
+  /* Semantic Colors - Content Dark */
+  --content-dark-primary: var(--global-neutral-100);
+  --content-dark-secondary: var(--global-neutral-80);
+  --content-dark-tertiary: var(--global-neutral-70);
+  --content-dark-disable: var(--global-neutral-60);
+  --content-dark-informative: var(--global-blue-60);
+  --content-dark-positive: var(--global-green-60);
+  --content-dark-error: var(--global-red-60);
+
+  /* Semantic Colors - Content Light */
+  --content-light-primary: var(--global-neutral-0);
+  --content-light-secondary: var(--global-neutral-20);
+  --content-light-tertiary: var(--global-neutral-30);
+  --content-light-disable: var(--global-neutral-60);
+  --content-light-informative: var(--global-blue-60);
+  --content-light-positive: var(--global-green-60);
+  --content-light-error: var(--global-red-60);
+
+  /* Semantic Colors - Border */
+  --border-primary: var(--global-neutral-40);
+  --border-secondary: var(--global-neutral-60);
+  --border-tertiary: var(--global-neutral-100);
+  --border-informative: var(--global-blue-30);
+  --border-positive: var(--global-green-30);
+  --border-error: var(--global-red-30);
+  --border-warning: var(--global-blue-30);
+
+  /* Semantic Colors - Background */
+  --bg-primary: var(--global-neutral-0);
+  --bg-secondary: var(--global-neutral-20);
+  --bg-tertiary: var(--global-neutral-30);
+  --bg-blue: var(--global-blue-10);
+  --bg-green: var(--global-green-10);
+  --bg-red: var(--global-red-10);
+  --bg-orange: var(--global-orange-10);
+  --bg-purple: var(--global-purple-10);
+  --bg-yellow: var(--global-yellow-10);
+
+  /* Semantic Colors - Action Primary */
+  --action-primary-base: var(--global-neutral-90);
+  --action-primary-hover: var(--global-neutral-80);
+  --action-primary-active: var(--global-neutral-100);
+  --action-primary-selected: var(--global-neutral-90);
+  --action-primary-disabled: var(--global-neutral-20);
+
+  /* Semantic Colors - Action Secondary */
+  --action-secondary-base: var(--global-neutral-0);
+  --action-secondary-base2: var(--global-neutral-30);
+  --action-secondary-hover: var(--global-neutral-40);
+  --action-secondary-active: var(--global-neutral-50);
+  --action-secondary-selected: var(--global-neutral-30);
+  --action-secondary-disabled: var(--global-neutral-20);
+
+  /* Semantic Colors - Action Outline */
+  --action-outline-base: var(--global-neutral-50);
+  --action-outline-hover: var(--global-neutral-60);
+  --action-outline-active: var(--global-neutral-70);
+  --action-outline-selected: var(--global-neutral-70);
+  --action-outline-disabled: var(--global-neutral-30);
+
+  /* Semantic Colors - Action Destructive */
+  --action-destructive-base: var(--global-red-50);
+  --action-destructive-hover: var(--global-red-60);
+  --action-destructive-active: var(--global-red-70);
+  --action-destructive-selected: var(--global-red-60);
+  --action-destructive-disabled: var(--global-red-20);
+
+  /* Semantic Colors - Interaction Primary */
+  --interaction-primary-base: var(--global-neutral-90);
+  --interaction-primary-hover: var(--global-neutral-80);
+  --interaction-primary-active: var(--global-neutral-100);
+  --interaction-primary-selected: var(--global-neutral-90);
+  --interaction-primary-disabled: var(--global-neutral-20);
+
+  /* Semantic Colors - Interaction Secondary */
+  --interaction-secondary-base: var(--global-neutral-0);
+  --interaction-secondary-hover: var(--global-neutral-30);
+  --interaction-secondary-active: var(--global-neutral-50);
+  --interaction-secondary-selected: var(--global-neutral-30);
+  --interaction-secondary-disabled: var(--global-neutral-20);
+
+  /* Semantic Colors - Interaction Outline */
+  --interaction-outline-base: var(--global-neutral-60);
+  --interaction-outline-hover: var(--global-neutral-70);
+  --interaction-outline-active: var(--global-neutral-80);
+  --interaction-outline-selected: var(--global-neutral-70);
+  --interaction-outline-disabled: var(--global-neutral-40);
+
+  /* Semantic Colors - Interaction Red */
+  --interaction-red-base: var(--global-red-60);
+  --interaction-red-hover: var(--global-red-70);
+  --interaction-red-active: var(--global-red-80);
+  --interaction-red-selected: var(--global-red-70);
+  --interaction-red-disabled: var(--global-red-20);
+
+  /* Semantic Colors - Interaction Green */
+  --interaction-green-base: var(--global-green-60);
+  --interaction-green-hover: var(--global-green-70);
+  --interaction-green-active: var(--global-green-80);
+  --interaction-green-selected: var(--global-green-70);
+  --interaction-green-disabled: var(--global-green-20);
+
+  /* Semantic Colors - Interaction Blue */
+  --interaction-blue-base: var(--global-blue-60);
+  --interaction-blue-hover: var(--global-blue-70);
+  --interaction-blue-active: var(--global-blue-80);
+  --interaction-blue-selected: var(--global-blue-70);
+  --interaction-blue-disabled: var(--global-blue-20);
+
+  /* Semantic Colors - Interaction Yellow */
+  --interaction-yellow-base: var(--global-yellow-60);
+  --interaction-yellow-hover: var(--global-yellow-70);
+  --interaction-yellow-active: var(--global-yellow-80);
+  --interaction-yellow-selected: var(--global-yellow-70);
+  --interaction-yellow-disabled: var(--global-yellow-20);
+
+  /* Semantic Colors - Interaction Purple */
+  --interaction-purple-base: var(--global-purple-60);
+  --interaction-purple-hover: var(--global-purple-70);
+  --interaction-purple-active: var(--global-purple-80);
+  --interaction-purple-selected: var(--global-purple-70);
+  --interaction-purple-disabled: var(--global-purple-20);
+
+  /* Semantic Colors - Interaction Orange */
+  --interaction-orange-base: var(--global-orange-60);
+  --interaction-orange-hover: var(--global-orange-70);
+  --interaction-orange-active: var(--global-orange-80);
+  --interaction-orange-selected: var(--global-orange-70);
+  --interaction-orange-disabled: var(--global-orange-20);
+}

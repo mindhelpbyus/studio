@@ -1,0 +1,228 @@
+/* Venture CRM Dashboard - Typography System */
+
+:root {
+  /* Font Family */
+  --font-venture: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  
+  /* Heading Styles */
+  --heading-h1-size: 48px;
+  --heading-h1-weight: 500;
+  --heading-h1-line-height: 57.6px;
+  
+  --heading-h2-size: 32px;
+  --heading-h2-weight: 500;
+  --heading-h2-line-height: 40px;
+  
+  --heading-h3-size: 28px;
+  --heading-h3-weight: 500;
+  --heading-h3-line-height: 36px;
+  
+  --heading-h4-size: 24px;
+  --heading-h4-weight: 500;
+  --heading-h4-line-height: 28px;
+  
+  --heading-h5-size: 20px;
+  --heading-h5-weight: 500;
+  --heading-h5-line-height: 28px;
+  
+  /* Body Extra Large */
+  --body-xl-size: 20px;
+  --body-xl-line-height: 28px;
+  --body-xl-weight-semibold: 600;
+  --body-xl-weight-medium: 500;
+  --body-xl-weight-regular: 400;
+  
+  /* Body Large */
+  --body-lg-size: 18px;
+  --body-lg-line-height: 26px;
+  --body-lg-weight-semibold: 600;
+  --body-lg-weight-medium: 500;
+  --body-lg-weight-regular: 400;
+  
+  /* Body Medium */
+  --body-md-size: 16px;
+  --body-md-line-height: 24px;
+  --body-md-weight-semibold: 600;
+  --body-md-weight-medium: 500;
+  --body-md-weight-regular: 400;
+  
+  /* Body Small */
+  --body-sm-size: 14px;
+  --body-sm-line-height: 20px;
+  --body-sm-weight-semibold: 600;
+  --body-sm-weight-medium: 500;
+  --body-sm-weight-regular: 400;
+  
+  /* Body Extra Small */
+  --body-xs-size: 12px;
+  --body-xs-line-height: 16px;
+  --body-xs-weight-semibold: 600;
+  --body-xs-weight-medium: 500;
+  --body-xs-weight-regular: 400;
+}
+
+/* Heading Classes */
+.venture-h1 {
+  font-family: var(--font-venture);
+  font-size: var(--heading-h1-size);
+  font-weight: var(--heading-h1-weight);
+  line-height: var(--heading-h1-line-height);
+  letter-spacing: normal;
+}
+
+.venture-h2 {
+  font-family: var(--font-venture);
+  font-size: var(--heading-h2-size);
+  font-weight: var(--heading-h2-weight);
+  line-height: var(--heading-h2-line-height);
+  letter-spacing: normal;
+}
+
+.venture-h3 {
+  font-family: var(--font-venture);
+  font-size: var(--heading-h3-size);
+  font-weight: var(--heading-h3-weight);
+  line-height: var(--heading-h3-line-height);
+  letter-spacing: normal;
+}
+
+.venture-h4 {
+  font-family: var(--font-venture);
+  font-size: var(--heading-h4-size);
+  font-weight: var(--heading-h4-weight);
+  line-height: var(--heading-h4-line-height);
+  letter-spacing: normal;
+}
+
+.venture-h5 {
+  font-family: var(--font-venture);
+  font-size: var(--heading-h5-size);
+  font-weight: var(--heading-h5-weight);
+  line-height: var(--heading-h5-line-height);
+  letter-spacing: normal;
+}
+
+/* Body Extra Large Classes */
+.venture-body-xl-semibold {
+  font-family: var(--font-venture);
+  font-size: var(--body-xl-size);
+  font-weight: var(--body-xl-weight-semibold);
+  line-height: var(--body-xl-line-height);
+  letter-spacing: normal;
+}
+
+.venture-body-xl-medium {
+  font-family: var(--font-venture);
+  font-size: var(--body-xl-size);
+  font-weight: var(--body-xl-weight-medium);
+  line-height: var(--body-xl-line-height);
+  letter-spacing: normal;
+}
+
+.venture-body-xl {
+  font-family: var(--font-venture);
+  font-size: var(--body-xl-size);
+  font-weight: var(--body-xl-weight-regular);
+  line-height: var(--body-xl-line-height);
+  letter-spacing: normal;
+}
+
+/* Body Large Classes */
+.venture-body-lg-semibold {
+  font-family: var(--font-venture);
+  font-size: var(--body-lg-size);
+  font-weight: var(--body-lg-weight-semibold);
+  line-height: var(--body-lg-line-height);
+  letter-spacing: normal;
+}
+
+.venture-body-lg-medium {
+  font-family: var(--font-venture);
+  font-size: var(--body-lg-size);
+  font-weight: var(--body-lg-weight-medium);
+  line-height: var(--body-lg-line-height);
+  letter-spacing: normal;
+}
+
+.venture-body-lg {
+  font-family: var(--font-venture);
+  font-size: var(--body-lg-size);
+  font-weight: var(--body-lg-weight-regular);
+  line-height: var(--body-lg-line-height);
+  letter-spacing: normal;
+}
+
+/* Body Medium Classes */
+.venture-body-md-semibold {
+  font-family: var(--font-venture);
+  font-size: var(--body-md-size);
+  font-weight: var(--body-md-weight-semibold);
+  line-height: var(--body-md-line-height);
+  letter-spacing: normal;
+}
+
+.venture-body-md-medium {
+  font-family: var(--font-venture);
+  font-size: var(--body-md-size);
+  font-weight: var(--body-md-weight-medium);
+  line-height: var(--body-md-line-height);
+  letter-spacing: normal;
+}
+
+.venture-body-md {
+  font-family: var(--font-venture);
+  font-size: var(--body-md-size);
+  font-weight: var(--body-md-weight-regular);
+  line-height: var(--body-md-line-height);
+  letter-spacing: normal;
+}
+
+/* Body Small Classes */
+.venture-body-sm-semibold {
+  font-family: var(--font-venture);
+  font-size: var(--body-sm-size);
+  font-weight: var(--body-sm-weight-semibold);
+  line-height: var(--body-sm-line-height);
+  letter-spacing: normal;
+}
+
+.venture-body-sm-medium {
+  font-family: var(--font-venture);
+  font-size: var(--body-sm-size);
+  font-weight: var(--body-sm-weight-medium);
+  line-height: var(--body-sm-line-height);
+  letter-spacing: normal;
+}
+
+.venture-body-sm {
+  font-family: var(--font-venture);
+  font-size: var(--body-sm-size);
+  font-weight: var(--body-sm-weight-regular);
+  line-height: var(--body-sm-line-height);
+  letter-spacing: normal;
+}
+
+/* Body Extra Small Classes */
+.venture-body-xs-semibold {
+  font-family: var(--font-venture);
+  font-size: var(--body-xs-size);
+  font-weight: var(--body-xs-weight-semibold);
+  line-height: var(--body-xs-line-height);
+  letter-spacing: normal;
+}
+
+.venture-body-xs-medium {
+  font-family: var(--font-venture);
+  font-size: var(--body-xs-size);
+  font-weight: var(--body-xs-weight-medium);
+  line-height: var(--body-xs-line-height);
+  letter-spacing: normal;
+}
+
+.venture-body-xs {
+  font-family: var(--font-venture);
+  font-size: var(--body-xs-size);
+  font-weight: var(--body-xs-weight-regular);
+  line-height: var(--body-xs-line-height);
+  letter-spacing: normal;
+}

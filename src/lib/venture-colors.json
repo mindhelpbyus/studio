@@ -1,0 +1,227 @@
+{
+  "globalColors": {
+    "neutral": {
+      "0": "#FFFFFF",
+      "10": "#FAFAFA",
+      "20": "#F5F5F5",
+      "30": "#EEEEEE",
+      "40": "#E0E0E0",
+      "50": "#BDBDBD",
+      "60": "#9E9E9E",
+      "70": "#757575",
+      "80": "#616161",
+      "90": "#424242",
+      "100": "#212121"
+    },
+    "blue": {
+      "10": "#E3F2FD",
+      "20": "#BBDEFB",
+      "30": "#90CAF9",
+      "40": "#64B5F6",
+      "50": "#42A5F5",
+      "60": "#2196F3",
+      "70": "#1E88E5",
+      "80": "#1976D2",
+      "90": "#1565C0",
+      "100": "#0D47A1"
+    },
+    "green": {
+      "10": "#E8F5E9",
+      "20": "#C8E6C9",
+      "30": "#A5D6A7",
+      "40": "#81C784",
+      "50": "#66BB6A",
+      "60": "#4CAF50",
+      "70": "#43A047",
+      "80": "#388E3C",
+      "90": "#2E7D32",
+      "100": "#1B5E20"
+    },
+    "red": {
+      "10": "#FFEBEE",
+      "20": "#FFCDD2",
+      "30": "#EF9A9A",
+      "40": "#E57373",
+      "50": "#EF5350",
+      "60": "#F44336",
+      "70": "#E53935",
+      "80": "#D32F2F",
+      "90": "#C62828",
+      "100": "#B71C1C"
+    },
+    "orange": {
+      "10": "#FFF3E0",
+      "20": "#FFE0B2",
+      "30": "#FFCC80",
+      "40": "#FFB74D",
+      "50": "#FFA726",
+      "60": "#FF9800",
+      "70": "#FB8C00",
+      "80": "#F57C00",
+      "90": "#EF6C00",
+      "100": "#E65100"
+    },
+    "purple": {
+      "10": "#F3E5F5",
+      "20": "#E1BEE7",
+      "30": "#CE93D8",
+      "40": "#BA68C8",
+      "50": "#AB47BC",
+      "60": "#9C27B0",
+      "70": "#8E24AA",
+      "80": "#7B1FA2",
+      "90": "#6A1B9A",
+      "100": "#4A148C"
+    },
+    "yellow": {
+      "10": "#FFFDE7",
+      "20": "#FFF9C4",
+      "30": "#FFF59D",
+      "40": "#FFF176",
+      "50": "#FFEE58",
+      "60": "#FFEB3B",
+      "70": "#FDD835",
+      "80": "#FBC02D",
+      "90": "#F9A825",
+      "100": "#F57F17"
+    }
+  },
+  "semanticColors": {
+    "content": {
+      "dark": {
+        "primary": "var(--global-neutral-100)",
+        "secondary": "var(--global-neutral-80)",
+        "tertiary": "var(--global-neutral-70)",
+        "disable": "var(--global-neutral-60)",
+        "informative": "var(--global-blue-60)",
+        "positive": "var(--global-green-60)",
+        "error": "var(--global-red-60)"
+      },
+      "light": {
+        "primary": "var(--global-neutral-0)",
+        "secondary": "var(--global-neutral-20)",
+        "tertiary": "var(--global-neutral-30)",
+        "disable": "var(--global-neutral-60)",
+        "informative": "var(--global-blue-60)",
+        "positive": "var(--global-green-60)",
+        "error": "var(--global-red-60)"
+      }
+    },
+    "border": {
+      "primary": "var(--global-neutral-40)",
+      "secondary": "var(--global-neutral-60)",
+      "tertiary": "var(--global-neutral-100)",
+      "informative": "var(--global-blue-30)",
+      "positive": "var(--global-green-30)",
+      "error": "var(--global-red-30)",
+      "warning": "var(--global-blue-30)"
+    },
+    "background": {
+      "primary": "var(--global-neutral-0)",
+      "secondary": "var(--global-neutral-20)",
+      "tertiary": "var(--global-neutral-30)",
+      "blue": "var(--global-blue-10)",
+      "green": "var(--global-green-10)",
+      "red": "var(--global-red-10)",
+      "orange": "var(--global-orange-10)",
+      "purple": "var(--global-purple-10)",
+      "yellow": "var(--global-yellow-10)"
+    },
+    "action": {
+      "primary": {
+        "base": "var(--global-neutral-90)",
+        "hover": "var(--global-neutral-80)",
+        "active": "var(--global-neutral-100)",
+        "selected": "var(--global-neutral-90)",
+        "disabled": "var(--global-neutral-20)"
+      },
+      "secondary": {
+        "base": "var(--global-neutral-0)",
+        "base2": "var(--global-neutral-30)",
+        "hover": "var(--global-neutral-40)",
+        "active": "var(--global-neutral-50)",
+        "selected": "var(--global-neutral-30)",
+        "disabled": "var(--global-neutral-20)"
+      },
+      "outline": {
+        "base": "var(--global-neutral-50)",
+        "hover": "var(--global-neutral-60)",
+        "active": "var(--global-neutral-70)",
+        "selected": "var(--global-neutral-70)",
+        "disabled": "var(--global-neutral-30)"
+      },
+      "destructive": {
+        "base": "var(--global-red-50)",
+        "hover": "var(--global-red-60)",
+        "active": "var(--global-red-70)",
+        "selected": "var(--global-red-60)",
+        "disabled": "var(--global-red-20)"
+      }
+    },
+    "interaction": {
+      "primary": {
+        "base": "var(--global-neutral-90)",
+        "hover": "var(--global-neutral-80)",
+        "active": "var(--global-neutral-100)",
+        "selected": "var(--global-neutral-90)",
+        "disabled": "var(--global-neutral-20)"
+      },
+      "secondary": {
+        "base": "var(--global-neutral-0)",
+        "hover": "var(--global-neutral-30)",
+        "active": "var(--global-neutral-50)",
+        "selected": "var(--global-neutral-30)",
+        "disabled": "var(--global-neutral-20)"
+      },
+      "outline": {
+        "base": "var(--global-neutral-60)",
+        "hover": "var(--global-neutral-70)",
+        "active": "var(--global-neutral-80)",
+        "selected": "var(--global-neutral-70)",
+        "disabled": "var(--global-neutral-40)"
+      },
+      "red": {
+        "base": "var(--global-red-60)",
+        "hover": "var(--global-red-70)",
+        "active": "var(--global-red-80)",
+        "selected": "var(--global-red-70)",
+        "disabled": "var(--global-red-20)"
+      },
+      "green": {
+        "base": "var(--global-green-60)",
+        "hover": "var(--global-green-70)",
+        "active": "var(--global-green-80)",
+        "selected": "var(--global-green-70)",
+        "disabled": "var(--global-green-20)"
+      },
+      "blue": {
+        "base": "var(--global-blue-60)",
+        "hover": "var(--global-blue-70)",
+        "active": "var(--global-blue-80)",
+        "selected": "var(--global-blue-70)",
+        "disabled": "var(--global-blue-20)"
+      },
+      "yellow": {
+        "base": "var(--global-yellow-60)",
+        "hover": "var(--global-yellow-70)",
+        "active": "var(--global-yellow-80)",
+        "selected": "var(--global-yellow-70)",
+        "disabled": "var(--global-yellow-20)"
+      },
+      "purple": {
+        "base": "var(--global-purple-60)",
+        "hover": "var(--global-purple-70)",
+        "active": "var(--global-purple-80)",
+        "selected": "var(--global-purple-70)",
+        "disabled": "var(--global-purple-20)"
+      },
+      "orange": {
+        "base": "var(--global-orange-60)",
+        "hover": "var(--global-orange-70)",
+        "active": "var(--global-orange-80)",
+        "selected": "var(--global-orange-70)",
+        "disabled": "var(--global-orange-20)"
+      }
+    }
+  }
+}

@@ -1,6 +1,11 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import {
+  VentureSelect,
+  VentureDatePicker,
+  VentureRadioSelect,
+} from '@/components/ui/venture-select';
 
 interface PatientSummary {
   patientId: string;
@@ -45,6 +50,9 @@ export default function EHRDemo() {
   const [summaryData, setSummaryData] = useState<PatientSummary | null>(null);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('summary');
+  const [recordedBy, setRecordedBy] = useState('');
+  const [recordDate, setRecordDate] = useState('');
+  const [vitalStatus, setVitalStatus] = useState('');
   const [vitalForm, setVitalForm] = useState({
     bpSystolic: '',
     bpDiastolic: '',
@@ -55,6 +63,20 @@ export default function EHRDemo() {
     weight: '',
     height: ''
   });
+
+  const providerOptions = [
+    { value: 'dr-smith', label: 'Dr. Sarah Smith' },
+    { value: 'dr-johnson', label: 'Dr. Michael Johnson' },
+    { value: 'nurse-williams', label: 'Nurse Emily Williams' },
+    { value: 'nurse-brown', label: 'Nurse David Brown' },
+  ];
+
+  const statusOptions = [
+    { value: 'routine', label: 'Routine Check' },
+    { value: 'follow-up', label: 'Follow-up' },
+    { value: 'emergency', label: 'Emergency' },
+    { value: 'pre-op', label: 'Pre-operative' },
+  ];
 
   const patientId = 'patient-123';
 
@@ -226,6 +248,32 @@ export default function EHRDemo() {
               <h2 className="text-2xl font-bold text-gray-900 mb-6">Record Vital Signs</h2>
 
               <form onSubmit={handleVitalSubmit} className="space-y-6">
+                {/* Venture Selector Components */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6 border-b border-gray-200">
+                  <VentureSelect
+                    label="Recorded By"
+                    placeholder="Select provider"
+                    options={providerOptions}
+                    value={recordedBy}
+                    onChange={setRecordedBy}
+                  />
+
+                  <VentureDatePicker
+                    label="Record Date"
+                    placeholder="Select date"
+                    value={recordDate}
+                    onChange={setRecordDate}
+                  />
+
+                  <VentureRadioSelect
+                    label="Visit Type"
+                    placeholder="Select visit type"
+                    options={statusOptions}
+                    value={vitalStatus}
+                    onChange={setVitalStatus}
+                  />
+                </div>
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">

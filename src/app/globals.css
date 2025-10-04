@@ -4,6 +4,13 @@
 @tailwind utilities;
 /* stylelint-enable at-rule-no-unknown */
 
+/* Import Venture CRM Dashboard Design System */
+@import '../styles/venture-colors.css';
+@import '../styles/venture-typography.css';
+@import '../styles/venture-buttons.css';
+@import '../styles/venture-inputs.css';
+@import '../styles/venture-selectors.css';
+
 :root {
   /* ===== UNIFIED DESIGN SYSTEM - LIGHT MODE ===== */
   

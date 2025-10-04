@@ -1,0 +1,249 @@
+/* Venture CRM Dashboard - Button Styles */
+
+/* Base Button Styles */
+.venture-btn {
+  font-family: var(--font-venture);
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 0.375rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+.venture-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Size Variants */
+.venture-btn-lg {
+  padding: 0.75rem 1rem;
+  font-size: 18px;
+  line-height: 1.5;
+  gap: 0.5rem;
+}
+
+.venture-btn-md {
+  padding: 0.5rem 0.75rem;
+  font-size: 16px;
+  line-height: 1.5;
+  gap: 0.5rem;
+}
+
+.venture-btn-sm {
+  padding: 0.5rem 0.75rem;
+  font-size: 14px;
+  line-height: 1.25;
+  gap: 0.5rem;
+}
+
+.venture-btn-xs {
+  padding: 0.5rem 0.75rem;
+  font-size: 12px;
+  line-height: 1;
+  gap: 0.25rem;
+}
+
+/* Icon Only Buttons */
+.venture-btn-icon-lg {
+  padding: 0.75rem;
+}
+
+.venture-btn-icon-md {
+  padding: 0.625rem;
+}
+
+.venture-btn-icon-sm {
+  padding: 0.5rem;
+}
+
+.venture-btn-icon-xs {
+  padding: 0.5rem;
+}
+
+/* Primary Button */
+.venture-btn-primary {
+  background-color: var(--action-primary-base);
+  color: var(--content-light-primary);
+}
+
+.venture-btn-primary:hover:not(:disabled) {
+  background-color: var(--action-primary-hover);
+}
+
+.venture-btn-primary:active:not(:disabled) {
+  background-color: var(--action-primary-active);
+}
+
+.venture-btn-primary:disabled {
+  background-color: var(--action-primary-disabled);
+  color: var(--content-light-disable);
+}
+
+/* Primary with Shadow (Special) */
+.venture-btn-primary-shadow {
+  background-color: var(--global-neutral-100);
+  color: var(--content-light-primary);
+  box-shadow: 
+    0px 0px 0px 4px rgba(0, 0, 0, 0.04),
+    0px 0px 0px 1px rgba(0, 0, 0, 1.00),
+    inset 0px 10px 12px 0px rgba(255, 255, 255, 0.26);
+  outline: 1px solid rgba(255, 255, 255, 0.2);
+  outline-offset: -1px;
+}
+
+/* Secondary Button */
+.venture-btn-secondary {
+  background-color: var(--action-secondary-base2);
+  color: var(--content-dark-primary);
+}
+
+.venture-btn-secondary:hover:not(:disabled) {
+  background-color: var(--action-secondary-hover);
+}
+
+.venture-btn-secondary:active:not(:disabled) {
+  background-color: var(--action-secondary-active);
+}
+
+.venture-btn-secondary:disabled {
+  background-color: var(--action-secondary-disabled);
+  color: var(--content-dark-disable);
+}
+
+/* Outline Button */
+.venture-btn-outline {
+  background-color: var(--action-secondary-base);
+  color: var(--content-dark-primary);
+  outline: 1px solid var(--action-outline-base);
+  outline-offset: -0.5px;
+}
+
+.venture-btn-outline:hover:not(:disabled) {
+  background-color: var(--action-secondary-hover);
+  outline-color: var(--action-outline-hover);
+}
+
+.venture-btn-outline:active:not(:disabled) {
+  outline-color: var(--action-outline-active);
+}
+
+.venture-btn-outline:disabled {
+  outline-color: var(--action-outline-disabled);
+  color: var(--content-dark-disable);
+}
+
+/* Outline Pill (Rounded) */
+.venture-btn-outline-pill {
+  background-color: transparent;
+  color: var(--content-dark-primary);
+  outline: 1px solid var(--action-outline-base);
+  outline-offset: -1px;
+  border-radius: 100px;
+}
+
+.venture-btn-outline-pill:hover:not(:disabled) {
+  background-color: var(--action-secondary-hover);
+  outline-color: var(--action-outline-hover);
+}
+
+.venture-btn-outline-pill:disabled {
+  outline-color: var(--action-outline-disabled);
+  color: var(--content-dark-disable);
+}
+
+/* Ghost Button (No background) */
+.venture-btn-ghost {
+  background-color: transparent;
+  color: var(--content-dark-primary);
+}
+
+.venture-btn-ghost:hover:not(:disabled) {
+  background-color: var(--action-secondary-hover);
+}
+
+.venture-btn-ghost:disabled {
+  color: var(--content-dark-disable);
+}
+
+/* Destructive Button (Outline) */
+.venture-btn-destructive-outline {
+  background-color: transparent;
+  color: var(--action-destructive-base);
+  outline: 1px solid var(--action-destructive-base);
+  outline-offset: -1px;
+}
+
+.venture-btn-destructive-outline:hover:not(:disabled) {
+  background-color: var(--bg-red);
+  color: var(--action-destructive-hover);
+  outline-color: var(--action-destructive-hover);
+}
+
+.venture-btn-destructive-outline:disabled {
+  background-color: transparent;
+  color: var(--action-destructive-disabled);
+  outline-color: var(--bg-red);
+}
+
+/* Link Button */
+.venture-btn-link {
+  background-color: transparent;
+  color: var(--action-primary-base);
+  text-decoration: underline;
+  padding: 0.5rem 0.75rem;
+}
+
+.venture-btn-link:hover:not(:disabled) {
+  color: var(--action-primary-hover);
+}
+
+.venture-btn-link:disabled {
+  color: var(--content-dark-disable);
+}
+
+/* Icon Sizes */
+.venture-btn-lg .venture-icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+.venture-btn-md .venture-icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+.venture-btn-sm .venture-icon {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+.venture-btn-xs .venture-icon {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+.venture-btn-icon-lg .venture-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.venture-btn-icon-md .venture-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.venture-btn-icon-sm .venture-icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+.venture-btn-icon-xs .venture-icon {
+  width: 0.875rem;
+  height: 0.875rem;
+}

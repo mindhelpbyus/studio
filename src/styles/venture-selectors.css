@@ -1,0 +1,311 @@
+/* Venture CRM Dashboard - Selector/Dropdown Styles */
+
+/* Select Trigger */
+.venture-select-trigger {
+  font-family: var(--font-venture);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.25;
+  padding: 0.625rem 0.75rem;
+  background-color: var(--interaction-secondary-base);
+  border-radius: 0.375rem;
+  outline: 1px solid var(--interaction-outline-base);
+  outline-offset: -1px;
+  color: var(--content-dark-primary);
+  transition: all 0.2s ease;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  cursor: pointer;
+}
+
+.venture-select-trigger:hover:not(:disabled):not(.open) {
+  outline-color: var(--interaction-outline-hover);
+}
+
+.venture-select-trigger.open {
+  outline-color: var(--interaction-primary-active);
+}
+
+.venture-select-trigger:disabled {
+  background-color: var(--interaction-secondary-disabled);
+  outline-color: var(--interaction-outline-disabled);
+  color: var(--content-dark-disable);
+  cursor: not-allowed;
+}
+
+.venture-select-trigger .placeholder {
+  color: var(--content-dark-tertiary);
+}
+
+.venture-select-trigger:disabled .placeholder {
+  color: var(--content-dark-disable);
+}
+
+/* Select Icon */
+.venture-select-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: var(--content-dark-primary);
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.venture-select-trigger.open .venture-select-icon {
+  transform: rotate(180deg);
+}
+
+.venture-select-trigger:disabled .venture-select-icon {
+  color: var(--content-dark-disable);
+}
+
+/* Dropdown Menu */
+.venture-dropdown {
+  background-color: var(--bg-primary);
+  border-radius: 0.1875rem;
+  box-shadow: 0px 4px 20px 0px rgba(230, 233, 239, 1),
+              0px 0px 1px 0px rgba(9, 30, 66, 0.31);
+  outline: 1px solid var(--border-secondary);
+  outline-offset: -1px;
+  overflow: hidden;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.venture-dropdown.simple {
+  box-shadow: 0px 4px 20px 0px rgba(230, 233, 239, 1);
+  outline: 1px solid #E5E7EB;
+}
+
+/* Dropdown Option */
+.venture-option {
+  font-family: var(--font-venture);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.25;
+  padding: 0.375rem 0.75rem;
+  background-color: var(--bg-primary);
+  color: var(--content-dark-primary);
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.venture-option:hover {
+  background-color: var(--interaction-secondary-hover);
+}
+
+.venture-option:disabled {
+  background-color: var(--interaction-secondary-disabled);
+  color: var(--content-dark-disable);
+  cursor: not-allowed;
+}
+
+/* Option with Checkbox */
+.venture-option-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Option with Radio */
+.venture-option-radio {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Option with Avatar */
+.venture-option-avatar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.venture-option-avatar img {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 64px;
+  flex-shrink: 0;
+}
+
+/* Option with Avatar and Description */
+.venture-option-detailed {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.venture-option-detailed img,
+.venture-option-detailed .venture-option-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.3125rem;
+  flex-shrink: 0;
+}
+
+.venture-option-detailed .venture-option-icon {
+  background-color: var(--bg-tertiary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.venture-option-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.venture-option-title {
+  font-size: 14px;
+  line-height: 1.25;
+  color: var(--content-dark-primary);
+}
+
+.venture-option-description {
+  font-size: 12px;
+  line-height: 1;
+  color: var(--content-dark-tertiary);
+}
+
+.venture-option:disabled .venture-option-title {
+  color: var(--content-dark-disable);
+}
+
+.venture-option:disabled .venture-option-description {
+  color: var(--content-dark-disable);
+}
+
+.venture-option:disabled img {
+  opacity: 0.5;
+}
+
+/* Option with Badge/Flag */
+.venture-option-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.venture-option-flag {
+  width: 1.75rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+}
+
+/* Checkbox */
+.venture-checkbox {
+  width: 1.25rem;
+  height: 1.25rem;
+  background-color: var(--interaction-secondary-base);
+  border: 1px solid var(--interaction-outline-base);
+  border-radius: 0.25rem;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.venture-checkbox:hover {
+  border-color: var(--interaction-outline-hover);
+}
+
+.venture-checkbox.checked {
+  background-color: var(--interaction-primary-base);
+  border-color: var(--interaction-primary-base);
+}
+
+.venture-checkbox:disabled {
+  background-color: var(--interaction-secondary-disabled);
+  border-color: var(--interaction-outline-disabled);
+  cursor: not-allowed;
+}
+
+.venture-checkbox-icon {
+  width: 0.75rem;
+  height: 0.75rem;
+  color: var(--content-light-primary);
+  display: none;
+}
+
+.venture-checkbox.checked .venture-checkbox-icon {
+  display: block;
+}
+
+/* Radio Button */
+.venture-radio {
+  width: 1.25rem;
+  height: 1.25rem;
+  background-color: var(--interaction-secondary-base);
+  border: 1px solid var(--interaction-outline-base);
+  border-radius: 100px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.venture-radio:hover {
+  border-color: var(--interaction-outline-hover);
+}
+
+.venture-radio.checked {
+  border-color: var(--interaction-primary-base);
+}
+
+.venture-radio:disabled {
+  background-color: var(--interaction-secondary-disabled);
+  border-color: var(--interaction-outline-disabled);
+  cursor: not-allowed;
+}
+
+.venture-radio-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  background-color: var(--interaction-primary-base);
+  border-radius: 100px;
+  display: none;
+}
+
+.venture-radio.checked .venture-radio-dot {
+  display: block;
+}
+
+/* Date Picker Icon */
+.venture-datepicker-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: var(--content-dark-secondary);
+  flex-shrink: 0;
+}
+
+.venture-select-trigger:disabled .venture-datepicker-icon {
+  color: var(--content-dark-disable);
+}
+
+/* Scrollbar for Dropdown */
+.venture-dropdown::-webkit-scrollbar {
+  width: 6px;
+}
+
+.venture-dropdown::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.venture-dropdown::-webkit-scrollbar-thumb {
+  background: var(--border-secondary);
+  border-radius: 3px;
+}
+
+.venture-dropdown::-webkit-scrollbar-thumb:hover {
+  background: var(--content-dark-tertiary);
+}
