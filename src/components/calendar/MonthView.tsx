@@ -1,98 +1,180 @@
-'use client';
-
-import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameMonth } from 'date-fns';
 import React from 'react';
-import { CalendarAppointment } from '@/lib/calendar-types';
+import { Appointment, Therapist } from '../../types/appointment';
 
 interface MonthViewProps {
   date: Date;
-  appointments: CalendarAppointment[];
-  onDateClick: (date: Date) => void;
-  onAppointmentClick: (appointment: CalendarAppointment) => void;
+  appointments: Appointment[];
+  therapists: Therapist[];
+  onDayClick: (date: Date) => void;
+  onAppointmentClick: (appointment: Appointment) => void;
 }
 
-export const MonthView: React.FC<MonthViewProps> = ({
+export function MonthView({
   date,
   appointments,
-  onDateClick,
+  therapists,
+  onDayClick,
   onAppointmentClick,
-}) => {
-  const monthStart = startOfMonth(date);
-  const monthEnd = endOfMonth(date);
+}: MonthViewProps) {
+  // Get the first day of the month
+  const firstDayOfMonth = new Date(date.getFullYear(), date.getMonth(), 1);
+  const lastDayOfMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0);
   
-  // Adjust the start date to include days from previous month to fill the first week
-  const calendarStart = new Date(monthStart);
-  calendarStart.setDate(calendarStart.getDate() - monthStart.getDay());
+  // Get the first day of the calendar (may be from previous month)
+  const firstDayOfCalendar = new Date(firstDayOfMonth);
+  const dayOfWeek = firstDayOfMonth.getDay();
+  firstDayOfCalendar.setDate(firstDayOfMonth.getDate() - dayOfWeek);
   
-  // Adjust the end date to include days from next month to fill the last week
-  const calendarEnd = new Date(monthEnd);
-  calendarEnd.setDate(calendarEnd.getDate() + (6 - monthEnd.getDay()));
-  
-  const days = eachDayOfInterval({ start: calendarStart, end: calendarEnd });
+  // Generate 42 days (6 weeks) for the calendar grid
+  const calendarDays = Array.from({ length: 42 }, (_, i) => {
+    const day = new Date(firstDayOfCalendar);
+    day.setDate(firstDayOfCalendar.getDate() + i);
+    return day;
+  });
+
+  const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
   const getAppointmentsForDay = (day: Date) => {
-    return appointments.filter((apt) => {
+    return appointments.filter(apt => {
       const aptDate = new Date(apt.startTime);
       return (
-        aptDate.getDate() === day.getDate() &&
+        aptDate.getFullYear() === day.getFullYear() &&
         aptDate.getMonth() === day.getMonth() &&
-        aptDate.getFullYear() === day.getFullYear()
+        aptDate.getDate() === day.getDate()
       );
     });
   };
 
+  const isCurrentMonth = (day: Date) => {
+    return day.getMonth() === date.getMonth();
+  };
+
+  const isToday = (day: Date) => {
+    const today = new Date();
+    return (
+      day.getFullYear() === today.getFullYear() &&
+      day.getMonth() === today.getMonth() &&
+      day.getDate() === today.getDate()
+    );
+  };
+
+  const getTherapistById = (id: string) => {
+    return therapists.find(t => t.id === id);
+  };
+
   return (
-    <div className="h-full grid grid-cols-7 gap-px bg-gray-200">
-      {/* Day headers */}
-      {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
-        <div
-          key={day}
-          className="bg-white p-2 text-sm font-medium text-center"
-        >
-          {day}
-        </div>
-      ))}
+    <div className="h-full flex flex-col bg-background">
+      {/* Header with day names */}
+      <div className="grid grid-cols-7 border-b border-border bg-card">
+        {weekDays.map(day => (
+          <div
+            key={day}
+            className="p-3 text-center font-medium text-sm text-muted-foreground border-r border-border last:border-r-0"
+          >
+            {day}
+          </div>
+        ))}
+      </div>
 
       {/* Calendar grid */}
-      {days.map((day, dayIdx) => {
-        const dayAppointments = getAppointmentsForDay(day);
-        const isCurrentMonth = isSameMonth(day, date);
-
-        return (
-          <div
-            key={day.toISOString()}
-            className={`bg-white p-2 min-h-[120px] relative ${                !isCurrentMonth ? 'text-gray-400 bg-gray-50' : 'hover:bg-gray-50'
-            } ${dayAppointments.length > 0 ? 'font-semibold' : ''} cursor-pointer border border-gray-100`}
-            onClick={() => onDateClick(day)}
-          >
-            <div className="font-medium text-sm mb-1">
-              {format(day, 'd')}
-            </div>
-
-            <div className="space-y-1">
-              {dayAppointments.slice(0, 3).map((apt) => (
-                <div
-                  key={apt.id}
-                  className={`text-xs p-1 rounded truncate bg-${apt.color}-100 text-${apt.color}-800 cursor-pointer hover:bg-${apt.color}-200`}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onAppointmentClick(apt);
-                  }}
+      <div className="flex-1 grid grid-cols-7 grid-rows-6">
+        {calendarDays.map((day, index) => {
+          const dayAppointments = getAppointmentsForDay(day);
+          const isCurrentMonthDay = isCurrentMonth(day);
+          const isTodayDay = isToday(day);
+          
+          return (
+            <div
+              key={day.toISOString()}
+              className={`
+                border-r border-b border-border last:border-r-0 p-2 cursor-pointer transition-colors
+                hover:bg-muted/50 min-h-24
+                ${!isCurrentMonthDay ? 'bg-muted/20 text-muted-foreground' : 'bg-background'}
+                ${isTodayDay ? 'bg-blue-50' : ''}
+              `}
+              onClick={() => onDayClick(day)}
+            >
+              {/* Day number */}
+              <div className="flex items-center justify-between mb-1">
+                <span
+                  className={`
+                    text-sm font-medium
+                    ${isTodayDay ? 'bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center' : ''}
+                    ${!isCurrentMonthDay ? 'text-muted-foreground' : ''}
+                  `}
                 >
-                  {format(apt.startTime, 'h:mm a')} - {apt.title}
-                </div>
-              ))}
-              {dayAppointments.length > 3 && (
-                <div className="text-xs text-gray-500 pl-1">
-                  +{dayAppointments.length - 3} more...
+                  {day.getDate()}
+                </span>
+                
+                {/* Appointment count indicator */}
+                {dayAppointments.length > 3 && (
+                  <span className="text-xs text-muted-foreground bg-muted rounded px-1">
+                    +{dayAppointments.length - 3}
+                  </span>
+                )}
+              </div>
+
+              {/* Appointments preview */}
+              <div className="space-y-1">
+                {dayAppointments.slice(0, 3).map(appointment => {
+                  const therapist = getTherapistById(appointment.therapistId);
+                  const startTime = new Date(appointment.startTime);
+                  
+                  return (
+                    <div
+                      key={appointment.id}
+                      className={`
+                        text-xs p-1 rounded cursor-pointer transition-colors
+                        ${appointment.type === 'break' 
+                          ? 'bg-gray-200 text-gray-700' 
+                          : 'bg-white border-l-2 shadow-sm hover:shadow-md'
+                        }
+                      `}
+                      style={{
+                        borderLeftColor: appointment.type === 'break' ? '#6b7280' : (appointment.color || therapist?.color || '#3b82f6'),
+                      }}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onAppointmentClick(appointment);
+                      }}
+                    >
+                      <div className="flex items-center gap-1">
+                        <span className="font-medium">
+                          {startTime.toLocaleTimeString('en-US', {
+                            hour: 'numeric',
+                            minute: '2-digit',
+                            hour12: true,
+                          })}
+                        </span>
+                        {appointment.status === 'pending' && (
+                          <span className="w-1 h-1 bg-yellow-500 rounded-full" />
+                        )}
+                      </div>
+                      
+                      <div className="truncate" title={appointment.title}>
+                        {appointment.title}
+                      </div>
+                      
+                      {therapists.length > 1 && therapist && (
+                        <div className="text-xs text-muted-foreground truncate" title={therapist.name}>
+                          {therapist.name}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Empty state */}
+              {dayAppointments.length === 0 && isCurrentMonthDay && (
+                <div className="h-full flex items-center justify-center text-muted-foreground text-xs opacity-0 hover:opacity-100 transition-opacity">
+                  Click to add
                 </div>
               )}
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
     </div>
   );
-};
-
-export default MonthView;
+}

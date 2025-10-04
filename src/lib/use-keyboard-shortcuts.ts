@@ -1,6 +1,6 @@
 import { addDays, addWeeks, addMonths, subDays, subWeeks, subMonths } from 'date-fns';
 import { useEffect, useCallback } from 'react';
-import { CalendarView } from './calendar-types';
+import { CalendarView } from '../types/appointment';
 
 interface KeyboardShortcutOptions {
   onDateChange: (date: Date) => void;
@@ -88,12 +88,6 @@ export function useKeyboardShortcuts(options: KeyboardShortcutOptions) {
         if (isCtrlPressed) {
           event.preventDefault();
           options.onViewChange('agenda');
-        }
-        break;
-      case '5':
-        if (isCtrlPressed) {
-          event.preventDefault();
-          options.onViewChange('timeline');
         }
         break;
 
@@ -188,7 +182,7 @@ export function useKeyboardShortcuts(options: KeyboardShortcutOptions) {
       { key: '←/→', description: 'Previous/Next Day' },
       { key: 'Ctrl + ←/→', description: 'Previous/Next Week' },
       { key: 'Ctrl + Shift + ←/→', description: 'Previous/Next Month' },
-      { key: 'Ctrl + 1-5', description: 'Switch Views' },
+      { key: 'Ctrl + 1-4', description: 'Switch Views' },
       { key: 'Ctrl + N', description: 'New Appointment' },
       { key: 'Ctrl + E', description: 'Edit Selected Appointment' },
       { key: 'Ctrl + D', description: 'Delete Selected Appointment' },

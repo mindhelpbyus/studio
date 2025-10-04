@@ -310,4 +310,4 @@ if (require.main === module) {
   });
 }
 
-export { AWSDeployer, DeploymentConfig };
+export type { AWSDeployer, DeploymentConfig };

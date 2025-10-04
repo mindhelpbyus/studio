@@ -13,7 +13,7 @@ import {
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { AnimatedLogoIcon } from '../animated-logo-icon';
+import Logo from '@/components/Logo';
 import { Badge } from '../ui/badge';
 
 const navLinks = [
@@ -36,9 +36,7 @@ export function ProviderSidebar() {
     <aside className="w-56 shrink-0 border-r bg-card text-card-foreground flex flex-col">
        <div className="flex h-16 shrink-0 items-center justify-center border-b px-4">
          <Link href="/" className="flex items-center gap-2">
-            <div className='w-8 h-8'>
-                <AnimatedLogoIcon />
-            </div>
+            <Logo width={32} height={32} />
           </Link>
       </div>
       <div className="flex-1 overflow-y-auto">

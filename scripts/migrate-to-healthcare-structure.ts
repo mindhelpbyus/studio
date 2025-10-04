@@ -71,16 +71,16 @@ class HealthcareStructureMigration {
       }
     ];
 
-    for (let i = 0; i < steps.length; i++) {
-      const step = steps[i];
-      console.log(`📋 Step ${i + 1}/${steps.length}: ${step.name}`);
+    for (const [index, step] of steps.entries()) {
+      console.log(`📋 Step ${index + 1}/${steps.length}: ${step.name}`);
       console.log(`   ${step.description}`);
-      
+
       try {
         await step.execute();
         console.log(`   ✅ Completed\n`);
       } catch (error) {
-        console.error(`   ❌ Failed: ${error.message}\n`);
+        const errorMessage = error instanceof Error ? error.message : String(error);
+        console.error(`   ❌ Failed: ${errorMessage}\n`);
         throw error;
       }
     }
@@ -99,7 +99,7 @@ class HealthcareStructureMigration {
       await fs.access(this.srcPath);
       await fs.rename(this.srcPath, this.backupPath);
       console.log(`   📦 Backed up existing src to ${this.backupPath}`);
-    } catch (error) {
+    } catch (error: any) {
       if (error.code !== 'ENOENT') {
         throw error;
       }
@@ -344,7 +344,7 @@ class HealthcareStructureMigration {
   private async ensureDirectory(path: string): Promise<void> {
     try {
       await fs.mkdir(path, { recursive: true });
-    } catch (error) {
+    } catch (error: any) {
       if (error.code !== 'EEXIST') {
         throw error;
       }

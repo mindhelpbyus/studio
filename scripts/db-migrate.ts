@@ -11,6 +11,7 @@ interface MigrationConfig {
   databaseType: 'postgresql' | 'mysql' | 'mongodb' | 'dynamodb' | 'cosmosdb' | 'firestore';
   connectionString: string;
   migrationsPath: string;
+  projectId?: string; // Add projectId as optional
 }
 
 class MigrationRunner {
@@ -28,9 +29,9 @@ class MigrationRunner {
       await this.db.initialize({
         type: config.databaseType,
         connectionString: config.connectionString,
-        projectId: process.env.FIREBASE_PROJECT_ID,
-        credentials: process.env.FIREBASE_SERVICE_ACCOUNT_KEY ? 
+        credentials: process.env.FIREBASE_SERVICE_ACCOUNT_KEY ?
           JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY) : undefined,
+        options: config.projectId ? { projectId: config.projectId } : {},
       });
 
       // Create migrations table if it doesn't exist

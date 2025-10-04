@@ -14,6 +14,7 @@ const app = new cdk.App();
 const environment = app.node.tryGetContext('environment') || process.env.ENVIRONMENT || 'development';
 const providers = app.node.tryGetContext('providers') || process.env.PROVIDERS || 'aws';
 const region = app.node.tryGetContext('region') || process.env.AWS_REGION || 'us-east-1';
+const appName = app.node.tryGetContext('appName') || process.env.APP_NAME || 'VivaleHealthcare';
 
 // Parse providers
 const providerList = providers.split(',').map((p: string) => p.trim());
@@ -24,9 +25,11 @@ providerList.forEach((provider: string) => {
     env: {
       account: process.env.CDK_DEFAULT_ACCOUNT,
       region: region,
-    },
+    } as cdk.Environment, // Cast to cdk.Environment
     provider: provider as any,
     environment: environment as any,
+    appName: appName, // Add appName
+    region: region, // Add region
     description: `Vivalé Healthcare ${provider.toUpperCase()} infrastructure for ${environment}`,
     tags: {
       Project: 'VivaleHealthcare',

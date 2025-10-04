@@ -3,7 +3,7 @@
  * Provides unified interfaces for all cloud providers
  */
 
-export type CloudProvider = 'aws' | 'azure' | 'gcp' | 'oci';
+export type CloudProvider = 'aws' | 'azure' | 'gcp' | 'oci' | 'local';
 
 export interface CloudConfig {
   provider: CloudProvider;

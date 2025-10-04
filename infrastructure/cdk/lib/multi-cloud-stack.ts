@@ -41,11 +41,11 @@ export interface StorageConfig {
 }
 
 export class MultiCloudStack extends cdk.Stack {
-  public readonly database: any;
-  public readonly storage: any;
-  public readonly compute: any;
-  public readonly monitoring: any;
-  public readonly secrets: any;
+  public database: any;
+  public storage: any;
+  public compute: any;
+  public monitoring: any;
+  public secrets: any;
 
   constructor(scope: Construct, id: string, props: MultiCloudStackProps) {
     super(scope, id, props);
@@ -93,7 +93,7 @@ export class MultiCloudStack extends cdk.Stack {
         cdk.aws_ec2.InstanceClass.T3,
         props.environment === 'production' ? cdk.aws_ec2.InstanceSize.MEDIUM : cdk.aws_ec2.InstanceSize.MICRO
       ),
-      vpc,
+      vpc: vpc as cdk.aws_ec2.IVpc,
       credentials: cdk.aws_rds.Credentials.fromGeneratedSecret('dbadmin'),
       multiAz: props.environment === 'production',
       storageEncrypted: true,
@@ -118,7 +118,7 @@ export class MultiCloudStack extends cdk.Stack {
       runtime: cdk.aws_lambda.Runtime.NODEJS_18_X,
       handler: 'index.handler',
       code: cdk.aws_lambda.Code.fromAsset('dist'),
-      vpc,
+      vpc: vpc as cdk.aws_ec2.IVpc,
       environment: {
         DATABASE_URL: this.database.instanceEndpoint.socketAddress,
         STORAGE_BUCKET: this.storage.bucketName,
@@ -153,11 +153,11 @@ export class MultiCloudStack extends cdk.Stack {
         [new cdk.aws_cloudwatch.GraphWidget({
           title: 'Lambda Invocations',
           left: [this.compute.metricInvocations()],
-        })],
+        }) as cdk.aws_cloudwatch.IWidget],
         [new cdk.aws_cloudwatch.GraphWidget({
           title: 'Database Connections',
           left: [this.database.metricDatabaseConnections()],
-        })],
+        }) as cdk.aws_cloudwatch.IWidget],
       ],
     });
   }

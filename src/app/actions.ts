@@ -76,7 +76,7 @@ export async function login(prevState: LoginFormState, formData: FormData): Prom
 
     try {
         // We need the full URL for server-side fetch
-        const host = process.env.NEXT_PUBLIC_HOST_URL || 'http://localhost:9002';
+        const host = process.env.NEXT_PUBLIC_HOST_URL || 'http://localhost:3000';
         const response = await fetch(`${host}/api/auth/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },

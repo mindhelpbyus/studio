@@ -8,7 +8,7 @@ import { useActionState } from 'react';
 import React from 'react';
 import { useFormStatus } from 'react-dom';
 import { login } from '@/app/actions';
-import { Logo } from '@/components/logo';
+import Logo from '@/components/Logo';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -83,11 +83,9 @@ export default function LoginPage() {
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center gap-10 bg-muted/50 p-4">
-       <div className="absolute top-8 left-8">
-        <Link href="/">
-            <Logo />
-        </Link>
-      </div>
+      <Link href="/" className="absolute top-8 left-8">
+        <Logo position="absolute" top="2rem" left="2rem" />
+      </Link>
 
       <Card className="w-full max-w-md rounded-2xl shadow-card">
         <CardHeader>

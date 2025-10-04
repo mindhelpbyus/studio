@@ -1,7 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, useCallback } from 'react';
-import { CalendarAppointment, Therapist, UserRole, CalendarView } from '@/lib/calendar-types';
+import { Appointment as CalendarAppointment, Therapist, UserRole, CalendarView } from '@/types/appointment';
 
 interface CalendarContextType {
   view: CalendarView;

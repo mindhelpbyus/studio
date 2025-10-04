@@ -1,180 +1,303 @@
-'use client';
-
-import { format, addDays, startOfDay, endOfDay, addHours } from 'date-fns';
 import React from 'react';
-import { CalendarAppointment } from '@/lib/calendar-types';
-import { AppointmentBlock } from './appointment-block';
-import { ConflictDetectionService } from '@/lib/conflict-detection';
+import { Appointment, Therapist } from '../../types/appointment';
+import { AppointmentCard } from '../calendar-system/AppointmentCard';
+import { useDrop } from 'react-dnd';
 
 interface WeekViewProps {
   startDate: Date;
-  appointments: CalendarAppointment[];
-  onAppointmentClick: (appointment: CalendarAppointment) => void;
-  onSlotSelect: (start: Date, end: Date) => void;
+  appointments: Appointment[];
+  therapists: Therapist[];
+  onSlotClick: (date: Date, time: string, therapistId?: string) => void;
+  onAppointmentClick: (appointment: Appointment) => void;
+  onAppointmentUpdate: (appointmentId: string, updates: Partial<Appointment>) => void;
+  showMultipleTherapists: boolean;
 }
 
-const HOURS = Array.from({ length: 24 }, (_, i) => i);
-const DAYS = Array.from({ length: 7 }, (_, i) => i);
-
-const getCurrentTimePosition = () => {
-  const now = new Date();
-  return (now.getHours() + now.getMinutes() / 60) * 60;
-};
-
-export const WeekView: React.FC<WeekViewProps> = ({
+export function WeekView({
   startDate,
   appointments,
+  therapists,
+  onSlotClick,
   onAppointmentClick,
-  onSlotSelect,
-}) => {
-  const weekStart = startOfDay(startDate);
-  const weekDays = DAYS.map(i => addDays(weekStart, i));
+  onAppointmentUpdate,
+  showMultipleTherapists,
+}: WeekViewProps) {
+  // Generate 7 days starting from startDate
+  const weekDays = Array.from({ length: 7 }, (_, i) => {
+    const date = new Date(startDate);
+    date.setDate(startDate.getDate() + i);
+    return date;
+  });
 
-  const getPositionStyles = (appointment: CalendarAppointment) => {
-    const overlappingAppts = ConflictDetectionService.getOverlappingAppointmentsForDisplay(
-      appointment,
-      appointments
-    );
-    const startHour = appointment.startTime.getHours();
-    const startMinutes = appointment.startTime.getMinutes();
-    const endHour = appointment.endTime.getHours();
-    const endMinutes = appointment.endTime.getMinutes();
-    const dayIndex = appointment.startTime.getDay();
+  // Generate time slots from 6 AM to 10 PM (business hours)
+  const timeSlots = Array.from({ length: 16 }, (_, i) => {
+    const hour = i + 6; // Start from 6 AM
+    return {
+      hour,
+      time: `${hour.toString().padStart(2, '0')}:00`,
+      displayTime: new Date(0, 0, 0, hour).toLocaleTimeString('en-US', {
+        hour: 'numeric',
+        hour12: true,
+      }),
+    };
+  });
 
-    const top = (startHour + startMinutes / 60) * 60;
-    const height = ((endHour - startHour) * 60 + (endMinutes - startMinutes));
-    const columnWidth = 100 / 7;
-    const left = dayIndex * columnWidth;
+  const getAppointmentsForSlot = (date: Date, hour: number, therapistId?: string) => {
+    return appointments.filter(apt => {
+      const aptDate = new Date(apt.startTime);
+      const aptHour = aptDate.getHours();
+      const matchesDate = (
+        aptDate.getFullYear() === date.getFullYear() &&
+        aptDate.getMonth() === date.getMonth() &&
+        aptDate.getDate() === date.getDate()
+      );
+      const matchesHour = aptHour === hour;
+      const matchesTherapist = !therapistId || apt.therapistId === therapistId;
+      
+      return matchesDate && matchesHour && matchesTherapist;
+    });
+  };
+
+  const handleSlotClick = (date: Date, hour: number, therapistId?: string) => {
+    const time = `${hour.toString().padStart(2, '0')}:00`;
+    onSlotClick(date, time, therapistId);
+  };
+
+  const handleDrop = (item: { appointment: Appointment }, date: Date, hour: number, therapistId?: string) => {
+    const newStartTime = new Date(date);
+    newStartTime.setHours(hour, 0, 0, 0);
     
-    // Handle overlapping appointments
-    const position = overlappingAppts.indexOf(appointment);
-    const total = overlappingAppts.length;
-    const width = columnWidth / total;
-    const offsetLeft = left + (position * width);
+    const originalStart = new Date(item.appointment.startTime);
+    const originalEnd = new Date(item.appointment.endTime);
+    const duration = originalEnd.getTime() - originalStart.getTime();
+    
+    const newEndTime = new Date(newStartTime.getTime() + duration);
+    
+    onAppointmentUpdate(item.appointment.id, {
+      startTime: newStartTime,
+      endTime: newEndTime,
+      ...(therapistId && { therapistId }),
+    });
+  };
+
+  const formatDayHeader = (date: Date) => {
+    const today = new Date();
+    const isToday = (
+      date.getFullYear() === today.getFullYear() &&
+      date.getMonth() === today.getMonth() &&
+      date.getDate() === today.getDate()
+    );
 
     return {
-      top: `${top}px`,
-      height: `${height}px`,
-      left: `${offsetLeft}%`,
-      width: `${width}%`,
-      zIndex: 10 + position
-    };
-
-    return {
-      top: `${top}px`,
-      height: `${height}px`,
-      left,
-      width,
+      dayName: date.toLocaleDateString('en-US', { weekday: 'short' }),
+      dayNumber: date.getDate(),
+      isToday,
     };
   };
 
-  const handleSlotClick = (day: number, hour: number) => {
-    const start = addHours(addDays(weekStart, day), hour);
-    const end = addHours(start, 1);
-    onSlotSelect(start, end);
-  };
-
-  return (
-        <div className="relative h-[calc(100vh-12rem)] border rounded-lg overflow-auto bg-white">
-      {/* Week header */}
-      <div className="sticky top-0 z-20 flex border-b bg-white">
-        <div className="w-16" /> {/* Spacer for time column */}
-        {DAYS.map((day) => {
-          const date = addDays(weekStart, day);
-          return (
-            <div key={day} className="flex-1 text-center py-2">
-              <div className="text-sm font-medium">{format(date, 'EEE')}</div>
-              <div className="text-xs text-gray-500">{format(date, 'MMM d')}</div>
+  if (showMultipleTherapists) {
+    return (
+      <div className="h-full overflow-auto">
+        {/* Warning for many therapists */}
+        {therapists.length > 6 && (
+          <div className="bg-yellow-50 border-b border-yellow-200 px-4 py-2 text-sm text-yellow-800">
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 bg-yellow-500 rounded-full" />
+              Viewing {therapists.length} therapists. Consider filtering to improve performance and readability.
             </div>
-          );
-        })}
-      </div>
-
-      {/* Current time indicator */}
-      <div className="sticky top-0 z-10 flex border-b bg-white">
-        <div className="w-16" /> {/* Spacer for time column */}
-        {weekDays.map((day) => (
-          <div key={day.toISOString()} className="flex-1 text-center py-2 font-medium">
-            <div className="text-sm">{format(day, 'EEE')}</div>
-            <div className="text-xs text-gray-500">{format(day, 'MMM d')}</div>
           </div>
-        ))}
+        )}
+        <div className="min-w-max" style={{ minWidth: `${Math.max(800, therapists.length * 200)}px` }}>
+          {/* Header Row */}
+          <div className="sticky top-0 bg-background z-10 border-b border-border">
+            <div className="flex">
+              <div className="w-20 border-r border-border bg-muted/30 flex items-center justify-center text-sm font-medium p-2">
+                Time
+              </div>
+              {therapists.map(therapist => (
+                <div key={therapist.id} className="flex-1" style={{ minWidth: '200px' }}>
+                  <div className="bg-card border-r border-border p-3 text-center">
+                    <div className="flex items-center justify-center gap-2 mb-1">
+                      <div
+                        className="w-4 h-4 rounded-full"
+                        style={{ backgroundColor: therapist.color }}
+                      />
+                      <span className="font-medium text-sm">{therapist.name}</span>
+                    </div>
+                    <div className="text-xs text-muted-foreground">{therapist.email}</div>
+                  </div>
+                  <div className="flex border-r border-border">
+                    {weekDays.map(date => {
+                      const dayInfo = formatDayHeader(date);
+                      return (
+                        <div
+                          key={date.toISOString()}
+                          className={`
+                            flex-1 p-2 text-center border-r border-border bg-card text-xs
+                            ${dayInfo.isToday ? 'bg-blue-50 text-blue-900' : ''}
+                          `}
+                        >
+                          <div className="font-medium">{dayInfo.dayName}</div>
+                          <div className={`text-lg ${dayInfo.isToday ? 'font-bold' : ''}`}>
+                            {dayInfo.dayNumber}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Time Slots */}
+          {timeSlots.map(slot => (
+            <div key={slot.hour} className="flex border-b border-border">
+              <div className="w-20 border-r border-border bg-muted/30 flex items-center justify-center text-xs text-muted-foreground p-2">
+                {slot.displayTime}
+              </div>
+              {therapists.map(therapist => (
+                <div key={therapist.id} className="flex-1 border-r border-border" style={{ minWidth: '200px' }}>
+                  <div className="flex h-20">
+                    {weekDays.map(date => (
+                      <WeekSlot
+                        key={`${therapist.id}-${date.toISOString()}-${slot.hour}`}
+                        date={date}
+                        hour={slot.hour}
+                        appointments={getAppointmentsForSlot(date, slot.hour, therapist.id)}
+                        therapist={therapist}
+                        onSlotClick={() => handleSlotClick(date, slot.hour, therapist.id)}
+                        onAppointmentClick={onAppointmentClick}
+                        onDrop={(item) => handleDrop(item, date, slot.hour, therapist.id)}
+                      />
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
       </div>
-      {/* Time column */}
-            {/* Grid */}
-      <div className="absolute left-16 top-8 right-0 h-full grid grid-cols-7 divide-x divide-gray-100">
-        {DAYS.map((day) => (
-          <div key={day} className="relative h-full">
-            {HOURS.map((hour) => (
-              <div
-                key={hour}
-                className="h-[60px] border-b border-gray-100 group cursor-pointer hover:bg-gray-50"
-                onClick={() => handleSlotClick(day, hour)}
+    );
+  }
+
+  // Single therapist view
+  const therapist = therapists[0];
+  return (
+    <div className="h-full overflow-auto">
+      <div className="min-w-max">
+        {/* Header Row */}
+        <div className="sticky top-0 bg-background z-10 border-b border-border">
+          <div className="flex">
+            <div className="w-16 border-r border-border bg-muted/30 flex items-center justify-center text-sm font-medium p-2">
+              Time
+            </div>
+            {weekDays.map(date => {
+              const dayInfo = formatDayHeader(date);
+              return (
+                <div
+                  key={date.toISOString()}
+                  className={`
+                    flex-1 min-w-32 p-3 text-center border-r border-border bg-card
+                    ${dayInfo.isToday ? 'bg-blue-50 text-blue-900' : ''}
+                  `}
+                >
+                  <div className="font-medium text-sm">{dayInfo.dayName}</div>
+                  <div className={`text-xl ${dayInfo.isToday ? 'font-bold' : ''}`}>
+                    {dayInfo.dayNumber}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Time Slots */}
+        {timeSlots.map(slot => (
+          <div key={slot.hour} className="flex border-b border-border">
+            <div className="w-16 border-r border-border bg-muted/30 flex items-center justify-center text-xs text-muted-foreground p-2">
+              {slot.displayTime}
+            </div>
+            {weekDays.map(date => (
+              <WeekSlot
+                key={`${date.toISOString()}-${slot.hour}`}
+                date={date}
+                hour={slot.hour}
+                appointments={getAppointmentsForSlot(date, slot.hour, therapist?.id)}
+                therapist={therapist}
+                onSlotClick={() => handleSlotClick(date, slot.hour, therapist?.id)}
+                onAppointmentClick={onAppointmentClick}
+                onDrop={(item) => handleDrop(item, date, slot.hour, therapist?.id)}
               />
             ))}
           </div>
         ))}
       </div>
+    </div>
+  );
+}
 
-      {/* Time column */}
-      <div className="absolute left-0 top-8 w-16 h-full border-r bg-white sticky">
-        {HOURS.map((hour) => (
-          <div
-            key={hour}
-            className="h-[60px] border-b text-xs px-2 py-1 text-gray-500 sticky left-0 bg-white"
-          >
-            {format(addHours(new Date(), hour), 'h a')}
-            {format(addHours(weekStart, hour), 'h a')}
-          </div>
-        ))}
-      </div>
+interface WeekSlotProps {
+  date: Date;
+  hour: number;
+  appointments: Appointment[];
+  therapist: Therapist | undefined;
+  onSlotClick: () => void;
+  onAppointmentClick: (appointment: Appointment) => void;
+  onDrop: (item: { appointment: Appointment }) => void;
+}
 
-      {/* Day headers */}
-      <div className="ml-16 h-8 flex border-b">
-        {DAYS.map((day) => (
-          <div
-            key={day}
-            className="flex-1 text-center text-sm font-medium py-1"
-          >
-            {format(addDays(weekStart, day), 'EEE dd')}
-          </div>
-        ))}
-      </div>
+function WeekSlot({
+  date,
+  hour,
+  appointments,
+  therapist,
+  onSlotClick,
+  onAppointmentClick,
+  onDrop,
+}: WeekSlotProps) {
+  const [{ isOver }, drop] = useDrop(() => ({
+    accept: 'appointment',
+    drop: (item: { appointment: Appointment }) => onDrop(item),
+    collect: (monitor) => ({
+      isOver: monitor.isOver(),
+    }),
+  }));
 
-      {/* Grid */}
-      <div className="ml-16 relative">
-        {HOURS.map((hour) => (
-          <div key={hour} className="flex h-[60px] border-b">
-            {DAYS.map((day) => (
-              <div
-                key={`${day}-${hour}`}
-                className="flex-1 border-r group cursor-pointer hover:bg-gray-50"
-                onClick={() => handleSlotClick(day, hour)}
-              >
-                <div className="hidden group-hover:block text-xs text-gray-400 p-1">
-                  Click to add
-                </div>
-              </div>
-            ))}
-          </div>
-        ))}
+  const now = new Date();
+  const isCurrentHour = (
+    date.getFullYear() === now.getFullYear() &&
+    date.getMonth() === now.getMonth() &&
+    date.getDate() === now.getDate() &&
+    hour === now.getHours()
+  );
 
-        {/* Appointments */}
-        {appointments.map((appointment) => (
-          <div
+  const isPastHour = date.getTime() + (hour * 60 * 60 * 1000) < now.getTime();
+
+  return (
+    <div
+      ref={drop as unknown as React.Ref<HTMLDivElement>}
+      className={`
+        flex-1 h-20 border-r border-border p-1 transition-colors cursor-pointer
+        ${isOver ? 'bg-primary/10' : 'hover:bg-muted/50'}
+        ${isCurrentHour ? 'bg-blue-50' : ''}
+        ${isPastHour ? 'bg-gray-50' : ''}
+      `}
+      style={{ minWidth: '28px' }}
+      onClick={appointments.length === 0 ? onSlotClick : undefined}
+    >
+      <div className="h-full overflow-hidden">
+        {appointments.map(appointment => (
+          <AppointmentCard
             key={appointment.id}
-            className="absolute px-1"
-            style={getPositionStyles(appointment)}
-          >
-            <AppointmentBlock
-              appointment={appointment}
-              onClick={() => onAppointmentClick(appointment)}
-            />
-          </div>
+            appointment={appointment}
+            therapist={therapist}
+            onClick={() => onAppointmentClick(appointment)}
+            className="text-xs mb-1 h-fit"
+            showTherapistName={false}
+          />
         ))}
       </div>
     </div>
   );
-};
-
-export default WeekView;
+}

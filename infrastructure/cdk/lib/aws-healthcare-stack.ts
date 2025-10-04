@@ -20,12 +20,12 @@ export interface AWSHealthcareStackProps extends cdk.StackProps {
 }
 
 export class AWSHealthcareStack extends cdk.Stack {
-  public readonly userPool: cognito.UserPool;
-  public readonly userPoolClient: cognito.UserPoolClient;
-  public readonly patientsTable: dynamodb.Table;
-  public readonly providersTable: dynamodb.Table;
-  public readonly appointmentsTable: dynamodb.Table;
-  public readonly kmsKey: kms.Key;
+  public userPool: cognito.UserPool;
+  public userPoolClient: cognito.UserPoolClient;
+  public patientsTable: dynamodb.Table;
+  public providersTable: dynamodb.Table;
+  public appointmentsTable: dynamodb.Table;
+  public kmsKey: kms.Key;
 
   constructor(scope: Construct, id: string, props: AWSHealthcareStackProps) {
     super(scope, id, props);
@@ -60,18 +60,22 @@ export class AWSHealthcareStack extends cdk.Stack {
   }
 
   private createDynamoDBTables(props: AWSHealthcareStackProps): void {
-    const tableProps = {
+    const baseTableProps = {
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
-      encryption: props.enableEncryption !== false ? 
-        dynamodb.TableEncryption.CUSTOMER_MANAGED : 
+      encryption: props.enableEncryption !== false ?
+        dynamodb.TableEncryption.CUSTOMER_MANAGED :
         dynamodb.TableEncryption.AWS_MANAGED,
-      encryptionKey: props.enableEncryption !== false ? this.kmsKey : undefined,
       pointInTimeRecovery: props.enableBackups !== false,
-      removalPolicy: props.environment === 'production' ? 
-        cdk.RemovalPolicy.RETAIN : 
+      removalPolicy: props.environment === 'production' ?
+        cdk.RemovalPolicy.RETAIN :
         cdk.RemovalPolicy.DESTROY,
       stream: dynamodb.StreamViewType.NEW_AND_OLD_IMAGES
     };
+
+    const tableProps = props.enableEncryption !== false ? {
+      ...baseTableProps,
+      encryptionKey: this.kmsKey
+    } : baseTableProps;
 
     // Patients Table
     this.patientsTable = new dynamodb.Table(this, 'PatientsTable', {
@@ -110,8 +114,8 @@ export class AWSHealthcareStack extends cdk.Stack {
       projectionType: dynamodb.ProjectionType.ALL
     });
   }
-} 
- private createCognitoUserPool(props: AWSHealthcareStackProps): void {
+
+  private createCognitoUserPool(props: AWSHealthcareStackProps): void {
     this.userPool = new cognito.UserPool(this, 'VivaleUserPool', {
       userPoolName: `vivale-healthcare-${props.environment}`,
       selfSignUpEnabled: true,

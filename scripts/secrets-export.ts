@@ -22,7 +22,7 @@ class SecretsExporter {
       // Initialize secrets manager
       await this.secretsManager.initialize({
         provider: 'local',
-        encryptionKey: process.env.ENCRYPTION_KEY,
+        encryptionKey: process.env.ENCRYPTION_KEY || '',
       });
 
       // Export encrypted secrets
@@ -75,7 +75,7 @@ class SecretsExporter {
       // Initialize secrets manager
       await this.secretsManager.initialize({
         provider: 'local',
-        encryptionKey: process.env.ENCRYPTION_KEY,
+        encryptionKey: process.env.ENCRYPTION_KEY || '',
       });
 
       // Import secrets
@@ -96,7 +96,7 @@ class SecretsExporter {
       // Initialize secrets manager
       await this.secretsManager.initialize({
         provider: 'local',
-        encryptionKey: process.env.ENCRYPTION_KEY,
+        encryptionKey: process.env.ENCRYPTION_KEY || '',
       });
 
       const secretNames = await this.secretsManager.listSecrets();
@@ -124,7 +124,7 @@ class SecretsExporter {
       // Initialize secrets manager
       await this.secretsManager.initialize({
         provider: 'local',
-        encryptionKey: process.env.ENCRYPTION_KEY,
+        encryptionKey: process.env.ENCRYPTION_KEY || '',
       });
 
       // Generate new secret value (this is a simplified example)
@@ -149,7 +149,7 @@ class SecretsExporter {
       // Initialize secrets manager
       await this.secretsManager.initialize({
         provider: 'local',
-        encryptionKey: process.env.ENCRYPTION_KEY,
+        encryptionKey: process.env.ENCRYPTION_KEY || '',
       });
 
       const isHealthy = await this.secretsManager.healthCheck();
