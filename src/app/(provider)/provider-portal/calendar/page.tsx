@@ -4,9 +4,9 @@ import React, { useState } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { CalendarContainer } from '@/components/calendar/CalendarContainer';
-import { Button } from '@/components/ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/nexus-ui/button';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/nexus-ui/select';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/nexus-ui/card';
 import { UserRole } from '@/new-calendar/types/appointment';
 import { Calendar, Users, User, Settings } from 'lucide-react';
 

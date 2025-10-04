@@ -1,6 +1,6 @@
 import { HeartPulse, AlertCircle, Terminal } from 'lucide-react';
 import { PatientPortalHeader } from '@/components/patient-portal/header';
-import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
+import { Alert, AlertTitle, AlertDescription } from '@/components/nexus-ui/alert';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -11,15 +11,15 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from '@/components/ui/alert-dialog';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Switch } from '@/components/ui/switch';
+} from '@/components/nexus-ui/alert-dialog';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/nexus-ui/avatar';
+import { Badge } from '@/components/nexus-ui/badge';
+import { Button } from '@/components/nexus-ui/button';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/nexus-ui/card';
+import { Checkbox } from '@/components/nexus-ui/checkbox';
+import { Input } from '@/components/nexus-ui/input';
+import { Label } from '@/components/nexus-ui/label';
+import { Switch } from '@/components/nexus-ui/switch';
 
 
 export default function StyleGuidePage() {

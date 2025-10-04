@@ -1,13 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Appointment, Therapist, Client } from '../../types/appointment';
 import { appointmentsApi } from '@/api/appointments';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from './ui/dialog';
-import { Button } from './ui/button';
-import { Input } from './ui/input';
-import { Label } from './ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
-import { Textarea } from './ui/textarea';
-import { RadioGroup, RadioGroupItem } from './ui/radio-group';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, Button, Input, Label, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Textarea, RadioGroup, RadioGroupItem } from '@/components/nexus-ui';
 import { X, Calendar, Clock, User, FileText } from 'lucide-react';
 
 interface AppointmentFormProps {

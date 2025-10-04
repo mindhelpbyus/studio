@@ -131,7 +131,7 @@ export class DataSubjectRightsService {
             processingPurposes: await this.getProcessingPurposes(subjectId),
             dataRetentionPeriods: await this.getRetentionPeriods(subjectId),
             thirdPartyRecipients: await this.getThirdPartyRecipients(subjectId),
-            dataSource: 'Vivalé Healthcare Platform',
+            dataSource: 'Nexus Healthcare Platform',
             exportFormat: 'JSON'
         };
 

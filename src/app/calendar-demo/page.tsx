@@ -13,9 +13,9 @@ import {
   TestTube
 } from 'lucide-react';
 import React, { useState } from 'react';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/nexus-ui/badge';
+import { Button } from '@/components/nexus-ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/nexus-ui/card';
 
 export default function CalendarDemoPage() {
   const [currentDate, setCurrentDate] = useState(new Date());

@@ -1,8 +1,7 @@
 'use client';
 
-import { TooltipProvider } from '@/components/ui/tooltip';
+import { TooltipProvider, Toaster } from '@/components/nexus-ui';
 import ErrorBoundary from '@/components/error-boundary-new';
-import { Toaster } from '@/components/ui/toaster';
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   return (

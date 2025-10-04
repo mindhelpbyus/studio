@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import { Appointment, Therapist } from '@/types/appointment';
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from './ui/sheet';
-import { Button } from './ui/button';
-import { Badge } from './ui/badge';
-import { Separator } from './ui/separator';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription, Button, Badge, Separator } from '@/components/nexus-ui';
 import { 
   Calendar, 
   Clock, 
@@ -110,8 +107,8 @@ export function AppointmentPanel({
     }
   };
 
-  const startDateTime = formatDateTime(appointment.startTime);
-  const endDateTime = formatDateTime(appointment.endTime);
+  const startDateTime = formatDateTime(appointment.startTime.toISOString());
+  const endDateTime = formatDateTime(appointment.endTime.toISOString());
 
   return (
     <>

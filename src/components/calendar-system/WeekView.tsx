@@ -74,8 +74,8 @@ export function WeekView({
     const newEndTime = new Date(newStartTime.getTime() + duration);
     
     onAppointmentUpdate(item.appointment.id, {
-      startTime: newStartTime.toISOString(),
-      endTime: newEndTime.toISOString(),
+      startTime: newStartTime,
+      endTime: newEndTime,
       ...(therapistId && { therapistId }),
     });
   };
@@ -280,7 +280,7 @@ function WeekSlot({
 
   return (
     <div
-      ref={drop as React.Ref<HTMLDivElement>} // Cast drop to React.Ref<HTMLDivElement>
+      ref={drop as any}
       className={`
         flex-1 h-20 border-r border-border p-1 transition-colors cursor-pointer
         ${isOver ? 'bg-primary/10' : 'hover:bg-muted/50'}

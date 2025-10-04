@@ -349,7 +349,7 @@ export class SecretsManager {
       process.env.SECRET_KEY ||
       'default-key-change-in-production';
 
-    return crypto.scryptSync(keyMaterial, 'vivale-salt', 32);
+    return crypto.scryptSync(keyMaterial, 'nexus-salt', 32);
   }
 
   private async getKMSKey(keyId: string): Promise<Buffer> {

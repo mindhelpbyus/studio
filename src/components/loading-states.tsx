@@ -1,8 +1,8 @@
 'use client';
 
 import { Loader2 } from 'lucide-react';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { Skeleton } from '@/components/ui/skeleton';
+import { Card, CardContent, CardHeader } from '@/components/nexus-ui/card';
+import { Skeleton } from '@/components/nexus-ui/skeleton';
 
 // Generic loading spinner
 export function LoadingSpinner({ size = 'default' }: { size?: 'sm' | 'default' | 'lg' }) {

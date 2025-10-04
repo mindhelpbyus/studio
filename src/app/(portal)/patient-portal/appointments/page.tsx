@@ -1,7 +1,7 @@
 import { Video } from 'lucide-react';
 import Link from 'next/link';
 import { PatientPortalHeader } from '@/components/patient-portal/header';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/nexus-ui/button';
 
 // Mock data - in a real app, this would be fetched for the logged-in user
 const upcomingAppointments = [

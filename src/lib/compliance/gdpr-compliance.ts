@@ -255,7 +255,7 @@ export class GDPRComplianceManager {
     contact: string;
   } {
     return {
-      dataController: 'Vivalé Healthcare',
+      dataController: 'Nexus Healthcare',
       purposes: [
         'Providing healthcare services',
         'Appointment scheduling',
@@ -286,7 +286,7 @@ export class GDPRComplianceManager {
         'Right to object to processing',
         'Right to withdraw consent',
       ],
-      contact: 'privacy@vivale.com',
+      contact: 'privacy@nexus.com',
     };
   }
 

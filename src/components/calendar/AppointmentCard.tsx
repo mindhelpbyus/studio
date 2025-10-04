@@ -51,10 +51,10 @@ export function AppointmentCard({
   };
 
   const getStatusColor = () => {
-    if (appointment.type === 'break') return 'bg-gray-200 border-gray-400 text-gray-800';
+    if (appointment.type === 'break') return 'bg-nexus-bg-elevated border-nexus-border text-nexus-text-secondary';
     if (appointment.status === 'pending') return 'bg-yellow-50 border-yellow-200 text-yellow-800';
     if (appointment.type === 'tentative') return 'bg-blue-50 border-blue-300 text-blue-900';
-    return 'bg-white border-gray-200 text-gray-900';
+    return 'bg-nexus-bg-surface border-nexus-border text-nexus-text-primary';
   };
 
   const isBreakOrTentative = appointment.type === 'break' || appointment.type === 'tentative';
@@ -76,7 +76,7 @@ export function AppointmentCard({
       className={`
         ${getStatusColor()}
         border border-l-4 rounded-md p-2 cursor-pointer transition-all duration-200
-        hover:shadow-md hover:border-gray-300 active:scale-95
+        hover:shadow-md hover:border-nexus-accent-primary/50 active:scale-95 nexus-transition
         ${isBreakOrTentative ? 'relative' : ''}
         ${className}
       `}
@@ -107,17 +107,17 @@ export function AppointmentCard({
         </div>
 
         {/* Time and Duration */}
-        <div className="flex items-center gap-2 text-xs text-gray-600">
+        <div className="flex items-center gap-2 text-xs text-nexus-text-secondary">
           <Clock className="h-3 w-3" />
           <span>
             {formatTime(appointment.startTime)} - {formatTime(appointment.endTime)}
           </span>
-          <span className="text-gray-400">({getDuration()})</span>
+          <span className="text-nexus-text-muted">({getDuration()})</span>
         </div>
 
         {/* Therapist Name (if shown) */}
         {showTherapistName && therapist && (
-          <div className="flex items-center gap-1 text-xs text-gray-600">
+          <div className="flex items-center gap-1 text-xs text-nexus-text-secondary">
             <User className="h-3 w-3" />
             <span>{therapist.name}</span>
           </div>
@@ -125,7 +125,7 @@ export function AppointmentCard({
 
         {/* Client Name (for non-break appointments) */}
         {appointment.type !== 'break' && appointment.clientName && (
-          <div className="text-xs text-gray-600">
+          <div className="text-xs text-nexus-text-secondary">
             {appointment.clientName}
           </div>
         )}

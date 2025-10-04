@@ -10,12 +10,12 @@ import {
   Video,
 } from 'lucide-react';
 import * as React from 'react';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { Separator } from '@/components/ui/separator';
-import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
+import { Avatar, AvatarFallback } from '@/components/nexus-ui/avatar';
+import { Badge } from '@/components/nexus-ui/badge';
+import { Button } from '@/components/nexus-ui/button';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/nexus-ui/collapsible';
+import { Separator } from '@/components/nexus-ui/separator';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/nexus-ui';
 
 const pastAppointments = [
     { id: '1', date: '2024-06-18', service: '50-Minute Facial', status: 'Completed' },

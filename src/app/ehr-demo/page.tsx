@@ -399,7 +399,7 @@ export default function EHRDemo() {
 
         {/* Footer */}
         <div className="mt-12 bg-white rounded-lg shadow-sm p-6 text-center text-gray-600">
-          <h3 className="font-semibold text-gray-900 mb-2">🏥 Vivalé Healthcare Platform - EHR System Demo</h3>
+          <h3 className="font-semibold text-gray-900 mb-2">🏥 Nexus Healthcare Platform - EHR System Demo</h3>
           <p className="text-sm">
             Enterprise-grade Electronic Health Records with HIPAA compliance, clinical decision support,
             and comprehensive healthcare data management.

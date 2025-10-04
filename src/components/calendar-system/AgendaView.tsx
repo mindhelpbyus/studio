@@ -2,7 +2,7 @@ import React from 'react';
 import { Appointment, Therapist } from '@/types/appointment';
 import { format, isSameDay, isToday, isTomorrow, isThisWeek } from 'date-fns';
 import { Clock, Calendar, User, List } from 'lucide-react';
-import { Badge } from './ui/badge';
+import { Badge } from '@/components/nexus-ui';
 
 interface AgendaViewProps {
   appointments: Appointment[];

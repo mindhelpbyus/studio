@@ -130,7 +130,7 @@ export class JWTProvider implements AuthProvider {
         user: this.sanitizeUser(user),
         issuedAt: decoded.iat,
         expiresAt: decoded.exp,
-        issuer: decoded.iss || this.config.issuer || 'vivale-healthcare',
+        issuer: decoded.iss || this.config.issuer || 'nexus-healthcare',
         audience: decoded.aud,
         scopes: decoded.scopes || [],
         metadata: decoded.metadata || {},
@@ -369,8 +369,8 @@ export class JWTProvider implements AuthProvider {
 
       if (method === 'totp') {
         const secret = speakeasy.generateSecret({
-          name: `Vivalé Healthcare (${user.email})`,
-          issuer: 'Vivalé Healthcare',
+          name: `Nexus Healthcare (${user.email})`,
+          issuer: 'Nexus Healthcare',
         });
 
         const qrCode = await QRCode.toDataURL(secret.otpauth_url!);
@@ -578,7 +578,7 @@ export class JWTProvider implements AuthProvider {
 
     const options: jwt.SignOptions = {
       expiresIn: this.config.expiresIn || '15m',
-      issuer: this.config.issuer || 'vivale-healthcare',
+      issuer: this.config.issuer || 'nexus-healthcare',
       audience: this.config.audience,
       algorithm: (this.config.algorithm as jwt.Algorithm) || 'HS256',
     };
@@ -594,7 +594,7 @@ export class JWTProvider implements AuthProvider {
 
     const options: jwt.SignOptions = {
       expiresIn: this.config.refreshExpiresIn || '7d',
-      issuer: this.config.issuer || 'vivale-healthcare',
+      issuer: this.config.issuer || 'nexus-healthcare',
       audience: this.config.audience,
       algorithm: (this.config.algorithm as jwt.Algorithm) || 'HS256',
     };
@@ -604,7 +604,7 @@ export class JWTProvider implements AuthProvider {
 
   private verifyToken(token: string, isRefreshToken: boolean = false): any {
     const options: jwt.VerifyOptions = {
-      issuer: this.config.issuer || 'vivale-healthcare',
+      issuer: this.config.issuer || 'nexus-healthcare',
       audience: this.config.audience,
       algorithms: [(this.config.algorithm as jwt.Algorithm) || 'HS256'],
     };

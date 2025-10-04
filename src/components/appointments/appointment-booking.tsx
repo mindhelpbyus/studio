@@ -4,20 +4,19 @@ import { format, addDays } from 'date-fns';
 import { Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import * as React from 'react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/nexus-ui/button';
+import { Card, CardContent } from '@/components/nexus-ui/card';
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from '@/components/ui/carousel';
+} from '@/components/nexus-ui/carousel';
 import { useToast } from '@/hooks/use-toast';
 import { availableTimeSlots, Appointment } from '@/lib/appointments';
 import type { Provider } from '@/lib/providers';
-import { Input } from '../ui/input';
-import { Label } from '../ui/label';
+import { Input, Label } from '@/components/nexus-ui';
 
 async function getBookedSlots(providerId: string, date: string): Promise<string[]> {
     // This is a placeholder. In a real app, you would fetch this from your API.

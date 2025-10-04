@@ -83,8 +83,8 @@ export function generateToken(user: User): string {
     secret, 
     { 
       expiresIn: '24h',
-      issuer: 'vivale-app',
-      audience: 'vivale-users'
+      issuer: 'nexus-app',
+      audience: 'nexus-users'
     }
   );
 }

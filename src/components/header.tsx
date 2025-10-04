@@ -20,13 +20,18 @@ import {
   User,
   Hospital,
   Menu,
+  Moon,
+  Sun,
 } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react';
-import Logo from '@/components/Logo';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { Button } from '@/components/ui/button';
-import {
+import NexusLogo from '@/components/ui/nexus-logo';
+import { 
+  Accordion, 
+  AccordionContent, 
+  AccordionItem, 
+  AccordionTrigger,
+  Button,
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
@@ -34,8 +39,14 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
-} from '@/components/ui/navigation-menu';
-import { Sheet, SheetContent, SheetTrigger, SheetClose } from '@/components/ui/sheet';
+  Sheet, 
+  SheetContent, 
+  SheetTrigger, 
+  SheetClose 
+} from '@/components/nexus-ui';
+import { NexusButton } from '@/components/nexus-ui';
+import { useNexusTheme } from '@/hooks/useNexusTheme';
+import { useNexusAnimations } from '@/hooks/useNexusAnimations';
 import { cn } from '@/lib/utils';
 
 
@@ -81,36 +92,44 @@ const whoWeServe: { title: string; href: string; description: string, icon: Luci
 
 
 export function Header() {
+  const { theme, toggleTheme, isDark } = useNexusTheme();
+  const { createHoverAnimation } = useNexusAnimations();
+  const logoHoverProps = createHoverAnimation({ duration: 'fast' });
+
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur-md border-b border-nexus-border transition-all duration-200">
       <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-6">
         <div className="flex items-center gap-6">
-          <Link href="/" className="flex items-center gap-2">
-            <Logo />
+          <Link href="/" className="flex items-center gap-2 nexus-transition" {...logoHoverProps}>
+            <NexusLogo variant="full" size="md" />
           </Link>
           <nav className="hidden items-center gap-6 md:flex">
             <NavigationMenu>
               <NavigationMenuList>
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger className="font-bold">Features</NavigationMenuTrigger>
+                  <NavigationMenuTrigger className="font-semibold text-nexus-text-primary hover:text-nexus-accent-primary transition-colors bg-transparent">
+                    Features
+                  </NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <div className="grid w-[400px] gap-3 p-4 md:w-[600px] md:grid-cols-[1fr_1fr] lg:w-[800px]">
-                      <div className="flex h-full flex-col justify-between rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md">
+                    <div className="grid w-[400px] gap-3 p-4 md:w-[600px] md:grid-cols-[1fr_1fr] lg:w-[800px] bg-nexus-bg-surface border border-nexus-border rounded-xl shadow-lg">
+                      <div className="flex h-full flex-col justify-between rounded-lg bg-gradient-to-br from-nexus-accent-primary/10 to-nexus-accent-secondary/10 p-6 no-underline outline-none focus:shadow-md border border-nexus-border/50">
                         <div>
-                          <Logo />
-                          <p className="mt-4 text-sm leading-tight text-muted-foreground">
-                            A complete platform for modern healthcare providers and patients.
+                          <NexusLogo variant="horizontal" size="lg" />
+                          <p className="mt-4 text-sm leading-tight text-nexus-text-secondary">
+                            A modern CRM platform for healthcare providers and patients.
                           </p>
                         </div>
-                        <Button asChild className="mt-6 w-full">
+                        <NexusButton asChild className="mt-6 w-full" size="sm">
                           <Link href="#features">Explore All Features</Link>
-                        </Button>
+                        </NexusButton>
                       </div>
                       <div>
                         <Accordion type="single" collapsible className="w-full">
                           {featureCategories.map((category) => (
-                            <AccordionItem value={category.title} key={category.title}>
-                              <AccordionTrigger className="px-3 text-base font-semibold hover:no-underline">{category.title}</AccordionTrigger>
+                            <AccordionItem value={category.title} key={category.title} className="border-nexus-border">
+                              <AccordionTrigger className="px-3 text-base font-semibold hover:no-underline text-nexus-text-primary hover:text-nexus-accent-primary nexus-transition">
+                                {category.title}
+                              </AccordionTrigger>
                               <AccordionContent>
                                 <ul className="grid gap-3 p-3">
                                   {category.features.map((feature) => (
@@ -133,18 +152,20 @@ export function Header() {
                   </NavigationMenuContent>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger className="font-bold">Who We Serve</NavigationMenuTrigger>
+                  <NavigationMenuTrigger className="font-semibold text-nexus-text-primary hover:text-nexus-accent-primary transition-colors bg-transparent">
+                    Who We Serve
+                  </NavigationMenuTrigger>
                    <NavigationMenuContent>
-                    <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] lg:w-[600px] lg:grid-cols-[.75fr_1fr]">
+                    <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] lg:w-[600px] lg:grid-cols-[.75fr_1fr] bg-nexus-bg-surface border border-nexus-border rounded-xl shadow-lg">
                       <li className="row-span-3">
                         <NavigationMenuLink asChild>
                           <a
-                            className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                            className="flex h-full w-full select-none flex-col justify-end rounded-lg bg-gradient-to-br from-nexus-accent-primary/10 to-nexus-accent-secondary/10 p-6 no-underline outline-none focus:shadow-md border border-nexus-border/50 nexus-transition hover:border-nexus-accent-primary/50"
                             href="/"
                           >
-                            <Logo />
-                            <p className="mt-4 text-sm leading-tight text-muted-foreground">
-                              A complete platform for modern healthcare providers and patients.
+                            <NexusLogo variant="horizontal" size="lg" />
+                            <p className="mt-4 text-sm leading-tight text-nexus-text-secondary">
+                              A modern CRM platform for healthcare providers and patients.
                             </p>
                           </a>
                         </NavigationMenuLink>
@@ -164,7 +185,15 @@ export function Header() {
                 </NavigationMenuItem>
                 <NavigationMenuItem>
                    <NavigationMenuLink asChild>
-                    <Link href="#" className={cn(navigationMenuTriggerStyle(), "font-bold")}>Pricing</Link>
+                    <Link 
+                      href="#" 
+                      className={cn(
+                        navigationMenuTriggerStyle(), 
+                        "font-semibold text-nexus-text-primary hover:text-nexus-accent-primary transition-colors bg-transparent"
+                      )}
+                    >
+                      Pricing
+                    </Link>
                   </NavigationMenuLink>
                 </NavigationMenuItem>
               </NavigationMenuList>
@@ -173,31 +202,55 @@ export function Header() {
         </div>
         
         <div className="hidden items-center gap-4 md:flex">
-          <Button asChild variant="ghost" className="font-bold text-base">
+          {/* Theme Toggle */}
+          <button
+            onClick={toggleTheme}
+            className="p-2 text-nexus-text-muted hover:text-nexus-text-primary hover:bg-nexus-bg-elevated rounded-lg transition-colors"
+            aria-label={`Switch to ${isDark ? 'light' : 'dark'} mode`}
+          >
+            {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+          </button>
+
+          <NexusButton asChild variant="ghost" size="sm">
             <Link href="/login">Provider Log In</Link>
-          </Button>
-          <Button variant="outline" className="border-2 border-primary font-bold text-primary rounded-full relative overflow-hidden bg-gradient-button">Book a Demo</Button>
-          <Button className="rounded-full font-bold">Try it now</Button>
+          </NexusButton>
+          
+          <NexusButton variant="secondary" size="sm">
+            Book a Demo
+          </NexusButton>
+          
+          <NexusButton variant="primary" size="sm">
+            Try it now
+          </NexusButton>
         </div>
         
         <div className="md:hidden">
             <Sheet>
               <SheetTrigger asChild>
-                <Button variant="outline" size="icon">
-                  <Menu className="h-6 w-6" />
+                <NexusButton variant="ghost" size="sm">
+                  <Menu className="h-5 w-5" />
                   <span className="sr-only">Open menu</span>
-                </Button>
+                </NexusButton>
               </SheetTrigger>
-              <SheetContent side="right">
+              <SheetContent side="right" className="bg-nexus-bg-surface border-nexus-border">
                 <div className="grid gap-4 py-6">
+                  {/* Mobile Theme Toggle */}
+                  <button
+                    onClick={toggleTheme}
+                    className="flex items-center gap-3 p-3 text-nexus-text-secondary hover:text-nexus-text-primary hover:bg-nexus-bg-elevated rounded-lg nexus-transition"
+                  >
+                    {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+                    <span>{isDark ? 'Light Mode' : 'Dark Mode'}</span>
+                  </button>
+                  
                   <Link href="/login">
                      <SheetClose asChild>
-                        <Button variant="outline" className="w-full">Provider Log In</Button>
+                        <NexusButton variant="ghost" fullWidth>Provider Log In</NexusButton>
                      </SheetClose>
                   </Link>
                   <Link href="#">
                     <SheetClose asChild>
-                        <Button className="w-full">Try it now</Button>
+                        <NexusButton variant="primary" fullWidth>Try it now</NexusButton>
                     </SheetClose>
                   </Link>
                 </div>
@@ -220,18 +273,18 @@ const ListItem = React.forwardRef<
         <a
           ref={ref}
           className={cn(
-            'group/item relative flex select-none items-center gap-4 rounded-md p-3 leading-none no-underline outline-none transition-all duration-200 ease-in-out hover:bg-accent/50 focus:shadow-md',
+            'group/item relative flex select-none items-center gap-4 rounded-lg p-3 leading-none no-underline outline-none nexus-transition hover:bg-nexus-bg-elevated focus:shadow-md border border-transparent hover:border-nexus-border',
             className
           )}
           {...props}
         >
-          <div className="absolute left-0 top-0 h-full w-1.5 origin-left scale-y-0 rounded-r-full bg-gradient-to-b from-accent-left via-accent-mid to-accent-right transition-transform duration-300 ease-in-out group-hover/item:scale-y-100" />
-          <div className="text-muted-foreground transition-colors group-hover/item:text-primary">
-            <Icon className="h-6 w-6" />
+          <div className="absolute left-0 top-0 h-full w-1 origin-left scale-y-0 rounded-r-full bg-gradient-to-b from-nexus-accent-primary to-nexus-accent-secondary transition-transform duration-300 ease-in-out group-hover/item:scale-y-100" />
+          <div className="text-nexus-text-muted transition-colors group-hover/item:text-nexus-accent-primary">
+            <Icon className="h-5 w-5" />
           </div>
           <div className="transition-transform duration-200 ease-in-out group-hover/item:translate-x-1">
-            <div className="text-base font-medium leading-tight text-foreground">{title}</div>
-            <p className="mt-1 line-clamp-2 text-sm leading-snug text-muted-foreground">
+            <div className="text-sm font-semibold leading-tight text-nexus-text-primary">{title}</div>
+            <p className="mt-1 line-clamp-2 text-xs leading-snug text-nexus-text-secondary">
               {children}
             </p>
           </div>

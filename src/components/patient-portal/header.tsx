@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import Logo from '@/components/Logo';
-import { Button } from '@/components/ui/button';
+import Logo from '@/components/logo';
+import { Button } from '@/components/nexus-ui/button';
 
 export function PatientPortalHeader() {
   return (

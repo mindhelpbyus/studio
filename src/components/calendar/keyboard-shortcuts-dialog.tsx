@@ -5,8 +5,8 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from './ui/dialog';
-import { Button } from './ui/button';
+} from '@/components/nexus-ui';
+import { Button } from '@/components/nexus-ui';
 import { Keyboard } from 'lucide-react';
 
 interface ShortcutInfo {

@@ -337,7 +337,7 @@ export class DynamoDBAdapter implements DatabaseAdapter {
   // Helper methods
   private getTableName(tableName: string): string {
     // Add environment prefix if configured
-    const prefix = this.config.options?.tablePrefix || 'vivale';
+    const prefix = this.config.options?.tablePrefix || 'nexus';
     return `${prefix}-${tableName.toLowerCase()}`;
   }
 

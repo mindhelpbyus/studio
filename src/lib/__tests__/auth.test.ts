@@ -26,8 +26,8 @@ describe('Auth Utils', () => {
       expect(decoded.userId).toBe(mockUser.id);
       expect(decoded.email).toBe(mockUser.email);
       expect(decoded.role).toBe(mockUser.role);
-      expect(decoded.iss).toBe('vivale-app');
-      expect(decoded.aud).toBe('vivale-users');
+      expect(decoded.iss).toBe('nexus-app');
+      expect(decoded.aud).toBe('nexus-users');
     });
 
     it('should throw error when JWT_SECRET is not set', () => {

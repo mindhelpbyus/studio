@@ -2,10 +2,10 @@
 import { MapPin } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/nexus-ui/button';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/nexus-ui/card';
 import type { Provider } from '@/lib/providers';
-import { Badge } from '../ui/badge';
+import { Badge } from '@/components/nexus-ui';
 
 type ProviderCardProps = {
   provider: Provider;

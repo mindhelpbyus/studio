@@ -12,17 +12,17 @@ import {
   MapPin
 } from 'lucide-react';
 import React from 'react';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/nexus-ui/avatar';
+import { Badge } from '@/components/nexus-ui/badge';
+import { Button } from '@/components/nexus-ui/button';
+import { Separator } from '@/components/nexus-ui/separator';
 import {
   Sheet,
   SheetContent,
   SheetHeader,
   SheetTitle,
   SheetDescription,
-} from '@/components/ui/sheet';
+} from '@/components/nexus-ui/sheet';
 import { CalendarAppointment } from '@/lib/calendar-types';
 import { formatAppointmentTime } from '@/lib/calendar-utils';
 import { AppointmentService, MockDataService } from '@/lib/enhanced-appointments';

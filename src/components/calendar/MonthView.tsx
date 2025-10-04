@@ -126,8 +126,8 @@ export function MonthView({
                       className={`
                         text-xs p-1 rounded cursor-pointer transition-colors
                         ${appointment.type === 'break' 
-                          ? 'bg-gray-200 text-gray-700' 
-                          : 'bg-white border-l-2 shadow-sm hover:shadow-md'
+                          ? 'bg-nexus-bg-elevated text-nexus-text-muted' 
+                          : 'bg-nexus-bg-surface border-l-2 shadow-sm hover:shadow-md border-nexus-accent-primary'
                         }
                       `}
                       style={{

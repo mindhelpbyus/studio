@@ -41,7 +41,7 @@ export default async function ProvidersPage() {
       <footer className="bg-background py-6">
         <div className="container mx-auto flex items-center justify-between px-4 md:px-6">
           <p className="text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} Vivalé. All rights
+            &copy; {new Date().getFullYear()} Nexus. All rights
             reserved.
           </p>
         </div>

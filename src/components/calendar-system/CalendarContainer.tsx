@@ -7,10 +7,7 @@ import { MonthView } from './MonthView';
 import { AppointmentForm } from './AppointmentForm';
 import { AppointmentPanel } from './AppointmentPanel';
 import { CalendarSidebar } from './CalendarSidebar';
-import { Button } from './ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from './ui/dropdown-menu';
-import { Checkbox } from './ui/checkbox';
+import { Button, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, Checkbox } from '@/components/nexus-ui';
 import { ChevronLeft, ChevronRight, Plus, Calendar, Users, ChevronDown, Search } from 'lucide-react';
 
 interface CalendarContainerProps {

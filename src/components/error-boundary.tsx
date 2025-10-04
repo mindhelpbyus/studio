@@ -2,8 +2,8 @@
 
 import { AlertTriangle, RefreshCw } from 'lucide-react';
 import React from 'react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/nexus-ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/nexus-ui/card';
 
 interface ErrorBoundaryState {
   hasError: boolean;

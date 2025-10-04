@@ -5,7 +5,7 @@ const envSchema = z.object({
   // App Configuration
   NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
   NEXT_PUBLIC_APP_URL: z.string().url().default('http://localhost:9002'),
-  NEXT_PUBLIC_APP_NAME: z.string().default('Vivalé'),
+  NEXT_PUBLIC_APP_NAME: z.string().default('Nexus'),
   
   // Security
   JWT_SECRET: z.string().min(32, 'JWT_SECRET must be at least 32 characters'),

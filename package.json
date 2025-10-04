@@ -1,9 +1,10 @@
 {
-  "name": "nextn",
+  "name": "nexus-crm",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "start:clean": "tsx scripts/start-app.ts",
     "genkit:dev": "genkit start -- tsx src/ai/dev.ts",
     "genkit:watch": "genkit start -- tsx --watch src/ai/dev.ts",
     "clean": "rm -rf .next out node_modules",
@@ -91,6 +92,7 @@
     "@radix-ui/react-toggle": "^1.1.10",
     "@radix-ui/react-toggle-group": "^1.1.11",
     "@radix-ui/react-tooltip": "^1.2.8",
+    "autoprefixer": "^10.4.21",
     "aws-cdk-lib": "^2.100.0",
     "aws-sdk": "^2.1500.0",
     "bcrypt": "^5.1.1",

@@ -12,14 +12,14 @@ const manrope = Manrope({
 
 export const metadata: Metadata = {
   title: {
-    default: 'Vivalé - Healthcare Management Platform',
-    template: '%s | Vivalé',
+    default: 'Nexus - Healthcare CRM Platform',
+    template: '%s | Nexus CRM',
   },
-  description: 'Comprehensive healthcare management platform for providers and patients. Schedule appointments, manage records, and connect with your care team.',
-  keywords: ['healthcare', 'telemedicine', 'appointments', 'medical records', 'patient portal', 'provider portal'],
-  authors: [{ name: 'Vivalé Team' }],
-  creator: 'Vivalé',
-  publisher: 'Vivalé',
+  description: 'Modern healthcare CRM platform for providers and patients. Manage relationships, schedule appointments, and streamline healthcare operations.',
+  keywords: ['healthcare', 'crm', 'patient management', 'appointments', 'medical records', 'healthcare software'],
+  authors: [{ name: 'Nexus Team' }],
+  creator: 'Nexus',
+  publisher: 'Nexus',
   formatDetection: {
     email: false,
     address: false,
@@ -33,22 +33,22 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: '/',
-    title: 'Vivalé - Healthcare Management Platform',
-    description: 'Comprehensive healthcare management platform for providers and patients.',
-    siteName: 'Vivalé',
+    title: 'Nexus - Healthcare CRM Platform',
+    description: 'Modern healthcare CRM platform for providers and patients.',
+    siteName: 'Nexus CRM',
     images: [
       {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Vivalé Healthcare Platform',
+        alt: 'Nexus Healthcare CRM Platform',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Vivalé - Healthcare Management Platform',
-    description: 'Comprehensive healthcare management platform for providers and patients.',
+    title: 'Nexus - Healthcare CRM Platform',
+    description: 'Modern healthcare CRM platform for providers and patients.',
     images: ['/og-image.jpg'],
   },
   robots: {

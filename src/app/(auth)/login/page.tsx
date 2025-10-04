@@ -8,12 +8,12 @@ import { useActionState } from 'react';
 import React from 'react';
 import { useFormStatus } from 'react-dom';
 import { login } from '@/app/actions';
-import Logo from '@/components/Logo';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import Logo from '@/components/logo';
+import { Alert, AlertDescription, AlertTitle } from '@/components/nexus-ui/alert';
+import { Button } from '@/components/nexus-ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/nexus-ui/card';
+import { Input } from '@/components/nexus-ui/input';
+import { Label } from '@/components/nexus-ui/label';
 
 function ProviderSubmitButton() {
   const { pending } = useFormStatus();
@@ -21,8 +21,7 @@ function ProviderSubmitButton() {
   return (
     <Button 
         type="submit" 
-        className="w-full font-bold text-primary relative overflow-hidden bg-gradient-button border-2 border-primary" 
-        variant="outline"
+        className="w-full" 
         disabled={pending}
     >
       {pending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
@@ -65,8 +64,7 @@ function PatientJoinForm() {
         </div>
         <Button 
             type="submit" 
-            className="w-full font-bold text-primary relative overflow-hidden bg-gradient-button border-2 border-primary"
-            variant="outline"
+            className="w-full"
         >
             <Video className="mr-2 h-4 w-4" />
             Join Call
@@ -82,12 +80,12 @@ export default function LoginPage() {
   const [state, formAction] = useActionState(login, initialState);
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center gap-10 bg-muted/50 p-4">
+    <div className="flex min-h-screen flex-col items-center justify-center gap-10 bg-surface p-4">
       <Link href="/" className="absolute top-8 left-8">
         <Logo position="absolute" top="2rem" left="2rem" />
       </Link>
 
-      <Card className="w-full max-w-md rounded-2xl shadow-card">
+      <Card className="w-full max-w-md rounded-2xl shadow-lg border-border">
         <CardHeader>
           <CardTitle className="text-2xl">Provider Login</CardTitle>
           <CardDescription>

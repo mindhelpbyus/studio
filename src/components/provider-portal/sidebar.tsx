@@ -12,9 +12,9 @@ import {
 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import Logo from '@/components/Logo';
-import { Badge } from '../ui/badge';
+import { Button } from '@/components/nexus-ui/button';
+import Logo from '@/components/logo';
+import { Badge } from '@/components/nexus-ui';
 
 const navLinks = [
   { href: '/provider-portal/calendar', icon: Calendar, label: 'Calendar', active: true, notification: 2 },
